@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/testukas', [App\Http\Controllers\UserController::class, 'index']);
+
+Route::get('/{route?}', function () {
+    return view('app');
 });
 
 Auth::routes();
