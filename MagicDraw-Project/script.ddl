@@ -12,7 +12,9 @@ DROP TABLE IF EXISTS Course;
 
 CREATE TABLE Course
 (
-	Id int,
+	Id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	startDate date,
 	title varchar (255),
 	shortDescription varchar (255),
@@ -24,12 +26,13 @@ CREATE TABLE Course
 
 CREATE TABLE Users
 (
-	Id int,
+	Id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	username varchar (255),
 	email varchar (255),
 	password varchar (255),
 	isBlocked boolean DEFAULT false,
-	createdAt date,
 	isAdmin boolean DEFAULT false,
 	PRIMARY KEY(Id)
 );
@@ -37,7 +40,9 @@ CREATE TABLE Users
 CREATE TABLE ProgressTracker
 (
 	completedTopics int,
-	id_ProgressTracker integer,
+	id_ProgressTracker int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	fk_UsersId integer NOT NULL,
 	fk_CourseId int NOT NULL,
 	PRIMARY KEY(id_ProgressTracker),
@@ -47,7 +52,9 @@ CREATE TABLE ProgressTracker
 
 CREATE TABLE Topic
 (
-	id int,
+	id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	title varchar (255),
 	topicOrder int,
 	shortDescription varchar (255),
@@ -60,7 +67,9 @@ CREATE TABLE Topic
 CREATE TABLE Assignment
 (
 	description varchar (255),
-	id int,
+	id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	title varchar (255),
 	deadline date,
 	fk_CourseId int NOT NULL,
@@ -74,7 +83,9 @@ CREATE TABLE Assignment
 CREATE TABLE AttendanceEntry
 (
 	isAttending boolean DEFAULT false,
-	id_AttendanceEntry integer,
+	id_AttendanceEntry integer NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	fk_CourseId int NOT NULL,
 	fk_UsersId integer NOT NULL,
 	fk_Topicid int NOT NULL,
@@ -88,7 +99,9 @@ CREATE TABLE AttendanceEntry
 
 CREATE TABLE Media
 (
-	id int,
+	id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	fileName varchar (255),
 	fk_Topicid int NOT NULL,
 	PRIMARY KEY(id, fk_Topicid),
@@ -97,7 +110,9 @@ CREATE TABLE Media
 
 CREATE TABLE TimetableEntry
 (
-	id int,
+	id int NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	lessonTime date,
 	entryTitle varchar (255),
 	link varchar (255),
@@ -113,7 +128,9 @@ CREATE TABLE AssignmentEntry
 (
 	fileName varchar (255),
 	rating integer,
-	id_AssignmentEntry integer,
+	id_AssignmentEntry integer NOT NULL AUTO_INCREMENT,
+	created_at datetime,
+	updated_at datetime,
 	fk_Assignmentid int NOT NULL,
 	fk_Assignmentfk_CourseId int NOT NULL,
 	fk_UsersId integer NOT NULL,

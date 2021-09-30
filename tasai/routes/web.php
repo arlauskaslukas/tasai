@@ -18,6 +18,7 @@ Route::get('/api/users', [App\Http\Controllers\UserController::class, 'index']);
 Route::get('/api/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
 Route::post('/api/users/insert', [App\Http\Controllers\UserController::class, 'create']);
 Route::get('/api/users/csrf', [App\Http\Controllers\UserController::class, 'csrftoken']);
+Route::delete('/api/users/delete', [App\Http\Controllers\UserController::class, 'destroy']);
 
 Route::get('/{route?}', function () {
     return view('app');
