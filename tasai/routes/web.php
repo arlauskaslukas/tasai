@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/testukas', [App\Http\Controllers\UserController::class, 'index']);
+//users
+Route::get('/api/users', [App\Http\Controllers\UserController::class, 'index']);
+Route::get('/api/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
+Route::post('/api/users/insert', [App\Http\Controllers\UserController::class, 'create']);
+Route::get('/api/users/csrf', [App\Http\Controllers\UserController::class, 'csrftoken']);
 
 Route::get('/{route?}', function () {
     return view('app');

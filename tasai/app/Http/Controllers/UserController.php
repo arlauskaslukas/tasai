@@ -15,10 +15,10 @@ class UserController extends Controller
     public function index()
     {
         $result = User::all();
-        foreach($result as $user)
-        {
-            return $user;
-        }
+        return $result;
+    }
+    public function csrftoken(){
+        echo(csrf_token());
     }
 
     /**
@@ -26,9 +26,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = new User();
+        $user->username = $request->username;
+        $user->password = $request->password;
+        $user->email = $request->email;
+        $user->save();
     }
 
     /**
@@ -50,7 +54,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = User::where('Id', $id)->get();
+        return $result;
     }
 
     /**

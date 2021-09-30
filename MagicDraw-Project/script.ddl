@@ -24,7 +24,7 @@ CREATE TABLE Course
 
 CREATE TABLE Users
 (
-	Id integer,
+	Id int,
 	username varchar (255),
 	email varchar (255),
 	password varchar (255),
