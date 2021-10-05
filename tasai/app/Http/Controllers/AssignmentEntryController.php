@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignmentEntry;
 use Illuminate\Http\Request;
-use App\Models\User;
 
-class UserController extends Controller
+class AssignmentEntryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,12 @@ class UserController extends Controller
     public function index()
     {
         $array = array();
-        array_push($array,new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        array_push($array,new User(['id'=>2,'name'=>"dummy2",'email'=>'dummy2@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        array_push($array,new User(['id'=>3,'name'=>"dummy3",'email'=>'dummy3@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
+        array_push($array,new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
+            'rating'=>10,'assignment_id'=>1,'user_id'=>1]));
+        array_push($array,new AssignmentEntry(['id'=>2,'filename'=>'lipsum.py',
+            'rating'=>10,'assignment_id'=>1,'user_id'=>2]));
+        array_push($array,new AssignmentEntry(['id'=>3,'filename'=>'lipsum.py',
+            'rating'=>10,'assignment_id'=>1,'user_id'=>3]));
         return response(json_encode($array), 200);
     }
 
@@ -29,9 +29,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-
+        //
     }
 
     /**
@@ -42,9 +42,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]);
-        return response($user, 201);
+        $entry =new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
+            'rating'=>10,'assignment_id'=>1,'user_id'=>1]);
+        return response($entry, 201);
     }
 
     /**
@@ -55,9 +55,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]);
-        return response($user, 200);
+        $entry =new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
+            'rating'=>10,'assignment_id'=>1,'user_id'=>1]);
+        return response($entry, 200);
     }
 
     /**
@@ -78,7 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         return response(json_encode(array("response"=>"ok")), 200);
     }
@@ -89,7 +89,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         return response(json_encode(array("response"=>"ok")), 200);
     }

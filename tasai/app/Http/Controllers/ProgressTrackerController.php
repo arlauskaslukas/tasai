@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\ProgressTracker;
+use function MongoDB\BSON\toJSON;
 
-class UserController extends Controller
+class ProgressTrackerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,9 @@ class UserController extends Controller
     public function index()
     {
         $array = array();
-        array_push($array,new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        array_push($array,new User(['id'=>2,'name'=>"dummy2",'email'=>'dummy2@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        array_push($array,new User(['id'=>3,'name'=>"dummy3",'email'=>'dummy3@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]));
+        array_push($array, new ProgressTracker(["id"=>1,"completed_topics"=>2, "user_id"=>1,"course_id"=>2]));
+        array_push($array, new ProgressTracker(["id"=>2,"completed_topics"=>2, "user_id"=>2,"course_id"=>2]));
+        array_push($array, new ProgressTracker(["id"=>3,"completed_topics"=>2, "user_id"=>3,"course_id"=>2]));
         return response(json_encode($array), 200);
     }
 
@@ -29,7 +27,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
 
     }
@@ -42,9 +40,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]);
-        return response($user, 201);
+        $progresstracker = new ProgressTracker();
+        $progresstracker->id=1;
+        $progresstracker->completed_topics = 0;
+        $progresstracker->course_id = $request->course_id;
+        $progresstracker->user_id = $request->user_id;
+        //$progresstracker->save();
+        return response($progresstracker, 201);
     }
 
     /**
@@ -55,9 +57,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-            'password'=>'eNcRyPteD', 'is_admin'=>true]);
-        return response($user, 200);
+        //$progresstracker = ProgressTracker::findOrFail($id);
+        $progresstracker=new ProgressTracker(["id"=>1,"completed_topics"=>2, "user_id"=>1,"course_id"=>2]);
+        return response($progresstracker, 200);
     }
 
     /**
@@ -78,8 +80,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        //ProgressTracker::where('id', $id)->update(['completed_topics'=>$request->completed_topics]);
         return response(json_encode(array("response"=>"ok")), 200);
     }
 
@@ -89,8 +92,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
+        //ProgressTracker::destroy($id);
         return response(json_encode(array("response"=>"ok")), 200);
     }
 }
