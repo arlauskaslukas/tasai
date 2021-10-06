@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 //users
 Route::get('/api/users', [App\Http\Controllers\UserController::class, 'index']);
 Route::get('/api/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
-Route::post('/api/users/insert', [App\Http\Controllers\UserController::class, 'create']);
+Route::post('/api/users', [App\Http\Controllers\UserController::class, 'create']);
+Route::post('/api/users/update', [App\Http\Controllers\UserController::class, 'update']);
 Route::delete('/api/users/delete', [App\Http\Controllers\UserController::class, 'destroy']);
 
 Route::get('/api/progresstrackers', [App\Http\Controllers\ProgressTrackerController::class,'index']);
