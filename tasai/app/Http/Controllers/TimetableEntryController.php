@@ -14,20 +14,20 @@ class TimetableEntryController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array,new TimetableEntry(['id'=>1,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-            'link'=>'http://lorem.ipsum',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1,'topic_id'=>1]));
-        array_push($array,new TimetableEntry(['id'=>2,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-            'link'=>'http://lorem.ipsum',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1,'topic_id'=>1]));
-        array_push($array,new TimetableEntry(['id'=>3,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-            'link'=>'http://lorem.ipsum',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1,'topic_id'=>1]));
-        return response(json_encode($array), 200);
+        $array = TimetableEntry::all();
+        //array_push($array,new TimetableEntry(['id'=>1,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
+        //    'link'=>'http://lorem.ipsum',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1,'topic_id'=>1]));
+        //array_push($array,new TimetableEntry(['id'=>2,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
+        //    'link'=>'http://lorem.ipsum',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1,'topic_id'=>1]));
+        //array_push($array,new TimetableEntry(['id'=>3,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
+        //    'link'=>'http://lorem.ipsum',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1,'topic_id'=>1]));
+        return response($array, 200);
     }
 
     /**
@@ -48,11 +48,14 @@ class TimetableEntryController extends Controller
      */
     public function store(Request $request)
     {
-         $entry =new TimetableEntry(['id'=>1,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-             'link'=>'http://lorem.ipsum',
-             'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-             'course_id'=>1,'topic_id'=>1]);
-         return response($entry, 201);
+        $entry = new TimetableEntry([
+            'lesson_time' => "2021-10-06 09:00", 'entry_title' => 'lorem ipsum',
+            'link' => 'http://lorem.ipsum',
+            'long_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+            'course_id' => $request->course_id, 'topic_id' => $request->topic_id
+        ]);
+        if ($entry->save()) return response($entry, 201);
+        return response('', 409);
     }
 
     /**
@@ -63,10 +66,8 @@ class TimetableEntryController extends Controller
      */
     public function show($id)
     {
-        $entry =new TimetableEntry(['id'=>1,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-            'link'=>'http://lorem.ipsum',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1,'topic_id'=>1]);
+        $entry = TimetableEntry::find($id);
+        if ($entry == null) return response('', 404);
         return response($entry, 200);
     }
 
@@ -90,7 +91,7 @@ class TimetableEntryController extends Controller
      */
     public function update(Request $request)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -101,6 +102,6 @@ class TimetableEntryController extends Controller
      */
     public function destroy($id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

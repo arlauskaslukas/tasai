@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
+
+use function PHPUnit\Framework\isEmpty;
 
 class CourseController extends Controller
 {
@@ -14,20 +17,20 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array,new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration'=>10,'cost'=>'90']));
-        array_push($array,new Course(['id'=>2,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration'=>10,'cost'=>'90']));
-        array_push($array,new Course(['id'=>3,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration'=>10,'cost'=>'90']));
-        return response(json_encode($array), 200);
+        $array = Course::all();
+        //array_push($array,new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'duration'=>10,'cost'=>'90']));
+        //array_push($array,new Course(['id'=>2,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'duration'=>10,'cost'=>'90']));
+        //array_push($array,new Course(['id'=>3,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'duration'=>10,'cost'=>'90']));
+        return response($array, 200);
     }
 
     /**
@@ -48,11 +51,14 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course =new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration'=>10,'cost'=>'90']);
-        return response($course, 201);
+        $course = new Course([
+            'starts_at' => "2021-10-06", 'title' => 'lorem ipsum',
+            'short_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+            'long_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+            'duration' => 10, 'cost' => '90'
+        ]);
+        if ($course->save()) return response($course, 201);
+        return response('', 409);
     }
 
     /**
@@ -63,10 +69,33 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course =new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration'=>10,'cost'=>'90']);
+        $course = Course::find($id);
+        if ($course == null) return response('', 404);
+        //$course =new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'duration'=>10,'cost'=>'90']);
+        return response($course, 200);
+    }
+
+    public function course_topics($course_id)
+    {
+        $course = Course::find($course_id);
+        if ($course == null) return response('', 404);
+        $topics = $course->topics()->get();
+        $course['topics'] = $topics;
+        return response($course, 200);
+    }
+
+    public function course_assignments($course_id)
+    {
+        $course = Course::find($course_id);
+        if ($course == null) return response('', 404);
+        $topics = $course->topics()->get();
+        foreach ($topics as $topic) {
+            $topic['assignments'] = $topic->assignments()->get();
+        }
+        $course['topics'] = $topics;
         return response($course, 200);
     }
 
@@ -90,7 +119,7 @@ class CourseController extends Controller
      */
     public function update(Request $request)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -101,6 +130,6 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

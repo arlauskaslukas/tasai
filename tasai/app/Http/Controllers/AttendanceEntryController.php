@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AssignmentEntry;
+use App\Models\AttendanceEntry;
 use Illuminate\Http\Request;
 
 class AttendanceEntryController extends Controller
@@ -14,11 +15,11 @@ class AttendanceEntryController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array, new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]));
-        array_push($array, new AssignmentEntry(['id'=>2,'is_attending'=>true,'user_id'=>2,'topic_id'=>1]));
-        array_push($array, new AssignmentEntry(['id'=>3,'is_attending'=>true,'user_id'=>3,'topic_id'=>1]));
-        return response(json_encode($array),200);
+        $array = AttendanceEntry::all();
+        //array_push($array, new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]));
+        //array_push($array, new AssignmentEntry(['id'=>2,'is_attending'=>true,'user_id'=>2,'topic_id'=>1]));
+        //array_push($array, new AssignmentEntry(['id'=>3,'is_attending'=>true,'user_id'=>3,'topic_id'=>1]));
+        return response(json_encode($array), 200);
     }
 
     /**
@@ -39,8 +40,9 @@ class AttendanceEntryController extends Controller
      */
     public function store(Request $request)
     {
-        $entry = new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]);
-        return response($entry,201);
+        $entry = new AttendanceEntry(['is_attending' => true, 'user_id' => $request->user_id, 'topic_id' => $request->topic_id]);
+        if ($entry->save()) return response($entry, 201);
+        return response('', 409);
     }
 
     /**
@@ -51,8 +53,9 @@ class AttendanceEntryController extends Controller
      */
     public function show($id)
     {
-        $entry = new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]);
-        return response($entry,201);
+        $entry = AttendanceEntry::find($id);
+        if ($entry == null) return response('', 404);
+        return response($entry, 201);
     }
 
     /**
@@ -75,7 +78,7 @@ class AttendanceEntryController extends Controller
      */
     public function update(Request $request)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -86,6 +89,6 @@ class AttendanceEntryController extends Controller
      */
     public function destroy($id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

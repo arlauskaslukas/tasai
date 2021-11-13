@@ -14,14 +14,14 @@ class AssignmentEntryController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array,new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
-            'rating'=>10,'assignment_id'=>1,'user_id'=>1]));
-        array_push($array,new AssignmentEntry(['id'=>2,'filename'=>'lipsum.py',
-            'rating'=>10,'assignment_id'=>1,'user_id'=>2]));
-        array_push($array,new AssignmentEntry(['id'=>3,'filename'=>'lipsum.py',
-            'rating'=>10,'assignment_id'=>1,'user_id'=>3]));
-        return response(json_encode($array), 200);
+        $array = AssignmentEntry::all();
+        //array_push($array,new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
+        //    'rating'=>10,'assignment_id'=>1,'user_id'=>1]));
+        //array_push($array,new AssignmentEntry(['id'=>2,'filename'=>'lipsum.py',
+        //    'rating'=>10,'assignment_id'=>1,'user_id'=>2]));
+        //array_push($array,new AssignmentEntry(['id'=>3,'filename'=>'lipsum.py',
+        //    'rating'=>10,'assignment_id'=>1,'user_id'=>3]));
+        return response($array, 200);
     }
 
     /**
@@ -42,9 +42,12 @@ class AssignmentEntryController extends Controller
      */
     public function store(Request $request)
     {
-        $entry =new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
-            'rating'=>10,'assignment_id'=>1,'user_id'=>1]);
-        return response($entry, 201);
+        $entry = new AssignmentEntry([
+            'filename' => $request->filename,
+            'rating' => $request->rating, 'assignment_id' => $request->assignment_id, 'user_id' => $request->user_id
+        ]);
+        if ($entry->save()) return response($entry, 201);
+        return response('', 409);
     }
 
     /**
@@ -55,8 +58,8 @@ class AssignmentEntryController extends Controller
      */
     public function show($id)
     {
-        $entry =new AssignmentEntry(['id'=>1,'filename'=>'lipsum.py',
-            'rating'=>10,'assignment_id'=>1,'user_id'=>1]);
+        $entry = AssignmentEntry::find($id);
+        if ($entry == null) return response('', 404);
         return response($entry, 200);
     }
 
@@ -80,7 +83,7 @@ class AssignmentEntryController extends Controller
      */
     public function update(Request $request)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -91,6 +94,6 @@ class AssignmentEntryController extends Controller
      */
     public function destroy($id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

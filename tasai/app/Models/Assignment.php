@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assigment extends Model
+class Assignment extends Model
 {
     use HasFactory;
     protected $table = "assignments";
@@ -19,6 +19,12 @@ class Assigment extends Model
     protected $casts = [
         'deadline' => 'datetime'
     ];
-    public function topic() {return $this->belongsTo(Topic::class);}
-    public function assignment_entries() {return $this->hasMany(AssignmentEntry::class);}
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class);
+    }
+    public function assignment_entries()
+    {
+        return $this->hasMany(AssignmentEntry::class);
+    }
 }

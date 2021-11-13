@@ -19,9 +19,10 @@ class User extends Authenticatable
      */
     protected $table = "Users";
     protected $fillable = [
-        'username',
+        'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -42,7 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function progress_trackers() {return $this->hasMany(ProgressTracker::class);}
-    public function assignment_entries() {return $this->hasMany(AssignmentEntry::class);}
-    public function attendance_entries() {return $this->hasMany(AttendanceEntry::class);}
+    public function progress_trackers()
+    {
+        return $this->hasMany(ProgressTracker::class);
+    }
+    public function assignment_entries()
+    {
+        return $this->hasMany(AssignmentEntry::class);
+    }
+    public function attendance_entries()
+    {
+        return $this->hasMany(AttendanceEntry::class);
+    }
 }

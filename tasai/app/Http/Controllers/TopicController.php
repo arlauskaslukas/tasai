@@ -14,21 +14,21 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array,new Topic(['id'=>1,'title'=>'lorem ipsum','topic_order'=>1,
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1]));
-        array_push($array,new Topic(['id'=>2,'title'=>'lorem ipsum','topic_order'=>2,
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1]));
-        array_push($array,new Topic(['id'=>3, 'title'=>'lorem ipsum','topic_order'=>3,
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1]));
-
-        return response(json_encode($array), 200);
+        $array = Topic::all();
+        //array_push($array,new Topic(['id'=>1,'title'=>'lorem ipsum','topic_order'=>1,
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1]));
+        //array_push($array,new Topic(['id'=>2,'title'=>'lorem ipsum','topic_order'=>2,
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1]));
+        //array_push($array,new Topic(['id'=>3, 'title'=>'lorem ipsum','topic_order'=>3,
+        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+        //    'course_id'=>1]));
+        //
+        return response($array, 200);
     }
 
     /**
@@ -41,6 +41,7 @@ class TopicController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,11 +50,14 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        $topic = new Topic(['id'=>3, 'title'=>'lorem ipsum','topic_order'=>3,
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1]);
-        return response($topic, 201);
+        $topic = new Topic([
+            'title' => 'lorem ipsum', 'topic_order' => $request->topic_order,
+            'short_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+            'theory' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
+            'course_id' => $request->course_id
+        ]);
+        if ($topic->save()) return response($topic, 201);
+        return response('', 409);
     }
 
     /**
@@ -64,10 +68,8 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        $topic = new Topic(['id'=>3, 'title'=>'lorem ipsum','topic_order'=>3,
-            'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id'=>1]);
+        $topic = Topic::find($id);
+        if ($topic == null) return response('', 404);
         return response($topic, 200);
     }
 
@@ -91,7 +93,7 @@ class TopicController extends Controller
      */
     public function update(Request $request)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -102,6 +104,6 @@ class TopicController extends Controller
      */
     public function destroy()
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

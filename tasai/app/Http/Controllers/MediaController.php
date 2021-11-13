@@ -14,14 +14,14 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array,new Media(['id'=>1,'filename'=>'lipsum.jpg',
-            'topic_id'=>1]));
-        array_push($array,new Media(['id'=>2,'filename'=>'lipsum2.jpg',
-            'topic_id'=>2]));
-        array_push($array,new Media(['id'=>3,'filename'=>'lipsum3.jpg',
-            'topic_id'=>3]));
-        return response(json_encode($array), 200);
+        $array = Media::all();
+        //array_push($array,new Media(['id'=>1,'filename'=>'lipsum.jpg',
+        //    'topic_id'=>1]));
+        //array_push($array,new Media(['id'=>2,'filename'=>'lipsum2.jpg',
+        //    'topic_id'=>2]));
+        //array_push($array,new Media(['id'=>3,'filename'=>'lipsum3.jpg',
+        //    'topic_id'=>3]));
+        return response($array, 200);
     }
 
     /**
@@ -42,9 +42,12 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        $media = new Media(['id'=>1,'filename'=>'lipsum.jpg',
-            'topic_id'=>1]);
-        return response($media,201);
+        $media = new Media([
+            'filename' => $request->filename,
+            'topic_id' => $request->topic_id
+        ]);
+        if ($media->save()) return response($media, 201);
+        return response('', 409);
     }
 
     /**
@@ -55,9 +58,9 @@ class MediaController extends Controller
      */
     public function show($id)
     {
-        $media = new Media(['id'=>1,'filename'=>'lipsum.jpg',
-            'topic_id'=>1]);
-        return response($media,200);
+        $media = Media::find($id);
+        if ($media == null) return response('', 404);
+        return response($media, 200);
     }
 
     /**
@@ -80,7 +83,7 @@ class MediaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -91,6 +94,6 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
-        return response(json_encode(array("response"=>"ok")), 200);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }

@@ -15,11 +15,8 @@ class ProgressTrackerController extends Controller
      */
     public function index()
     {
-        $array = array();
-        array_push($array, new ProgressTracker(["id"=>1,"completed_topics"=>2, "user_id"=>1,"course_id"=>2]));
-        array_push($array, new ProgressTracker(["id"=>2,"completed_topics"=>2, "user_id"=>2,"course_id"=>2]));
-        array_push($array, new ProgressTracker(["id"=>3,"completed_topics"=>2, "user_id"=>3,"course_id"=>2]));
-        return response(json_encode($array), 200);
+        $array = ProgressTracker::all();
+        return response($array, 200);
     }
 
     /**
@@ -29,7 +26,6 @@ class ProgressTrackerController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -41,12 +37,13 @@ class ProgressTrackerController extends Controller
     public function store(Request $request)
     {
         $progresstracker = new ProgressTracker();
-        $progresstracker->id=1;
         $progresstracker->completed_topics = 0;
         $progresstracker->course_id = $request->course_id;
         $progresstracker->user_id = $request->user_id;
-        //$progresstracker->save();
-        return response($progresstracker, 201);
+        if ($progresstracker->save()) {
+            return response($progresstracker, 201);
+        }
+        return response('', 409); //conflict
     }
 
     /**
@@ -57,9 +54,11 @@ class ProgressTrackerController extends Controller
      */
     public function show($id)
     {
-        //$progresstracker = ProgressTracker::findOrFail($id);
-        $progresstracker=new ProgressTracker(["id"=>1,"completed_topics"=>2, "user_id"=>1,"course_id"=>2]);
-        return response($progresstracker, 200);
+        $progresstracker = ProgressTracker::find($id);
+        if ($progresstracker != null) {
+            return response($progresstracker, 200);
+        }
+        return response('', 404);
     }
 
     /**
@@ -80,10 +79,11 @@ class ProgressTrackerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        //ProgressTracker::where('id', $id)->update(['completed_topics'=>$request->completed_topics]);
-        return response(json_encode(array("response"=>"ok")), 200);
+        if ($request->completed_topics == null) return response('', 404);
+        ProgressTracker::where('id', $id)->update(['completed_topics' => $request->completed_topics]);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 
     /**
@@ -92,9 +92,9 @@ class ProgressTrackerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(Request $request)
     {
-        //ProgressTracker::destroy($id);
-        return response(json_encode(array("response"=>"ok")), 200);
+        ProgressTracker::destroy($request->id);
+        return response(json_encode(array("response" => "ok")), 200);
     }
 }
