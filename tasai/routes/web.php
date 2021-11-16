@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//REMINDER FOR MYSELF: CSRF IS FOKIN DISABLED. 
+//REMINDER FOR MYSELF: CSRF IS FOKIN DISABLED.
 //ENABLE WHEN POSTING INTO PRODUCTION OR YOU ARE A SHIT DEV
 
 //users
@@ -75,6 +75,13 @@ Route::post('/api/media', [App\Http\Controllers\MediaController::class, 'store']
 Route::put('/api/media', [App\Http\Controllers\MediaController::class, 'update']);
 Route::delete('/api/media', [App\Http\Controllers\MediaController::class, 'destroy']);
 
+Route::post('/api/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/api/login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+Route::group(['middleware'=>['auth:sanctum']], function(){
+    Route::post('/api/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+});
+
 Route::get('/api/{route?}', function () {
     return response('', 404);
 });
@@ -91,9 +98,6 @@ Route::delete('/api/{route?}', function () {
     return response('', 404);
 });
 
-Route::get('/{route?}', function () {
-    return view('app');
-});
 
 Auth::routes();
 
