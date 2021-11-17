@@ -61,4 +61,19 @@ class AuthController extends Controller
         ];
         return response($response, 201);
     }
+    public function refresh(Request $request)
+    {
+        if(auth()->user()->tokens()==null)
+        {
+            return response(['message'=>'Unauthenticated'],401);
+        }
+        else{
+            auth()->user()->tokens()->delete();
+
+            $token = $request->user()->createToken('usertoken')->plainTextToken;
+
+            $response = ['token'=>$token];
+            return response($response, 200);
+        }
+    }
 }

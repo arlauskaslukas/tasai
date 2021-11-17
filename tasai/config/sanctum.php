@@ -30,7 +30,8 @@ return [
     |
     */
 
-    'expiration' => null,
+    //token expires after 24 hours
+    'expiration' => 60 * 24,
 
     /*
     |--------------------------------------------------------------------------

@@ -18,7 +18,7 @@ class CreateTopicsTable extends Migration
             $table->string('title');
             $table->integer('topic_order');
             $table->string('short_description');
-            $table->string('theory');
+            $table->longText('theory');
             $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
         });

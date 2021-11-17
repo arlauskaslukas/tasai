@@ -18,7 +18,7 @@ class CreateCourseTable extends Migration
             $table->date('starts_at');
             $table->string('title');
             $table->string('short_description');
-            $table->string('long_description');
+            $table->longText('long_description');
             $table->integer('duration');
             $table->float('cost');
             $table->timestamps();
