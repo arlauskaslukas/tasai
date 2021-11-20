@@ -40,7 +40,7 @@ class AttendanceEntryController extends Controller
      */
     public function store(Request $request)
     {
-        $entry = new AttendanceEntry(['is_attending' => true, 'user_id' => $request->user_id, 'topic_id' => $request->topic_id]);
+        $entry = new AttendanceEntry(['is_attending' => $request['is_attending'], 'user_id' => $request['user_id'], 'topic_id' => $request['topic_id']]);
         if ($entry->save()) return response($entry, 201);
         return response('', 409);
     }
@@ -78,6 +78,7 @@ class AttendanceEntryController extends Controller
      */
     public function update(Request $request)
     {
+        AttendanceEntry::findOrFail($request['id'])->update(['is_attending' => $request['is_attending'], 'user_id' => $request['user_id'], 'topic_id' => $request['topic_id']]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -89,6 +90,7 @@ class AttendanceEntryController extends Controller
      */
     public function destroy($id)
     {
+        AttendanceEntry::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

@@ -52,10 +52,10 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $course = new Course([
-            'starts_at' => "2021-10-06", 'title' => 'lorem ipsum',
-            'short_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'long_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'duration' => 10, 'cost' => '90'
+            'starts_at' => $request['starts_at'], 'title' => $request['title'],
+            'short_description' => $request['short_description'],
+            'long_description' => $request['long_description'],
+            'duration' => 10, 'cost' => $request['cost']
         ]);
         if ($course->save()) return response($course, 201);
         return response('', 409);
@@ -119,6 +119,11 @@ class CourseController extends Controller
      */
     public function update(Request $request)
     {
+        Course::find($request['id'])->update(['starts_at' => $request['starts_at'], 'title' => $request['title'],
+            'short_description' => $request['short_description'],
+            'long_description' => $request['long_description'],
+            'duration' => 10, 'cost' => $request['cost']
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -130,6 +135,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
+        Course::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

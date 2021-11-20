@@ -49,8 +49,8 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $assignment = new Assignment([
-            'description' => $request->description,
-            'title' => $request->title, 'deadline' => $request->deadline, 'topic_id' => $request->topic_id, 'course_id' => $request->course_id
+            'description' => $request['description'],
+            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id'], 'course_id' => $request['course_id']
         ]);
         if ($assignment->save()) return response($assignment, 201);
         return response('', 409);
@@ -89,6 +89,10 @@ class AssignmentController extends Controller
      */
     public function update(Request $request)
     {
+        Assignment::findOrFail($request['id'])->update([
+            'description' => $request['description'],
+            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id'], 'course_id' => $request['course_id']
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -100,6 +104,7 @@ class AssignmentController extends Controller
      */
     public function destroy($id)
     {
+        Assignment::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

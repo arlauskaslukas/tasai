@@ -43,8 +43,8 @@ class AssignmentEntryController extends Controller
     public function store(Request $request)
     {
         $entry = new AssignmentEntry([
-            'filename' => $request->filename,
-            'rating' => $request->rating, 'assignment_id' => $request->assignment_id, 'user_id' => $request->user_id
+            'filename' => $request['filename'],
+            'rating' => $request['rating'], 'assignment_id' => $request['assignment_id'], 'user_id' => $request['user_id']
         ]);
         if ($entry->save()) return response($entry, 201);
         return response('', 409);
@@ -83,6 +83,10 @@ class AssignmentEntryController extends Controller
      */
     public function update(Request $request)
     {
+        AssignmentEntry::findOrFail($request['id'])->update([
+            'filename' => $request['filename'],
+            'rating' => $request['rating'], 'assignment_id' => $request['assignment_id'], 'user_id' => $request['user_id']
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -94,6 +98,7 @@ class AssignmentEntryController extends Controller
      */
     public function destroy($id)
     {
+        AssignmentEntry::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

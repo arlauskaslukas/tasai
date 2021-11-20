@@ -36,10 +36,7 @@ class ProgressTrackerController extends Controller
      */
     public function store(Request $request)
     {
-        $progresstracker = new ProgressTracker();
-        $progresstracker->completed_topics = 0;
-        $progresstracker->course_id = $request->course_id;
-        $progresstracker->user_id = $request->user_id;
+        $progresstracker = new ProgressTracker(['completed_topics'=>0, 'course_id'=>$request['course_id'], 'user_id'=>$request['used_id']]);
         if ($progresstracker->save()) {
             return response($progresstracker, 201);
         }

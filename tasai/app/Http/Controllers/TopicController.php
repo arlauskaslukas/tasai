@@ -51,10 +51,10 @@ class TopicController extends Controller
     public function store(Request $request)
     {
         $topic = new Topic([
-            'title' => 'lorem ipsum', 'topic_order' => $request->topic_order,
-            'short_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'theory' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id' => $request->course_id
+            'title' => $request['title'], 'topic_order' => $request['topic_order'],
+            'short_description' => $request['short_description'],
+            'theory' => $request['long_description'],
+            'course_id' => $request['course_id']
         ]);
         if ($topic->save()) return response($topic, 201);
         return response('', 409);
@@ -93,6 +93,12 @@ class TopicController extends Controller
      */
     public function update(Request $request)
     {
+        Topic::findOrFail($request['id'])->update([
+            'title' => $request['title'], 'topic_order' => $request['topic_order'],
+            'short_description' => $request['short_description'],
+            'theory' => $request['long_description'],
+            'course_id' => $request['course_id']
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -102,8 +108,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
+        Topic::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

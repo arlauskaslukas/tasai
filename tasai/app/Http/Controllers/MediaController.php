@@ -83,6 +83,10 @@ class MediaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Media::findOrFail($id)->update([
+            'filename' => $request->filename,
+            'topic_id' => $request->topic_id
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -94,6 +98,7 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
+        Media::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }

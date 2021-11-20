@@ -49,10 +49,10 @@ class TimetableEntryController extends Controller
     public function store(Request $request)
     {
         $entry = new TimetableEntry([
-            'lesson_time' => "2021-10-06 09:00", 'entry_title' => 'lorem ipsum',
-            'link' => 'http://lorem.ipsum',
-            'long_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-            'course_id' => $request->course_id, 'topic_id' => $request->topic_id
+            'lesson_time' => $request['lesson_time'],'entry_title' => $request['entry_time'],
+            'link' => $request['link'],
+            'long_description' => $request['long_description'],
+            'course_id' => $request['course_id'], 'topic_id' => $request['topic_id']
         ]);
         if ($entry->save()) return response($entry, 201);
         return response('', 409);
@@ -89,8 +89,14 @@ class TimetableEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
+        TimetableEntry::findOrFail($id)->update([
+            'lesson_time' => $request['lesson_time'],'entry_title' => $request['entry_time'],
+            'link' => $request['link'],
+            'long_description' => $request['long_description'],
+            'course_id' => $request['course_id'], 'topic_id' => $request['topic_id']
+        ]);
         return response(json_encode(array("response" => "ok")), 200);
     }
 
@@ -102,6 +108,7 @@ class TimetableEntryController extends Controller
      */
     public function destroy($id)
     {
+        TimetableEntry::destroy($id);
         return response(json_encode(array("response" => "ok")), 200);
     }
 }
