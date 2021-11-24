@@ -53,7 +53,7 @@ class TopicController extends Controller
         $topic = new Topic([
             'title' => $request['title'], 'topic_order' => $request['topic_order'],
             'short_description' => $request['short_description'],
-            'theory' => $request['long_description'],
+            'theory' => $request['theory'],
             'course_id' => $request['course_id']
         ]);
         if ($topic->save()) return response($topic, 201);
@@ -96,10 +96,10 @@ class TopicController extends Controller
         Topic::findOrFail($request['id'])->update([
             'title' => $request['title'], 'topic_order' => $request['topic_order'],
             'short_description' => $request['short_description'],
-            'theory' => $request['long_description'],
+            'theory' => $request['theory'],
             'course_id' => $request['course_id']
         ]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -108,9 +108,9 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Topic::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        Topic::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }

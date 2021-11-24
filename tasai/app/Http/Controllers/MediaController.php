@@ -81,13 +81,13 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        Media::findOrFail($id)->update([
+        Media::findOrFail($request->id)->update([
             'filename' => $request->filename,
             'topic_id' => $request->topic_id
         ]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -96,9 +96,9 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Media::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        Media::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }

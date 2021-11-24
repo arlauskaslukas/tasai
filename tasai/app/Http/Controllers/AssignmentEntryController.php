@@ -87,7 +87,7 @@ class AssignmentEntryController extends Controller
             'filename' => $request['filename'],
             'rating' => $request['rating'], 'assignment_id' => $request['assignment_id'], 'user_id' => $request['user_id']
         ]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -96,9 +96,9 @@ class AssignmentEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        AssignmentEntry::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        AssignmentEntry::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }

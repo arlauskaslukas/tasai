@@ -124,7 +124,7 @@ class CourseController extends Controller
             'long_description' => $request['long_description'],
             'duration' => 10, 'cost' => $request['cost']
         ]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -133,9 +133,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Course::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        Course::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }

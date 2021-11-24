@@ -50,7 +50,7 @@ class AssignmentController extends Controller
     {
         $assignment = new Assignment([
             'description' => $request['description'],
-            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id'], 'course_id' => $request['course_id']
+            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id']
         ]);
         if ($assignment->save()) return response($assignment, 201);
         return response('', 409);
@@ -91,9 +91,9 @@ class AssignmentController extends Controller
     {
         Assignment::findOrFail($request['id'])->update([
             'description' => $request['description'],
-            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id'], 'course_id' => $request['course_id']
+            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id']
         ]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -102,9 +102,9 @@ class AssignmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Assignment::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        Assignment::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }

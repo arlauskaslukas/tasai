@@ -19,7 +19,7 @@ class AttendanceEntryController extends Controller
         //array_push($array, new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]));
         //array_push($array, new AssignmentEntry(['id'=>2,'is_attending'=>true,'user_id'=>2,'topic_id'=>1]));
         //array_push($array, new AssignmentEntry(['id'=>3,'is_attending'=>true,'user_id'=>3,'topic_id'=>1]));
-        return response(json_encode($array), 200);
+        return response($array, 200);
     }
 
     /**
@@ -79,7 +79,7 @@ class AttendanceEntryController extends Controller
     public function update(Request $request)
     {
         AttendanceEntry::findOrFail($request['id'])->update(['is_attending' => $request['is_attending'], 'user_id' => $request['user_id'], 'topic_id' => $request['topic_id']]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -88,9 +88,9 @@ class AttendanceEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        AttendanceEntry::destroy($id);
-        return response(json_encode(array("response" => "ok")), 200);
+        AttendanceEntry::destroy($request->id);
+        return response(array("response" => "ok"), 200);
     }
 }
