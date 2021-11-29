@@ -48,9 +48,15 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
+        $fields = $request->validate([
+            'description' => 'required|string',
+            'title' => 'required|string',
+            'deadline' => 'required|date',
+            'topic_id' => 'required|numeric'
+        ]);
         $assignment = new Assignment([
-            'description' => $request['description'],
-            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id']
+            'description' => $fields['description'],
+            'title' => $fields['title'], 'deadline' => $fields['deadline'], 'topic_id' => $fields['topic_id']
         ]);
         if ($assignment->save()) return response($assignment, 201);
         return response('', 409);
@@ -89,10 +95,27 @@ class AssignmentController extends Controller
      */
     public function update(Request $request)
     {
-        Assignment::findOrFail($request['id'])->update([
-            'description' => $request['description'],
-            'title' => $request['title'], 'deadline' => $request['deadline'], 'topic_id' => $request['topic_id']
+        $fields = $request->validate([
+            'description' => 'required|string',
+            'title' => 'required|string',
+            'deadline' => 'required|date',
+            'topic_id' => 'required|numeric',
+            'id' => 'required|numeric'
         ]);
+        if(($assignment=Assignment::find($fields['id']))!=null)
+        {
+            $assignment->update([
+                'description' => $fields['description'],
+                'title' => $fields['title'],
+                'deadline' => $fields['deadline'],
+                'topic_id' => $fields['topic_id']
+            ]);
+        }
+        else
+        {
+            return response(["message"=>"Assignment with such id not found"], 400);
+        }
+
         return response(array("response" => "ok"), 200);
     }
 

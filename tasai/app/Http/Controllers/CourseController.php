@@ -51,11 +51,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
+        $fields = $request->validate(
+            [
+                'starts_at' => 'required|date',
+                'title' => 'required|string',
+                'short_description' => 'required|string',
+                'long_description' => 'required|string',
+                'duration' => 'required|numeric|min:1',
+                'cost' => 'required|numeric|min:0'
+            ]
+        );
         $course = new Course([
-            'starts_at' => $request['starts_at'], 'title' => $request['title'],
-            'short_description' => $request['short_description'],
-            'long_description' => $request['long_description'],
-            'duration' => 10, 'cost' => $request['cost']
+            'starts_at' => $fields['starts_at'], 'title' => $fields['title'],
+            'short_description' => $fields['short_description'],
+            'long_description' => $fields['long_description'],
+            'duration' => $fields['duration'], 'cost' => $fields['cost']
         ]);
         if ($course->save()) return response($course, 201);
         return response('', 409);
@@ -119,6 +129,17 @@ class CourseController extends Controller
      */
     public function update(Request $request)
     {
+        $fields = $request->validate(
+            [
+                'starts_at' => 'required|date',
+                'title' => 'required|string',
+                'short_description' => 'required|string',
+                'long_description' => 'required|string',
+                'duration' => 'required|numeric|min:1',
+                'cost' => 'required|numeric|min:0',
+                'id'=>'required|numeric'
+            ]
+        );
         Course::find($request['id'])->update(['starts_at' => $request['starts_at'], 'title' => $request['title'],
             'short_description' => $request['short_description'],
             'long_description' => $request['long_description'],

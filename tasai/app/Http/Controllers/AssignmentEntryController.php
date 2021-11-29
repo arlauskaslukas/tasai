@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AssignmentEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentEntryController extends Controller
 {
@@ -42,9 +43,14 @@ class AssignmentEntryController extends Controller
      */
     public function store(Request $request)
     {
+        $fields = $request->validate([
+            'filename' => 'required|string',
+            'assignment_id' => 'required|numeric',
+            'user_id' => 'required|numeric'
+        ]);
         $entry = new AssignmentEntry([
-            'filename' => $request['filename'],
-            'rating' => $request['rating'], 'assignment_id' => $request['assignment_id'], 'user_id' => $request['user_id']
+            'filename' => $fields['filename'],
+            'rating' => 0, 'assignment_id' => $fields['assignment_id'], 'user_id' => $fields['user_id']
         ]);
         if ($entry->save()) return response($entry, 201);
         return response('', 409);
@@ -83,11 +89,31 @@ class AssignmentEntryController extends Controller
      */
     public function update(Request $request)
     {
-        AssignmentEntry::findOrFail($request['id'])->update([
-            'filename' => $request['filename'],
-            'rating' => $request['rating'], 'assignment_id' => $request['assignment_id'], 'user_id' => $request['user_id']
+        $fields = $request->validate([
+            'filename' => 'required|string',
+            'assignment_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+            'id' => 'required|numeric'
         ]);
-        return response(array("response" => "ok"), 200);
+        if(($assignmententry=AssignmentEntry::find($fields['id']))!=null)
+        {
+            if($assignmententry->user_id != auth()->user()->id)
+            {
+                return response(['message'=>'Unauthenticated'], 401);
+            }
+            $assignmententry->update([
+                'filename' => $request['filename'],
+                'rating' => $request['rating'],
+                'assignment_id' => $request['assignment_id'],
+                'user_id' => $request['user_id']
+            ]);
+        }
+        else{
+            return response(
+                ['message'=>'Assignment entry with such id was not found'],
+                400);
+        }
+        return response(array("message" => "ok"), 200);
     }
 
     /**

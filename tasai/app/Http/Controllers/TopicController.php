@@ -50,11 +50,18 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'topic_order' => 'required|string',
+            'short_description' => 'required|string',
+            'theory' => 'required|string',
+            'course_id' => 'required|numeric'
+        ]);
         $topic = new Topic([
-            'title' => $request['title'], 'topic_order' => $request['topic_order'],
-            'short_description' => $request['short_description'],
-            'theory' => $request['theory'],
-            'course_id' => $request['course_id']
+            'title' => $fields['title'], 'topic_order' => $fields['topic_order'],
+            'short_description' => $fields['short_description'],
+            'theory' => $fields['theory'],
+            'course_id' => $fields['course_id']
         ]);
         if ($topic->save()) return response($topic, 201);
         return response('', 409);
@@ -93,12 +100,28 @@ class TopicController extends Controller
      */
     public function update(Request $request)
     {
-        Topic::findOrFail($request['id'])->update([
-            'title' => $request['title'], 'topic_order' => $request['topic_order'],
-            'short_description' => $request['short_description'],
-            'theory' => $request['theory'],
-            'course_id' => $request['course_id']
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'topic_order' => 'required|string',
+            'short_description' => 'required|string',
+            'theory' => 'required|string',
+            'course_id' => 'required|numeric',
+            'id' => 'required|numeric'
         ]);
+        if(($topic=Topic::find($fields['id']))!=null)
+        {
+            $topic->update([
+                'title' => $fields['title'], 'topic_order' => $fields['topic_order'],
+                'short_description' => $fields['short_description'],
+                'theory' => $fields['theory'],
+                'course_id' => $fields['course_id']
+            ]);
+        }
+        else
+        {
+            return response(["message"=>"Topic with such id not found"], 400);
+        }
+
         return response(array("response" => "ok"), 200);
     }
 
