@@ -92,12 +92,11 @@ class AssignmentEntryController extends Controller
         $fields = $request->validate([
             'filename' => 'required|string',
             'assignment_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
             'id' => 'required|numeric'
         ]);
         if(($assignmententry=AssignmentEntry::find($fields['id']))!=null)
         {
-            if($assignmententry->user_id != auth()->user()->id)
+            if($assignmententry->user_id != auth()->user()->id || auth()->user()->is_admin != 1)
             {
                 return response(['message'=>'Unauthenticated'], 401);
             }
@@ -105,13 +104,12 @@ class AssignmentEntryController extends Controller
                 'filename' => $request['filename'],
                 'rating' => $request['rating'],
                 'assignment_id' => $request['assignment_id'],
-                'user_id' => $request['user_id']
             ]);
         }
         else{
             return response(
                 ['message'=>'Assignment entry with such id was not found'],
-                400);
+                404);
         }
         return response(array("message" => "ok"), 200);
     }
@@ -124,7 +122,18 @@ class AssignmentEntryController extends Controller
      */
     public function destroy(Request $request)
     {
-        AssignmentEntry::destroy($request->id);
-        return response(array("response" => "ok"), 200);
+        $fields = $request->validate([
+            'id' => 'required|numeric'
+        ]);
+        if(($assignmententry = AssignmentEntry::find($fields->id))!=null)
+        {
+            if($assignmententry->user_id != auth()->user()->id || auth()->user()->is_admin != 1)
+            {
+                return response(['message'=>'Unauthenticated'], 401);
+            }
+            AssignmentEntry::destroy($fields->id);
+            return response(array("response" => "ok"), 200);
+        }
+        return response(["message"=>"Assignment entry with such id is not found"], 404);
     }
 }

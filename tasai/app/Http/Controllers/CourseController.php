@@ -140,12 +140,16 @@ class CourseController extends Controller
                 'id'=>'required|numeric'
             ]
         );
-        Course::find($request['id'])->update(['starts_at' => $request['starts_at'], 'title' => $request['title'],
-            'short_description' => $request['short_description'],
-            'long_description' => $request['long_description'],
-            'duration' => 10, 'cost' => $request['cost']
-        ]);
-        return response(array("response" => "ok"), 200);
+        if(($course=Course::find($request->id))!=null)
+        {
+            $course->update(['starts_at' => $request['starts_at'], 'title' => $request['title'],
+                'short_description' => $request['short_description'],
+                'long_description' => $request['long_description'],
+                'duration' => 10, 'cost' => $request['cost']
+            ]);
+            return response(array("message" => "ok"), 200);
+        }
+        return response(["message" => "Course with such id not found"], 404);
     }
 
     /**
@@ -156,7 +160,14 @@ class CourseController extends Controller
      */
     public function destroy(Request $request)
     {
-        Course::destroy($request->id);
-        return response(array("response" => "ok"), 200);
+        $fields = $request->validate([
+            'id' => 'required|numeric'
+        ]);
+        if(Course::find($request->id)!=null)
+        {
+            Course::destroy($request->id);
+            return response(array("message" => "ok"), 200);
+        }
+        return response(['message'=>"Course with such id was not found"], 404);
     }
 }

@@ -122,7 +122,7 @@ class TopicController extends Controller
             return response(["message"=>"Topic with such id not found"], 400);
         }
 
-        return response(array("response" => "ok"), 200);
+        return response(array("message" => "ok"), 200);
     }
 
     /**
@@ -133,7 +133,13 @@ class TopicController extends Controller
      */
     public function destroy(Request $request)
     {
-        Topic::destroy($request->id);
-        return response(array("response" => "ok"), 200);
+        $fields = $request->validate([
+           'id' => 'required|numeric'
+        ]);
+        if(Topic::find($fields['id'])!=null) {
+            Topic::destroy($request->id);
+            return response(array("message" => "ok"), 200);
+        }
+        return response(['message'=>'Topic with such id was not found'], 404);
     }
 }
