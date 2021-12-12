@@ -43,7 +43,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
       <Container>
         <Paper className={classes.head}>
           <Typography variant="h4" textAlign={"left"}>
-            Administratoriaus panelė (vienintelė kurią turėsi)
+            Administratoriaus panelė
           </Typography>
         </Paper>
         <Grid container spacing={2}>

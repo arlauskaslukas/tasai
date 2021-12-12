@@ -10,10 +10,12 @@ import { NewCourse } from "./pages/NewCourse";
 import AdapterMoment from "@mui/lab/AdapterMoment";
 import { LocalizationProvider } from "@mui/lab";
 import { EditCourse } from "./pages/EditCourse";
+import { NavBar } from "./components/NavBar";
 
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
+      <NavBar />
       <div className="App" style={{ backgroundColor: "#FCFCFC" }}>
         <BrowserRouter>
           <Routes>
