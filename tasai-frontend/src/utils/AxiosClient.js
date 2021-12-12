@@ -3,7 +3,7 @@ import Cookies from "universal-cookie/es6";
 
 const cookies = new Cookies();
 
-const axiosClient = axios.create({
+const AxiosClient = axios.create({
   baseURL: "http://127.0.0.1:8000",
   headers: {
     Accept: "application/json",
@@ -15,18 +15,18 @@ const axiosClient = axios.create({
   },
 });
 
-axiosClient.interceptors.response.use(
+AxiosClient.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
     let res = error.response;
     if (res.status == 401) {
-      window.location.href = "https://localhost:3000/login";
+      window.location.href = "http://localhost:3000/login";
     }
     console.log("Unauthorized");
     return Promise.reject(error);
   }
 );
 
-export default { axiosClient };
+export default AxiosClient;

@@ -5,12 +5,18 @@ import {
   Typography,
   Button,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AddIcon from "@mui/icons-material/Add";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import { useState, useEffect } from "react";
+import AxiosClient from "../utils/AxiosClient";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -32,6 +38,26 @@ const useStyles = makeStyles((theme) => ({
 
 export const AdminDashboard = ({ LoginStatus }) => {
   const classes = useStyles();
+  const [recentJoins, setRecentJoins] = useState([]);
+
+  useEffect(() => {
+    const axiosCall = async () => {
+      const res = await AxiosClient.get(
+        "http://127.0.0.1:8000/api/recentjoins"
+      );
+      let elements = res.data;
+      console.log(elements);
+      setRecentJoins(elements);
+    };
+    axiosCall();
+  }, []);
+
+  const formatDate = (string) => {
+    let returnable = _.replace(string, new RegExp(".[0-9]*Z"), "");
+    returnable = _.replace(returnable, "T", " ");
+    return returnable;
+  };
+
   return (
     <div
       style={{
@@ -77,7 +103,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
             </Paper>
           </Grid>
           <Grid item xs={12} md={4} className={classes.section}>
-            <Paper className={classes.paper} elevation={2}>
+            <Paper className={classes.paper}>
               <Typography variant="h6" textAlign="left">
                 Temų kontrolės centras
               </Typography>
@@ -85,6 +111,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 <Button
                   className={classes.button}
                   variant={"contained"}
+                  href={"/admin/topics"}
                   style={{
                     marginBlock: "20px",
                     backgroundColor: "#C11F6B",
@@ -113,6 +140,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
               <div>
                 <Button
                   className={classes.button}
+                  href="/admin/users"
                   variant={"contained"}
                   style={{
                     marginBlock: "20px",
@@ -161,6 +189,17 @@ export const AdminDashboard = ({ LoginStatus }) => {
               <Typography variant="h6" textAlign="left">
                 Neseniai prie kursų prisijungę vartotojai
               </Typography>
+              <List>
+                {recentJoins.map((row) => (
+                  <ListItem>
+                    <ListItemText
+                      primary={`${row.user} - ${row.course} - ${formatDate(
+                        row.created_at
+                      )}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
             </Paper>
           </Grid>
         </Grid>

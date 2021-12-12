@@ -16,6 +16,8 @@ import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { useLayoutEffect } from "react";
 import { width } from "@mui/system";
+import Cookies from "universal-cookie/es6";
+import AxiosClient from "../utils/AxiosClient";
 
 const useWindowSize = () => {
   const [size, setSize] = useState("lg");
@@ -37,6 +39,19 @@ export const NavBar = () => {
   const size = useWindowSize();
   const toggleDrawer = (status) => {
     setDrawerState(status);
+  };
+
+  const cookies = new Cookies();
+
+  const handleLogout = () => {
+    AxiosClient.post("http://127.0.0.1:8000/api/logout").then((results) => {
+      console.log(results);
+      if (results.data.message === "Logged out") {
+        cookies.remove("Authorization");
+        cookies.remove("AdminStatus");
+        window.location.href = "http://localhost:3000/login";
+      }
+    });
   };
 
   const drawerContent = () => {
@@ -109,11 +124,35 @@ export const NavBar = () => {
               justifyContent: "space-between",
             }}
           >
-            <Button color="inherit">Home</Button>
-            <Button color="inherit">Courses</Button>
-            <Button color="inherit">About Us</Button>
-            <Button color="inherit">Register</Button>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">Namai</Button>
+            <Button color="inherit">Kursai</Button>
+            <Button color="inherit">Apie mus</Button>
+            {cookies.get("AdminStatus") === "1" ? (
+              <>
+                <Button color="inherit" href="/admin">
+                  Admin panelė
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
+            {cookies.get("Authorization") === undefined ? (
+              <>
+                <Button href={"/register"} color="inherit">
+                  Registruotis
+                </Button>
+                <Button href={"/login"} color="inherit">
+                  Prisijungti
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button color="inherit">Mano kursai</Button>
+                <Button onClick={() => handleLogout()} color="inherit">
+                  Atsijungti
+                </Button>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>

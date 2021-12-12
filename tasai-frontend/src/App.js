@@ -11,6 +11,9 @@ import AdapterMoment from "@mui/lab/AdapterMoment";
 import { LocalizationProvider } from "@mui/lab";
 import { EditCourse } from "./pages/EditCourse";
 import { NavBar } from "./components/NavBar";
+import { ManageUsers } from "./pages/ManageUsers";
+import { ManageTopics } from "./pages/ManageTopics";
+import { ManageAssignments } from "./pages/ManageAssignments";
 
 function App() {
   return (
@@ -23,6 +26,13 @@ function App() {
             <Route exact path={"/register"} element={<Register />} />
             <Route exact path={"/admin"} element={<AdminDashboard />} />
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
+            <Route exact path={"/admin/users"} element={<ManageUsers />} />
+            <Route exact path={"/admin/topics"} element={<ManageTopics />} />
+            <Route
+              exact
+              path={"/admin/assignments"}
+              element={<ManageAssignments />}
+            />
             <Route exact path={"/admin/courses/new"} element={<NewCourse />} />
             <Route path={"/admin/course/edit/:id"} element={<EditCourse />} />
           </Routes>

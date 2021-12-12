@@ -5,8 +5,7 @@ export const Error = ({ title, subpoints = [] }) => {
   return (
     <div>
       <Alert variant="filled" severity="error" style={{ textAlign: "left" }}>
-        <AlertTitle>Error</AlertTitle>
-        {title}
+        <AlertTitle>{title}</AlertTitle>
         <ul>
           {subpoints.map((entry) => (
             <li>{entry}</li>

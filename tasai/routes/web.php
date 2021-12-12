@@ -73,6 +73,7 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         Route::put('/api/topics', [App\Http\Controllers\TopicController::class, 'update']);
         Route::delete('/api/topics', [App\Http\Controllers\TopicController::class, 'destroy']);
         Route::delete('/api/progresstrackers', [App\Http\Controllers\ProgressTrackerController::class, 'destroy']);
+        Route::get('/api/recentjoins', [App\Http\Controllers\ProgressTrackerController::class, 'recentJoins']);
         Route::post('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'store']);
         Route::put('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'update']);
         Route::delete('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'destroy']);

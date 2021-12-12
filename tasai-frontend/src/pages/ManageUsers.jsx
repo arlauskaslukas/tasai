@@ -16,11 +16,12 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ArrowBack, RoomRounded } from "@mui/icons-material";
+import { ArrowBack, Close, RoomRounded } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
+import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -28,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ManageCourses = () => {
+export const ManageUsers = () => {
   const [data, setData] = useState(undefined);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
     const axiosCall = async () => {
-      const res = await axios.get("http://127.0.0.1:8000/api/courses");
+      const res = await AxiosClient.get("http://127.0.0.1:8000/api/users");
       let elements = res.data;
       console.log(elements);
       setData(elements);
@@ -68,7 +69,7 @@ export const ManageCourses = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ VALDYMAS
+              NAUDOTOJŲ VALDYMAS
             </Typography>
             <div
               style={{
@@ -86,13 +87,6 @@ export const ManageCourses = () => {
               >
                 Atgal
               </Button>
-              <Button
-                variant="contained"
-                href="/admin/courses/new"
-                startIcon={<Add />}
-              >
-                Pridėti naują kursą
-              </Button>
             </div>
           </div>
 
@@ -102,16 +96,16 @@ export const ManageCourses = () => {
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell style={{ fontWeight: "bold" }}>
-                      Kurso ID
+                      Naudotojo ID
                     </TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Kurso pavadinimas
+                      Naudotojo vardas
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso pradžios data
+                      Naudotojo elektroninis paštas
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso kaina
+                      Naudotojo rolė
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
                       Veiksmai
@@ -124,9 +118,13 @@ export const ManageCourses = () => {
                       <TableCell component="th" scope="row">
                         {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.starts_at}</TableCell>
-                      <TableCell align="right">{row.cost}</TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">
+                        {row.is_admin == "1"
+                          ? "Administratorius"
+                          : "Naudotojas"}
+                      </TableCell>
                       <TableCell>
                         <div
                           style={{
@@ -135,19 +133,20 @@ export const ManageCourses = () => {
                             justifyContent: "end",
                           }}
                         >
-                          <IconButton
-                            href={`/admin/course/edit/${row.id}`}
-                            aria-label="edit"
-                            style={{ color: "#0091AD" }}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            aria-label="delete"
-                            style={{ color: "#A01929" }}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
+                          {row.is_admin == 1 ? (
+                            <></>
+                          ) : (
+                            <Button
+                              style={{
+                                backgroundColor: "#A01929",
+                                color: "#FFFFFF",
+                              }}
+                              startIcon={<Close />}
+                              aria-label="Block user"
+                            >
+                              Blokuoti
+                            </Button>
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>

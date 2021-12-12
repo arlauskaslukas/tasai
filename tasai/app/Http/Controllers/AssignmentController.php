@@ -15,6 +15,11 @@ class AssignmentController extends Controller
     public function index()
     {
         $array = Assignment::all();
+        foreach($array as $assignment)
+        {
+            $topic = $assignment->topic()->get();
+            $tracker['topic']=$topic;
+        }
         //array_push($array,
         //new Assigment(['id'=>1,'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
         //    'title'=>'Lorem ipsum', 'deadline'=>'2021-10-06','topic_id'=>1])
@@ -27,7 +32,7 @@ class AssignmentController extends Controller
         //    new Assigment(['id'=>3,'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
         //        'title'=>'Lorem ipsum', 'deadline'=>'2021-10-06','topic_id'=>1])
         //);
-        return response(json_encode($array), 200);
+        return response($array, 200);
     }
 
     /**

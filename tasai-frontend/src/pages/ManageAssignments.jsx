@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
+import RegexTools from "../utils/RegexTools";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -28,14 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ManageCourses = () => {
+export const ManageAssignments = () => {
   const [data, setData] = useState(undefined);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const classes = useStyles();
-
   useEffect(() => {
     const axiosCall = async () => {
-      const res = await axios.get("http://127.0.0.1:8000/api/courses");
+      const res = await axios.get("http://127.0.0.1:8000/api/assignments");
       let elements = res.data;
       console.log(elements);
       setData(elements);
@@ -68,7 +68,7 @@ export const ManageCourses = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ VALDYMAS
+              ATSISKAITYMŲ VALDYMAS
             </Typography>
             <div
               style={{
@@ -102,16 +102,16 @@ export const ManageCourses = () => {
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell style={{ fontWeight: "bold" }}>
-                      Kurso ID
+                      Atsiskaitymo ID
                     </TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Kurso pavadinimas
+                      Atsiskaitymo pavadinimas
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso pradžios data
+                      Susietos temos ID
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso kaina
+                      Atsiskaitymo pateikimo data
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
                       Veiksmai
@@ -125,8 +125,8 @@ export const ManageCourses = () => {
                         {row.id}
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.starts_at}</TableCell>
-                      <TableCell align="right">{row.cost}</TableCell>
+                      <TableCell align="right">{row.topic_id}</TableCell>
+                      <TableCell align="right">{row.deadline}</TableCell>
                       <TableCell>
                         <div
                           style={{

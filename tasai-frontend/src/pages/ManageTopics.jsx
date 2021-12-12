@@ -16,11 +16,12 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ArrowBack, RoomRounded } from "@mui/icons-material";
+import { ArrowBack, Close, RoomRounded } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
+import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -28,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ManageCourses = () => {
+export const ManageTopics = () => {
   const [data, setData] = useState(undefined);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
     const axiosCall = async () => {
-      const res = await axios.get("http://127.0.0.1:8000/api/courses");
+      const res = await AxiosClient.get("http://127.0.0.1:8000/api/topics");
       let elements = res.data;
       console.log(elements);
       setData(elements);
@@ -68,7 +69,7 @@ export const ManageCourses = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ VALDYMAS
+              KURSŲ TEMŲ VALDYMAS
             </Typography>
             <div
               style={{
@@ -86,13 +87,6 @@ export const ManageCourses = () => {
               >
                 Atgal
               </Button>
-              <Button
-                variant="contained"
-                href="/admin/courses/new"
-                startIcon={<Add />}
-              >
-                Pridėti naują kursą
-              </Button>
             </div>
           </div>
 
@@ -102,16 +96,16 @@ export const ManageCourses = () => {
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell style={{ fontWeight: "bold" }}>
-                      Kurso ID
+                      Temos ID
                     </TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Kurso pavadinimas
+                      Temos pavadinimas
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso pradžios data
+                      Temos eiliškumas
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso kaina
+                      Kurso ID
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
                       Veiksmai
@@ -125,8 +119,8 @@ export const ManageCourses = () => {
                         {row.id}
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.starts_at}</TableCell>
-                      <TableCell align="right">{row.cost}</TableCell>
+                      <TableCell align="right">{row.topic_order}</TableCell>
+                      <TableCell align="right">{row.course_id}</TableCell>
                       <TableCell>
                         <div
                           style={{

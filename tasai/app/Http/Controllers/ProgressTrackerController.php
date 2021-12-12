@@ -19,6 +19,21 @@ class ProgressTrackerController extends Controller
         return response($array, 200);
     }
 
+
+    public function recentJoins()
+    {
+        $array = ProgressTracker::orderBy('created_at', 'DESC')->take(10)->get();
+        foreach($array as $tracker)
+        {
+            $course = $tracker->course()->get()[0];
+            $user = $tracker->user()->get()[0];
+            $tracker['user']=$user->name;
+            $tracker['course']=$course->title;
+            
+        }
+        return response($array, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
