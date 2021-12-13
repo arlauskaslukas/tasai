@@ -158,14 +158,12 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $fields = $request->validate([
-            'id' => 'required|numeric'
-        ]);
-        if(Course::find($request->id)!=null)
+        error_log($id);
+        if(Course::find($id)!=null)
         {
-            Course::destroy($request->id);
+            Course::destroy($id);
             return response(array("message" => "ok"), 200);
         }
         return response(['message'=>"Course with such id was not found"], 404);

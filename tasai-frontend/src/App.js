@@ -14,6 +14,7 @@ import { NavBar } from "./components/NavBar";
 import { ManageUsers } from "./pages/ManageUsers";
 import { ManageTopics } from "./pages/ManageTopics";
 import { ManageAssignments } from "./pages/ManageAssignments";
+import { NewTopic } from "./pages/NewTopic";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               element={<ManageAssignments />}
             />
             <Route exact path={"/admin/courses/new"} element={<NewCourse />} />
+            <Route exact path={"/admin/topics/new"} element={<NewTopic />} />
             <Route path={"/admin/course/edit/:id"} element={<EditCourse />} />
           </Routes>
         </BrowserRouter>

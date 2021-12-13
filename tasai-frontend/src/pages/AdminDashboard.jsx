@@ -64,6 +64,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
         backgroundColor: "#E6EAF2",
         backgroundSize: "cover",
         height: "100vh",
+        paddingBlock: "50px",
       }}
     >
       <Container>
@@ -102,7 +103,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={4} className={classes.section}>
+          <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
               <Typography variant="h6" textAlign="left">
                 Temų kontrolės centras
@@ -126,6 +127,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   style={{
                     justifyContent: "space-evenly",
                   }}
+                  href={"/admin/topics/new"}
                 >
                   <AddIcon /> Pridėti temą
                 </Button>
@@ -169,6 +171,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                     backgroundColor: "#C11F6B",
                     justifyContent: "space-around",
                   }}
+                  href={"/admin/assignments"}
                 >
                   <VisibilityIcon /> Valdyti atsiskaitymus
                 </Button>

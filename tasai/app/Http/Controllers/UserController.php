@@ -132,6 +132,22 @@ class UserController extends Controller
         $user = User::find($request->id);
         if ($user == null) return response('', 404);
         $user->delete();
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
+    }
+
+    public function getBlockedUsers()
+    {
+        $array = User::onlyTrashed()->get();
+        return response($array, 200);
+    }
+
+    public function restoreBlocked(Request $request)
+    {
+        $fields = $request->validate([
+            'id'=>'required|numeric'
+        ]);
+
+        User::withTrashed()->find($fields['id'])->restore();
+        return response(array("response" => "ok"), 200);
     }
 }

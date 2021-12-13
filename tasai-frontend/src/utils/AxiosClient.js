@@ -20,7 +20,9 @@ AxiosClient.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log(error);
     let res = error.response;
+    console.log(res.data);
     if (res.status == 401) {
       window.location.href = "http://localhost:3000/login";
     }

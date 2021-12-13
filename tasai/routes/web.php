@@ -86,8 +86,11 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
         Route::delete('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'destroy']);
         Route::post('/api/courses', [App\Http\Controllers\CourseController::class, 'store']);
         Route::put('/api/courses', [App\Http\Controllers\CourseController::class, 'update']);
-        Route::delete('/api/courses', [App\Http\Controllers\CourseController::class, 'destroy']);
+        Route::delete('/api/courses/{id}', [App\Http\Controllers\CourseController::class, 'destroy']);
         Route::get('/api/users', [App\Http\Controllers\UserController::class, 'index']);
+        Route::get('/api/blockedusers', [App\Http\Controllers\UserController::class, 'getBlockedUsers']);
+        Route::post('/api/getlasttopicorder', [App\Http\Controllers\TopicController::class, 'getAvailableTopicOrder']);
+        Route::post('/api/restoreuser', [App\Http\Controllers\UserController::class, 'restoreBlocked']);
     });
 });
 

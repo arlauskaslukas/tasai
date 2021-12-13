@@ -6,6 +6,10 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import AxiosClient from "../utils/AxiosClient";
+import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
+import _ from "lodash";
 
 export const EditCourse = () => {
   const { id } = useParams();
@@ -16,6 +20,62 @@ export const EditCourse = () => {
   const [shortDesc, setShortDesc] = useState("");
   const [longDesc, setLongDesc] = useState("");
   const [startDate, setStartDate] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
+
+  const handleButtonClick = async () => {
+    setSuccess(false);
+    if (Validate()) {
+      let res = await SendToDB();
+      setSuccess(true);
+    }
+  };
+
+  const SendToDB = async () => {
+    console.log({ title, duration, cost, shortDesc, longDesc });
+    AxiosClient.put("http://127.0.0.1:8000/api/courses", {
+      id: Number(id),
+      starts_at: moment(startDate).format("YYYY-MM-DD"),
+      title: title,
+      duration: duration,
+      short_description: shortDesc,
+      long_description: longDesc,
+      cost: cost,
+    });
+  };
+
+  const Validate = () => {
+    let isDataValid = true;
+    let num_regex = new RegExp("[1-9][0-9]*");
+    setErrors([]);
+
+    if (!_.isString(title) || _.isEqual(title, "")) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso pavadinimas privalomas"]);
+    }
+    if (!_.isString(shortDesc) || _.isEqual(shortDesc, "")) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
+    }
+    if (!_.isString(longDesc) || _.isEqual(longDesc, "")) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
+    }
+    if (_.isEqual(startDate, "")) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso pradžios datos laukas privalomas"]);
+    }
+    if (!num_regex.test(duration)) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso trukmės laukas privalomas"]);
+    }
+    if (cost < 0.0) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso kaina negali būti neigiama"]);
+    }
+    return isDataValid;
+  };
+
   useEffect(() => {
     const axiosCall = async () => {
       const res = await axios.get(url);
@@ -52,6 +112,18 @@ export const EditCourse = () => {
             </Button>
           </div>
         </div>
+        {errors.length === 0 ? (
+          <></>
+        ) : (
+          <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+        )}
+        {success ? (
+          <>
+            <SuccessAlert />
+          </>
+        ) : (
+          <></>
+        )}
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <TextField
@@ -60,7 +132,7 @@ export const EditCourse = () => {
               required
               value={title}
               onChange={(val) => {
-                setTitle(val);
+                setTitle(val.target.value);
               }}
               style={{ width: "100%" }}
             />
@@ -72,7 +144,7 @@ export const EditCourse = () => {
               required
               value={duration}
               onChange={(val) => {
-                setDuration(val);
+                setDuration(val.target.value);
               }}
               style={{ width: "100%" }}
             />
@@ -83,8 +155,8 @@ export const EditCourse = () => {
               required
               label="Kurso pradžia"
               value={startDate}
-              onChange={(newVal) => {
-                setStartDate(newVal);
+              onChange={(val) => {
+                setStartDate(val);
               }}
               renderInput={(params) => (
                 <TextField {...params} required style={{ width: "100%" }} />
@@ -97,7 +169,7 @@ export const EditCourse = () => {
               required
               value={cost}
               onChange={(val) => {
-                setCost(val);
+                setCost(val.target.value);
               }}
               label="Kurso kaina"
               style={{ width: "100%" }}
@@ -110,7 +182,7 @@ export const EditCourse = () => {
               rows={2}
               value={shortDesc}
               onChange={(val) => {
-                setShortDesc(val);
+                setShortDesc(val.target.value);
               }}
               label="Trumpas aprašymas"
               style={{ width: "100%" }}
@@ -123,7 +195,7 @@ export const EditCourse = () => {
               rows={4}
               value={longDesc}
               onChange={(val) => {
-                setLongDesc(val);
+                setLongDesc(val.target.value);
               }}
               label="Ilgas aprašymas"
               style={{ width: "100%" }}
@@ -138,7 +210,11 @@ export const EditCourse = () => {
             marginBlock: "20px",
           }}
         >
-          <Button variant="contained" endIcon={<Send />}>
+          <Button
+            onClick={() => handleButtonClick()}
+            variant="contained"
+            endIcon={<Send />}
+          >
             Išsaugoti
           </Button>
         </div>

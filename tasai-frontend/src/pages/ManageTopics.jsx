@@ -2,6 +2,10 @@ import {
   Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   LinearProgress,
   Paper,
@@ -32,7 +36,33 @@ const useStyles = makeStyles((theme) => ({
 export const ManageTopics = () => {
   const [data, setData] = useState(undefined);
   const [loadingStatus, setLoadingStatus] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState("");
+  const [success, setSuccess] = useState(false);
   const classes = useStyles();
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmation = () => {
+    SendToDB();
+    setDialogOpen(false);
+  };
+
+  const SendToDB = async () => {
+    let identifier = Number(selectedEntry.id);
+    const res = await AxiosClient.delete(`http://127.0.0.1:8000/api/topics`, {
+      data: {
+        id: identifier,
+      },
+    });
+    setSuccess(res.data.message === "ok");
+  };
 
   useEffect(() => {
     const axiosCall = async () => {
@@ -87,8 +117,42 @@ export const ManageTopics = () => {
               >
                 Atgal
               </Button>
+              <Button
+                variant="contained"
+                href="/admin/topics/new"
+                startIcon={<Add />}
+              >
+                Pridėti naują temą
+              </Button>
             </div>
           </div>
+
+          <Dialog
+            open={dialogOpen}
+            onClose={() => handleClose()}
+            aria-labelLedby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Ar tikrai norite pašalinti šį įrašą?"}
+            </DialogTitle>
+            <DialogContent id="alert-dialog-description">
+              <ul>
+                <li>ID: {selectedEntry.id}</li>
+                <li>Pavadinimas: {selectedEntry.title}</li>
+              </ul>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button
+                variant="contained"
+                autoFocus
+                onClick={() => handleConfirmation()}
+              >
+                Ištrinti
+              </Button>
+            </DialogActions>
+          </Dialog>
 
           <div>
             <TableContainer component={Paper} style={{ padding: "20px" }}>
@@ -130,13 +194,17 @@ export const ManageTopics = () => {
                           }}
                         >
                           <IconButton
-                            href={`/admin/course/edit/${row.id}`}
+                            href={`/admin/topic/edit/${row.id}`}
                             aria-label="edit"
                             style={{ color: "#0091AD" }}
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
+                            onClick={() => {
+                              setSelectedEntry(row);
+                              handleClickOpen();
+                            }}
                             aria-label="delete"
                             style={{ color: "#A01929" }}
                           >

@@ -2,6 +2,10 @@ import {
   Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   LinearProgress,
   Paper,
@@ -21,6 +25,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
+import AxiosClient from "../utils/AxiosClient";
+import qs from "qs";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -30,8 +37,33 @@ const useStyles = makeStyles((theme) => ({
 
 export const ManageCourses = () => {
   const [data, setData] = useState(undefined);
+  const [success, setSuccess] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedEntry, setSelectedEntry] = useState("");
   const classes = useStyles();
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmation = () => {
+    SendToDB();
+    setDialogOpen(false);
+  };
+
+  const SendToDB = async () => {
+    let identifier = Number(selectedEntry.id);
+    console.log(`http://127.0.0.1:8000/api/courses/${identifier}`);
+    const res = await AxiosClient.delete(
+      `http://127.0.0.1:8000/api/courses/${identifier}`
+    );
+    setSuccess(res.data.message === "ok");
+  };
 
   useEffect(() => {
     const axiosCall = async () => {
@@ -96,6 +128,35 @@ export const ManageCourses = () => {
             </div>
           </div>
 
+          <Dialog
+            open={dialogOpen}
+            onClose={() => handleClose()}
+            aria-labelLedby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Ar tikrai norite pašalinti šį įrašą?"}
+            </DialogTitle>
+            <DialogContent id="alert-dialog-description">
+              <ul>
+                <li>ID: {selectedEntry.id}</li>
+                <li>Pavadinimas: {selectedEntry.title}</li>
+              </ul>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button
+                variant="contained"
+                autoFocus
+                onClick={() => handleConfirmation()}
+              >
+                Ištrinti
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {success ? <DeleteSuccess /> : <></>}
+
           <div>
             <TableContainer component={Paper} style={{ padding: "20px" }}>
               <Table>
@@ -143,6 +204,10 @@ export const ManageCourses = () => {
                             <EditIcon />
                           </IconButton>
                           <IconButton
+                            onClick={() => {
+                              setSelectedEntry(row);
+                              handleClickOpen();
+                            }}
                             aria-label="delete"
                             style={{ color: "#A01929" }}
                           >

@@ -7,6 +7,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import AxiosClient from "../utils/AxiosClient";
 import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
 
 export const NewCourse = () => {
   const [title, setTitle] = useState("");
@@ -27,9 +28,9 @@ export const NewCourse = () => {
   };
 
   const SendToDB = async () => {
-    console.log({ title, duration, cost, shortDesc, longDesc, startDate });
-    AxiosClient.post("http://127.0.0.1:8000/api/", {
-      starts_at: startDate,
+    console.log({ title, duration, cost, shortDesc, longDesc });
+    AxiosClient.post("http://127.0.0.1:8000/api/courses", {
+      starts_at: moment(startDate).format("YYYY-MM-DD"),
       title: title,
       duration: duration,
       short_description: shortDesc,
@@ -98,6 +99,13 @@ export const NewCourse = () => {
         ) : (
           <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
         )}
+        {success ? (
+          <>
+            <SuccessAlert />
+          </>
+        ) : (
+          <></>
+        )}
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <TextField
@@ -106,7 +114,7 @@ export const NewCourse = () => {
               required
               value={title}
               onChange={(val) => {
-                setTitle(val);
+                setTitle(val.target.value);
               }}
               style={{ width: "100%" }}
             />
@@ -118,7 +126,7 @@ export const NewCourse = () => {
               required
               value={duration}
               onChange={(val) => {
-                setDuration(val);
+                setDuration(val.target.value);
               }}
               style={{ width: "100%" }}
             />
@@ -129,8 +137,8 @@ export const NewCourse = () => {
               required
               label="Kurso pradžia"
               value={startDate}
-              onChange={(newVal) => {
-                setStartDate(newVal);
+              onChange={(val) => {
+                setStartDate(val);
               }}
               renderInput={(params) => (
                 <TextField {...params} required style={{ width: "100%" }} />
@@ -143,7 +151,7 @@ export const NewCourse = () => {
               required
               value={cost}
               onChange={(val) => {
-                setCost(val);
+                setCost(val.target.value);
               }}
               label="Kurso kaina"
               style={{ width: "100%" }}
@@ -156,7 +164,7 @@ export const NewCourse = () => {
               rows={2}
               value={shortDesc}
               onChange={(val) => {
-                setShortDesc(val);
+                setShortDesc(val.target.value);
               }}
               label="Trumpas aprašymas"
               style={{ width: "100%" }}
@@ -169,7 +177,7 @@ export const NewCourse = () => {
               rows={4}
               value={longDesc}
               onChange={(val) => {
-                setLongDesc(val);
+                setLongDesc(val.target.value);
               }}
               label="Ilgas aprašymas"
               style={{ width: "100%" }}
