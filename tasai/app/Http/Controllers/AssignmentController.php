@@ -133,6 +133,6 @@ class AssignmentController extends Controller
     public function destroy(Request $request)
     {
         Assignment::destroy($request->id);
-        return response(array("response" => "ok"), 200);
+        return response(array("message" => "ok"), 200);
     }
 }

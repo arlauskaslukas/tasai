@@ -2,6 +2,10 @@ import {
   Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   LinearProgress,
   Paper,
@@ -22,6 +26,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
 import RegexTools from "../utils/RegexTools";
+import _ from "lodash";
+import AxiosClient from "../utils/AxiosClient";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -32,17 +39,56 @@ const useStyles = makeStyles((theme) => ({
 export const ManageAssignments = () => {
   const [data, setData] = useState(undefined);
   const [loadingStatus, setLoadingStatus] = useState(true);
+  const [selectedEntry, setSelectedEntry] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
   const classes = useStyles();
+
+  const axiosCall = async () => {
+    const res = await axios.get("http://127.0.0.1:8000/api/assignments");
+    let elements = res.data;
+    console.log(elements);
+    setData(elements);
+  };
+
   useEffect(() => {
-    const axiosCall = async () => {
-      const res = await axios.get("http://127.0.0.1:8000/api/assignments");
-      let elements = res.data;
-      console.log(elements);
-      setData(elements);
-    };
     axiosCall();
     setLoadingStatus(false);
   }, []);
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleConfirmation = () => {
+    SendToDB();
+    setDialogOpen(false);
+    axiosCall();
+  };
+
+  const SendToDB = async () => {
+    let identifier = Number(selectedEntry.id);
+    const res = await AxiosClient.delete(
+      `http://127.0.0.1:8000/api/assignments`,
+      {
+        data: {
+          id: identifier,
+        },
+      }
+    );
+    setSuccess(res.data.message === "ok");
+  };
+
+  const formatDate = (string) => {
+    let returnable = _.replace(string, new RegExp(".[0-9]*Z"), "");
+    returnable = _.replace(returnable, "T", " ");
+    return returnable;
+  };
+
   if (data === undefined) {
     return (
       <div>
@@ -88,14 +134,41 @@ export const ManageAssignments = () => {
               </Button>
               <Button
                 variant="contained"
-                href="/admin/courses/new"
+                href="/admin/assignments/new"
                 startIcon={<Add />}
               >
-                Pridėti naują kursą
+                Pridėti naują atsiskaitymą
               </Button>
             </div>
           </div>
 
+          <Dialog
+            open={dialogOpen}
+            onClose={() => handleClose()}
+            aria-labelLedby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Ar tikrai norite pašalinti šį įrašą?"}
+            </DialogTitle>
+            <DialogContent id="alert-dialog-description">
+              <ul>
+                <li>ID: {selectedEntry.id}</li>
+                <li>Pavadinimas: {selectedEntry.title}</li>
+              </ul>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button
+                variant="contained"
+                autoFocus
+                onClick={() => handleConfirmation()}
+              >
+                Ištrinti
+              </Button>
+            </DialogActions>
+          </Dialog>
+          {success ? <DeleteSuccess /> : <></>}
           <div>
             <TableContainer component={Paper} style={{ padding: "20px" }}>
               <Table>
@@ -126,7 +199,9 @@ export const ManageAssignments = () => {
                       </TableCell>
                       <TableCell align="right">{row.title}</TableCell>
                       <TableCell align="right">{row.topic_id}</TableCell>
-                      <TableCell align="right">{row.deadline}</TableCell>
+                      <TableCell align="right">
+                        {formatDate(row.deadline)}
+                      </TableCell>
                       <TableCell>
                         <div
                           style={{
@@ -136,13 +211,17 @@ export const ManageAssignments = () => {
                           }}
                         >
                           <IconButton
-                            href={`/admin/course/edit/${row.id}`}
+                            href={`/admin/assignment/edit/${row.id}`}
                             aria-label="edit"
                             style={{ color: "#0091AD" }}
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
+                            onClick={() => {
+                              setSelectedEntry(row);
+                              handleClickOpen();
+                            }}
                             aria-label="delete"
                             style={{ color: "#A01929" }}
                           >

@@ -112,7 +112,7 @@ class TopicController extends Controller
     {
         $fields = $request->validate([
             'title' => 'required|string',
-            'topic_order' => 'required|string',
+            'topic_order' => 'required|numeric',
             'short_description' => 'required|string',
             'theory' => 'required|string',
             'course_id' => 'required|numeric',

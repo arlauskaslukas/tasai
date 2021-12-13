@@ -15,6 +15,8 @@ import { ManageUsers } from "./pages/ManageUsers";
 import { ManageTopics } from "./pages/ManageTopics";
 import { ManageAssignments } from "./pages/ManageAssignments";
 import { NewTopic } from "./pages/NewTopic";
+import { EditTopic } from "./pages/EditTopic";
+import { CreateAssignment } from "./pages/CreateAssignment";
 
 function App() {
   return (
@@ -35,8 +37,18 @@ function App() {
               element={<ManageAssignments />}
             />
             <Route exact path={"/admin/courses/new"} element={<NewCourse />} />
+            <Route
+              exact
+              path={"/admin/assignments/new"}
+              element={<CreateAssignment />}
+            />
             <Route exact path={"/admin/topics/new"} element={<NewTopic />} />
             <Route path={"/admin/course/edit/:id"} element={<EditCourse />} />
+            <Route
+              exact
+              path={"/admin/topic/edit/:id"}
+              element={<EditTopic />}
+            />
           </Routes>
         </BrowserRouter>
       </div>

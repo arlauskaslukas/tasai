@@ -20,8 +20,10 @@ import React, { useEffect, useState } from "react";
 import AxiosClient from "../utils/AxiosClient";
 import { Error } from "../components/Error";
 import { SuccessAlert } from "../components/SuccessAlert";
+import { useParams } from "react-router";
 
-export const NewTopic = () => {
+export const EditTopic = () => {
+  let { id } = useParams();
   const [courseData, setCourseData] = useState(undefined);
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
@@ -55,13 +57,24 @@ export const NewTopic = () => {
   };
 
   const axiosCall = async () => {
-    let res = await AxiosClient.get("http://127.0.0.1:8000/api/courses");
-    setCourseData(res.data);
+    let res = await AxiosClient.get(`http://127.0.0.1:8000/api/topics/${id}`);
+    setCourse_id(res.data.course_id);
+    setTitle(res.data.title);
+    setShortDesc(res.data.short_description);
+    setTheory(res.data.theory);
+    setImpliedOrder(res.data.topic_order);
+    res = await AxiosClient.get(
+      `http://127.0.0.1:8000/api/courses/${res.data.course_id}`
+    );
+    setCourseData(res.data.title);
   };
+
+  const getCourseData = async () => {};
 
   const SendToDB = async () => {
     console.log({ title, impliedOrder, course_id, shortDesc, theory });
-    AxiosClient.post("http://127.0.0.1:8000/api/topics", {
+    AxiosClient.put("http://127.0.0.1:8000/api/topics", {
+      id: id,
       title: title,
       short_description: shortDesc,
       theory: theory,
@@ -72,6 +85,7 @@ export const NewTopic = () => {
 
   useEffect(() => {
     axiosCall();
+    getCourseData();
   }, []);
 
   const Validate = () => {
@@ -122,7 +136,7 @@ export const NewTopic = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              PRIDĖTI NAUJĄ TEMĄ
+              REDAGUOTI TEMĄ
             </Typography>
             <div
               style={{
@@ -157,17 +171,16 @@ export const NewTopic = () => {
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Kursas</InputLabel>
                 <Select
+                  disabled
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={course_id}
                   label="course_id"
                   onChange={handleChange}
                 >
-                  {courseData.map((course) => (
-                    <MenuItem value={course.id}>
-                      {course.id} - {course.title}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value={course_id}>
+                    {course_id} - {courseData}
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>

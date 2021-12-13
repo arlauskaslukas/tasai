@@ -52,6 +52,7 @@ export const ManageTopics = () => {
   const handleConfirmation = () => {
     SendToDB();
     setDialogOpen(false);
+    axiosCall();
   };
 
   const SendToDB = async () => {
@@ -64,13 +65,13 @@ export const ManageTopics = () => {
     setSuccess(res.data.message === "ok");
   };
 
+  const axiosCall = async () => {
+    const res = await AxiosClient.get("http://127.0.0.1:8000/api/topics");
+    let elements = res.data;
+    console.log(elements);
+    setData(elements);
+  };
   useEffect(() => {
-    const axiosCall = async () => {
-      const res = await AxiosClient.get("http://127.0.0.1:8000/api/topics");
-      let elements = res.data;
-      console.log(elements);
-      setData(elements);
-    };
     axiosCall();
     setLoadingStatus(false);
   }, []);
@@ -93,7 +94,7 @@ export const ManageTopics = () => {
         </div>
       </div>
     );
-  } else if (data !== undefined)
+  } else
     return (
       <div>
         <Container>

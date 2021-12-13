@@ -1,5 +1,5 @@
 import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker } from "@mui/lab";
+import { DatePicker, DateTimePicker } from "@mui/lab";
 import {
   Button,
   CircularProgress,
@@ -13,28 +13,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { width } from "@mui/system";
 import _ from "lodash";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import AxiosClient from "../utils/AxiosClient";
 import { Error } from "../components/Error";
 import { SuccessAlert } from "../components/SuccessAlert";
 
-export const NewTopic = () => {
-  const [courseData, setCourseData] = useState(undefined);
+export const CreateAssignment = () => {
+  const [topicData, setTopicData] = useState(undefined);
+  const [topic_id, setTopic_id] = useState(0);
   const [title, setTitle] = useState("");
+  const [duration, setDuration] = useState(0);
+  const [cost, setCost] = useState(0);
   const [shortDesc, setShortDesc] = useState("");
-  const [theory, setTheory] = useState("");
+  const [longDesc, setLongDesc] = useState("");
+  const [deadline, setDeadline] = useState("");
   const [errors, setErrors] = useState([]);
   const [success, setSuccess] = useState(false);
-  const [course_id, setCourse_id] = useState(0);
-  const [impliedOrder, setImpliedOrder] = useState(0);
-
-  const handleChange = (event) => {
-    getImpliedOrder(event.target.value);
-    setCourse_id(event.target.value);
-  };
 
   const handleButtonClick = async () => {
     setSuccess(false);
@@ -44,35 +40,28 @@ export const NewTopic = () => {
     }
   };
 
-  const getImpliedOrder = async (value) => {
-    let res = await AxiosClient.post(
-      "http://127.0.0.1:8000/api/getlasttopicorder",
-      {
-        id: value,
-      }
-    );
-    setImpliedOrder(res.data + 1);
+  const handleChange = (event) => {
+    setTopic_id(event.target.value);
   };
 
   const axiosCall = async () => {
-    let res = await AxiosClient.get("http://127.0.0.1:8000/api/courses");
-    setCourseData(res.data);
+    const res = await AxiosClient.get("http://127.0.0.1:8000/api/topics");
+    let elements = res.data;
+    console.log(elements);
+    setTopicData(elements);
   };
-
-  const SendToDB = async () => {
-    console.log({ title, impliedOrder, course_id, shortDesc, theory });
-    AxiosClient.post("http://127.0.0.1:8000/api/topics", {
-      title: title,
-      short_description: shortDesc,
-      theory: theory,
-      course_id: Number(course_id),
-      topic_order: Number(impliedOrder),
-    });
-  };
-
   useEffect(() => {
     axiosCall();
   }, []);
+
+  const SendToDB = async () => {
+    console.log({ title, duration, cost, shortDesc, longDesc });
+    AxiosClient.post("http://127.0.0.1:8000/api/courses", {
+      title: title,
+      duration: duration,
+      description: shortDesc,
+    });
+  };
 
   const Validate = () => {
     let isDataValid = true;
@@ -81,23 +70,31 @@ export const NewTopic = () => {
 
     if (!_.isString(title) || _.isEqual(title, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Temos pavadinimas privalomas"]);
+      setErrors((errs) => [...errs, "Kurso pavadinimas privalomas"]);
     }
     if (!_.isString(shortDesc) || _.isEqual(shortDesc, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Temos trumpas aprašymas privalomas"]);
+      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
     }
-    if (!_.isString(theory) || _.isEqual(theory, "")) {
+    if (!_.isString(longDesc) || _.isEqual(longDesc, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Teorijos laukas privalomas"]);
+      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
     }
-    if (_.isEqual(course_id, 0)) {
+    if (_.isEqual(deadline, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso laukas privalomas"]);
+      setErrors((errs) => [...errs, "Kurso pradžios datos laukas privalomas"]);
+    }
+    if (!num_regex.test(duration)) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso trukmės laukas privalomas"]);
+    }
+    if (cost < 0.0) {
+      isDataValid = false;
+      setErrors((errs) => [...errs, "Kurso kaina negali būti neigiama"]);
     }
     return isDataValid;
   };
-  if (courseData === undefined) {
+  if (topicData === undefined) {
     return (
       <div>
         <LinearProgress />
@@ -122,7 +119,7 @@ export const NewTopic = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              PRIDĖTI NAUJĄ TEMĄ
+              KURTI NAUJĄ ATSISKAITYMĄ
             </Typography>
             <div
               style={{
@@ -133,8 +130,8 @@ export const NewTopic = () => {
               <Button
                 variant="contained"
                 startIcon={<ArrowBack />}
-                href="/admin/topics"
-                style={{ backgroundColor: "#B7094C" }}
+                href="/admin/courses"
+                style={{ backgroundColor: "#B7094C " }}
               >
                 Atgal
               </Button>
@@ -155,17 +152,17 @@ export const NewTopic = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Kursas</InputLabel>
+                <InputLabel id="demo-simple-select-label">Tema</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={course_id}
-                  label="course_id"
+                  value={topic_id}
+                  label="topic_id"
                   onChange={handleChange}
                 >
-                  {courseData.map((course) => (
-                    <MenuItem value={course.id}>
-                      {course.id} - {course.title}
+                  {topicData.map((topic) => (
+                    <MenuItem value={topic.id}>
+                      {topic.id} - {topic.title}
                     </MenuItem>
                   ))}
                 </Select>
@@ -173,17 +170,8 @@ export const NewTopic = () => {
             </Grid>
             <Grid item xs={12} md={4}>
               <TextField
-                disabled
-                fullWidth
-                label={"Temos eiliškumas"}
-                variant={"outlined"}
-                value={impliedOrder}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
                 variant="outlined"
-                label="Temos pavadinimas"
+                label="Atsiskaitymo pavadinimas"
                 required
                 value={title}
                 onChange={(val) => {
@@ -192,29 +180,25 @@ export const NewTopic = () => {
                 style={{ width: "100%" }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                multiline
-                rows={2}
-                value={shortDesc}
-                onChange={(val) => {
-                  setShortDesc(val.target.value);
-                }}
-                label="Trumpas aprašymas"
-                style={{ width: "100%" }}
+            <Grid item xs={12} md={4}>
+              <DateTimePicker
+                fullWidth
+                label="Atsiskaitymo pateikimo data"
+                value={deadline}
+                onChange={(value) => setDeadline(value)}
+                renderInput={(params) => <TextField fullWidth {...params} />}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 multiline
-                rows={20}
-                value={theory}
+                rows={3}
+                value={shortDesc}
                 onChange={(val) => {
-                  setTheory(val.target.value);
+                  setShortDesc(val.target.value);
                 }}
-                label="Ilgas aprašymas"
+                label="Trumpas aprašymas"
                 style={{ width: "100%" }}
               />
             </Grid>
