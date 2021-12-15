@@ -69,14 +69,28 @@ export const AdminDashboard = ({ LoginStatus }) => {
     >
       <Container>
         <Paper className={classes.head}>
-          <Typography variant="h4" textAlign={"left"}>
+          <Typography
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: "bolder",
+            }}
+            variant="h4"
+            textAlign={"left"}
+          >
             Administratoriaus panelė
           </Typography>
         </Paper>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" textAlign="left">
+              <Typography
+                variant="h6"
+                textAlign="left"
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+              >
                 Kursų kontrolės centras
               </Typography>
               <div style={{ display: "inline-block" }}>
@@ -105,7 +119,14 @@ export const AdminDashboard = ({ LoginStatus }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" textAlign="left">
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
                 Temų kontrolės centras
               </Typography>
               <div style={{ display: "inline-block" }}>
@@ -113,44 +134,53 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   className={classes.button}
                   variant={"contained"}
                   href={"/admin/topics"}
+                  startIcon={<VisibilityIcon />}
                   style={{
                     marginBlock: "20px",
                     backgroundColor: "#C11F6B",
                     justifyContent: "space-around",
                   }}
                 >
-                  <VisibilityIcon /> Valdyti temas
+                  Valdyti temas
                 </Button>
                 <Button
                   className={classes.button}
                   variant={"contained"}
+                  startIcon={<AddIcon />}
                   style={{
                     justifyContent: "space-evenly",
                   }}
                   href={"/admin/topics/new"}
                 >
-                  <AddIcon /> Pridėti temą
+                  Pridėti temą
                 </Button>
               </div>
             </Paper>
           </Grid>
           <Grid item xs={12} md={4}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" textAlign="left">
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
                 Naudotojų valdymo centras
               </Typography>
-              <div>
+              <div style={{ display: "inline-block" }}>
                 <Button
                   className={classes.button}
                   href="/admin/users"
+                  startIcon={<VisibilityIcon />}
                   variant={"contained"}
                   style={{
                     marginBlock: "20px",
                     backgroundColor: "#C11F6B",
-                    justifyContent: "space-around",
                   }}
                 >
-                  <VisibilityIcon /> Valdyti naudotojus
+                  Valdyti naudotojus
                 </Button>
               </div>
             </Paper>
@@ -159,7 +189,14 @@ export const AdminDashboard = ({ LoginStatus }) => {
         <Grid container spacing={2} style={{ marginTop: "5%" }}>
           <Grid item xs={12} md={6}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" textAlign="left">
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
                 Atsiskaitymų centras
               </Typography>
               <div style={{ display: "inline-block" }}>
@@ -172,30 +209,33 @@ export const AdminDashboard = ({ LoginStatus }) => {
                     justifyContent: "space-around",
                   }}
                   href={"/admin/assignments"}
+                  startIcon={<VisibilityIcon />}
                 >
-                  <VisibilityIcon /> Valdyti atsiskaitymus
-                </Button>
-                <Button
-                  className={classes.button}
-                  variant={"contained"}
-                  style={{
-                    justifyContent: "space-evenly",
-                  }}
-                >
-                  <AddTaskIcon /> Vertinti atsiskaitymus
+                  Valdyti atsiskaitymus
                 </Button>
               </div>
             </Paper>
           </Grid>
           <Grid item xs={12} md={6}>
             <Paper className={classes.paper}>
-              <Typography variant="h6" textAlign="left">
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
                 Neseniai prie kursų prisijungę vartotojai
               </Typography>
               <List>
                 {recentJoins.map((row) => (
                   <ListItem>
                     <ListItemText
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        fontWeight: "bold",
+                      }}
                       primary={`${row.user} - ${row.course} - ${formatDate(
                         row.created_at
                       )}`}

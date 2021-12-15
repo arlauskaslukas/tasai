@@ -97,6 +97,12 @@ class CourseController extends Controller
         return response($course, 200);
     }
 
+    public function top_courses()
+    {
+        $courses = Course::all()->take(3);
+        return response($courses, 200);
+    }
+
     public function course_assignments($course_id)
     {
         $course = Course::find($course_id);

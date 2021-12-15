@@ -19,8 +19,10 @@ import React, { useState, useEffect } from "react";
 import AxiosClient from "../utils/AxiosClient";
 import { Error } from "../components/Error";
 import { SuccessAlert } from "../components/SuccessAlert";
+import { useParams } from "react-router";
 
-export const CreateAssignment = () => {
+export const EditAssignment = () => {
+  let { id } = useParams();
   const [topicData, setTopicData] = useState(undefined);
   const [topic_id, setTopic_id] = useState(0);
   const [title, setTitle] = useState("");
@@ -41,19 +43,31 @@ export const CreateAssignment = () => {
     setTopic_id(event.target.value);
   };
 
-  const axiosCall = async () => {
-    const res = await AxiosClient.get("http://127.0.0.1:8000/api/topics");
-    let elements = res.data;
-    console.log(elements);
-    setTopicData(elements);
+  const getAssignmentData = async () => {
+    const res = await AxiosClient.get(
+      `http://127.0.0.1:8000/api/assignments/${id}`
+    );
+    setTitle(res.data.title);
+    setDeadline(res.data.deadline);
+    setShortDesc(res.data.description);
+    setTopic_id(res.data.topic_id);
+    axiosCall(res.data.topic_id);
+  };
+
+  const axiosCall = async (value) => {
+    const res = await AxiosClient.get(
+      `http://127.0.0.1:8000/api/topics/${value}`
+    );
+    setTopicData(res.data.title);
   };
   useEffect(() => {
-    axiosCall();
+    getAssignmentData();
   }, []);
 
   const SendToDB = async () => {
-    let res = await AxiosClient.post("http://127.0.0.1:8000/api/assignments", {
+    let res = await AxiosClient.put("http://127.0.0.1:8000/api/assignments", {
       title: title,
+      id: id,
       deadline: moment(deadline).format("YYYY-MM-DD HH:mm:ss"),
       topic_id: topic_id,
       description: shortDesc,
@@ -146,17 +160,16 @@ export const CreateAssignment = () => {
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Tema</InputLabel>
                 <Select
+                  disabled
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={topic_id}
                   label="topic_id"
                   onChange={handleChange}
                 >
-                  {topicData.map((topic) => (
-                    <MenuItem value={topic.id}>
-                      {topic.id} - {topic.title}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value={topic_id}>
+                    {topic_id} - {topicData}
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>

@@ -1,6 +1,4 @@
-import logo from "./logo.svg";
 import "./App.css";
-import bg from "./assets/background.svg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
@@ -17,6 +15,17 @@ import { ManageAssignments } from "./pages/ManageAssignments";
 import { NewTopic } from "./pages/NewTopic";
 import { EditTopic } from "./pages/EditTopic";
 import { CreateAssignment } from "./pages/CreateAssignment";
+import { EditAssignment } from "./pages/EditAssignment";
+import { EditProfile } from "./pages/EditProfile";
+import { Home } from "./pages/Home";
+import { ViewCourses } from "./pages/ViewCourses";
+import { MoreCourses } from "./pages/MoreCourses";
+import { ViewCourse } from "./pages/ViewCourse";
+import { MyCourses } from "./pages/MyCourses";
+import { ViewEnrolledCourse } from "./pages/ViewEnrolledCourse";
+import React from "react";
+import { ViewEnrolledTopic } from "./pages/ViewEnrolledTopic";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -25,8 +34,23 @@ function App() {
       <div className="App" style={{ backgroundColor: "#FCFCFC" }}>
         <BrowserRouter>
           <Routes>
+            <Route exact path={"/"} element={<Home />} />
             <Route exact path={"/login"} element={<Login />} />
             <Route exact path={"/register"} element={<Register />} />
+            <Route exact path={"/courses"} element={<ViewCourses />} />
+            <Route exact path={"/mycourses"} element={<MyCourses />} />
+            <Route exact path={"/morecourses"} element={<MoreCourses />} />
+            <Route exact path={"/course/:id"} element={<ViewCourse />} />
+            <Route
+              exact
+              path={"/mycourses/:id"}
+              element={<ViewEnrolledCourse />}
+            />
+            <Route
+              exact
+              path="/mycourses/:course_id/topic/:topic_id"
+              element={<ViewEnrolledTopic />}
+            />
             <Route exact path={"/admin"} element={<AdminDashboard />} />
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
             <Route exact path={"/admin/users"} element={<ManageUsers />} />
@@ -49,9 +73,16 @@ function App() {
               path={"/admin/topic/edit/:id"}
               element={<EditTopic />}
             />
+            <Route
+              exact
+              path={"/admin/assignment/edit/:id"}
+              element={<EditAssignment />}
+            />
+            <Route exact path={"/profile"} element={<EditProfile />} />
           </Routes>
         </BrowserRouter>
       </div>
+      <Footer />
     </LocalizationProvider>
   );
 }

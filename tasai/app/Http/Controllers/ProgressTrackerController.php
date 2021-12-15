@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProgressTracker;
+use Illuminate\Support\Facades\Auth;
 use function MongoDB\BSON\toJSON;
+use const http\Client\Curl\AUTH_ANY;
 
 class ProgressTrackerController extends Controller
 {
@@ -29,7 +31,7 @@ class ProgressTrackerController extends Controller
             $user = $tracker->user()->get()[0];
             $tracker['user']=$user->name;
             $tracker['course']=$course->title;
-            
+
         }
         return response($array, 200);
     }
@@ -52,16 +54,32 @@ class ProgressTrackerController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'course_id' => 'required|numeric',
-            'user_id' => 'required|numeric'
+            'course_id' => 'required|numeric'
         ]);
+        error_log(Auth::user()->id);
         $progresstracker = new ProgressTracker(['completed_topics'=>0,
             'course_id'=>$fields['course_id'],
-            'user_id'=>$fields['user_id']]);
+            'user_id'=>Auth::user()->id]);
         if ($progresstracker->save()) {
             return response($progresstracker, 201);
         }
         return response('', 409); //conflict
+    }
+
+    public function getPersonalTrackers()
+    {
+        if(!Auth::user())
+        {
+            return response('', 404);
+        }
+        error_log(Auth::user()->id);
+        $trackers = ProgressTracker::where('user_id', Auth::user()->id)->get();
+        foreach($trackers as $tracker)
+        {
+            $tracker['course'] = $tracker->course()->get();
+        }
+        error_log($trackers);
+        return response($trackers, 200);
     }
 
     /**

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import background from "../assets/background.svg";
 import AxiosClient from "../utils/AxiosClient";
 import Cookies from "universal-cookie/es6";
+import Logo from "../assets/logo.svg";
 
 export const Register = () => {
   const [name, setName] = useState("");
@@ -10,7 +11,22 @@ export const Register = () => {
   const [pwd, setPwd] = useState("");
 
   const cookies = new Cookies();
-  console.log(cookies.get("Authorization"));
+  const handleRegistration = () => {
+    AxiosClient.post("http://127.0.0.1:8000/api/register", {
+      name: name,
+      email: email,
+      password: pwd,
+    }).then((results) => {
+      console.log(results);
+      cookies.set("Authorization", results.data.token, { path: "/" });
+      cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
+      if (cookies.get("AdminStatus") === "1") {
+        window.location.href = "http://localhost:3000/admin";
+      } else {
+        window.location.href = "http://localhost:3000/";
+      }
+    });
+  };
 
   return (
     <div
@@ -23,8 +39,18 @@ export const Register = () => {
       }}
     >
       <Grid container style={{ height: "100%" }}>
-        <Grid item xs={0} lg={6}>
-          karoce ce bus logo. On hover dideja
+        <Grid
+          item
+          xs={0}
+          lg={6}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img src={Logo} style={{ maxWidth: "30vw" }} />
         </Grid>
         <Grid
           item
@@ -85,6 +111,7 @@ export const Register = () => {
             />
             <Button
               variant="contained"
+              onClick={() => handleRegistration()}
               style={{ marginTop: "5vh", backgroundColor: "#0091AD" }}
             >
               Registruotis

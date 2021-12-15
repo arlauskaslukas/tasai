@@ -81,6 +81,14 @@ class TopicController extends Controller
         return response($topic, 200);
     }
 
+    public function topic_assignments($topic_id)
+    {
+        $topic = Topic::find($topic_id);
+        if($topic==null) return response('',404);
+        $topic['assignments'] = $topic->assignments()->get();
+        return response($topic, 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

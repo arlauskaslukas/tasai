@@ -1,6 +1,5 @@
 import React from "react";
 import { Alert, AlertTitle } from "@mui/material";
-import { width } from "@mui/system";
 
 export const DeleteSuccess = () => {
   return (

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Course;
 
+use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
+use const http\Client\Curl\AUTH_ANY;
 
 class UserController extends Controller
 {
@@ -115,10 +117,12 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        if(!Auth::user() || Auth::user()->id!=$request['id'])
+            return response(array("message"=>"Unauthorized"), 401);
         $user = User::find($request->id);
         if ($user == null) return response('', 404);
         $user->update(['name' => $request->name, 'email' => $request->email]);
-        return response(json_encode(array("response" => "ok")), 200);
+        return response(array("response" => "ok"), 200);
     }
 
     /**
@@ -149,5 +153,10 @@ class UserController extends Controller
 
         User::withTrashed()->find($fields['id'])->restore();
         return response(array("response" => "ok"), 200);
+    }
+    public function getCurrentUserData()
+    {
+        $user = Auth::user();
+        return response($user, 200);
     }
 }

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Cookies from "universal-cookie/es6";
 import background from "../assets/background.svg";
 import AxiosClient from "../utils/AxiosClient";
+import Logo from "../assets/logo.svg";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +17,8 @@ export const Login = () => {
       password: pwd,
     }).then((results) => {
       console.log(results);
-      cookies.set("Authorization", results.data.token);
-      cookies.set("AdminStatus", results.data.user.is_admin);
+      cookies.set("Authorization", results.data.token, { path: "/" });
+      cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
       if (cookies.get("AdminStatus") === "1") {
         window.location.href = "http://localhost:3000/admin";
       } else {
@@ -51,8 +52,18 @@ export const Login = () => {
         }}
       >
         <Grid container style={{ height: "100%" }}>
-          <Grid item xs={0} lg={6}>
-            karoce ce bus logo. On hover dideja
+          <Grid
+            item
+            xs={0}
+            lg={6}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img src={Logo} style={{ maxWidth: "30vw" }} />
           </Grid>
           <Grid
             item
@@ -107,21 +118,18 @@ export const Login = () => {
               </Button>
 
               <Typography variant="h6" style={{ marginBlock: "2vh" }}>
-                Neturite paskyros ar pamiršote slaptažodį?
+                Neturite paskyros?
               </Typography>
               <div
                 style={{
                   padding: "20px",
                   display: "flex",
                   width: "50%",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                 }}
               >
                 <Button variant="contained" href={"/register"}>
                   Registruotis
-                </Button>
-                <Button variant="contained" href={"/forgot-password"}>
-                  Atkurti slaptažodį
                 </Button>
               </div>
             </div>
