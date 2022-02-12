@@ -19,4 +19,5 @@ class Course extends Model
     ];
     public function progress_trackers(){ return $this->hasMany(ProgressTracker::class); }
     public function topics() {return $this->hasMany(Topic::class);}
+    public function testimonials() { return $this->hasMany(Testimonial::class);}
 }

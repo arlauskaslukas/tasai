@@ -126,6 +126,9 @@ export const NavBar = () => {
               <Button href="/courses" color="inherit">
                 Kursai
               </Button>
+              <Button href={"/testimonials"} color={"inherit"}>
+                Atsiliepimai
+              </Button>
               {cookies.get("AdminStatus") === "1" ? (
                 <>
                   <Button color="inherit" href="/admin">

@@ -26,6 +26,9 @@ import { ViewEnrolledCourse } from "./pages/ViewEnrolledCourse";
 import React from "react";
 import { ViewEnrolledTopic } from "./pages/ViewEnrolledTopic";
 import { Footer } from "./components/Footer";
+import {ViewTestimonials} from "./pages/ViewTestimonials";
+import {NewTestimonial} from "./pages/NewTestimonial";
+import {ViewCourseTimetable} from "./pages/ViewCourseTimetable";
 
 function App() {
   return (
@@ -51,6 +54,7 @@ function App() {
               path="/mycourses/:course_id/topic/:topic_id"
               element={<ViewEnrolledTopic />}
             />
+            <Route exact path={"/mycourses/:id/timetable"} element={<ViewCourseTimetable/>}/>
             <Route exact path={"/admin"} element={<AdminDashboard />} />
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
             <Route exact path={"/admin/users"} element={<ManageUsers />} />
@@ -79,6 +83,8 @@ function App() {
               element={<EditAssignment />}
             />
             <Route exact path={"/profile"} element={<EditProfile />} />
+            <Route exact path={"/testimonials"} element={<ViewTestimonials/>}/>
+            <Route exact path={"/testimonials/new"} element={<NewTestimonial/>} />
           </Routes>
         </BrowserRouter>
       </div>

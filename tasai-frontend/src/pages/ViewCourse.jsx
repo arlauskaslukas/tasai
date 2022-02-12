@@ -56,7 +56,7 @@ export const ViewCourse = () => {
   };
   const handleEnrollClick = () => {
     SendToDB();
-    window.location.href = "http://localhost:3000/mycourses";
+    //window.location.href = "http://localhost:3000/mycourses";
   };
   const SendToDB = async () => {
     let res = await AxiosClient.post(

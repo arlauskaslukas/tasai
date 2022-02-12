@@ -48,6 +48,8 @@ Route::group(['middleware'=>['Cors']], function()
     Route::get('/api/media', [App\Http\Controllers\MediaController::class, 'index']);
     Route::get('/api/media/{id}', [App\Http\Controllers\MediaController::class, 'show']);
 
+    Route::get('/api/testimonials', [\App\Http\Controllers\TestimonialController::class,'index']);
+
 //auth routes
     Route::post('/api/register', [\App\Http\Controllers\AuthController::class, 'register']);
     Route::post('/api/login', [\App\Http\Controllers\AuthController::class, 'login']);
@@ -70,26 +72,34 @@ Route::group(['middleware'=>['Cors']], function()
         Route::get('/api/users/{user_id}/progresstrackers', [App\Http\Controllers\UserController::class, 'progress_trackers']);
         Route::get('/api/users/{user_id}/courseprogress/{course_id}', [App\Http\Controllers\UserController::class, 'course_progress']);
         Route::get('/api/topics/{topic_id}/assignments', [\App\Http\Controllers\TopicController::class, 'topic_assignments']);
+        Route::post('/api/testimonials', [\App\Http\Controllers\TestimonialController::class, 'store']);
         //admin-protected routes
         Route::group(['middleware'=>['admin']], function() {
             Route::post('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'store']);
             Route::put('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'update']);
             Route::delete('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'destroy']);
+
             Route::post('/api/topics', [App\Http\Controllers\TopicController::class, 'store']);
             Route::put('/api/topics', [App\Http\Controllers\TopicController::class, 'update']);
             Route::delete('/api/topics', [App\Http\Controllers\TopicController::class, 'destroy']);
+
             Route::delete('/api/progresstrackers', [App\Http\Controllers\ProgressTrackerController::class, 'destroy']);
+
             Route::get('/api/recentjoins', [App\Http\Controllers\ProgressTrackerController::class, 'recentJoins']);
             Route::post('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'store']);
             Route::put('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'update']);
             Route::delete('/api/assignments', [App\Http\Controllers\AssignmentController::class, 'destroy']);
+
             Route::post('/api/users', [App\Http\Controllers\UserController::class, 'store']);
             Route::put('/api/users', [App\Http\Controllers\UserController::class, 'update']);
             Route::delete('/api/users', [App\Http\Controllers\UserController::class, 'destroy']);
+
             Route::post('/api/media', [App\Http\Controllers\MediaController::class, 'store']);
             Route::put('/api/media', [App\Http\Controllers\MediaController::class, 'update']);
             Route::delete('/api/media', [App\Http\Controllers\MediaController::class, 'destroy']);
+
             Route::delete('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'destroy']);
+
             Route::post('/api/courses', [App\Http\Controllers\CourseController::class, 'store']);
             Route::put('/api/courses', [App\Http\Controllers\CourseController::class, 'update']);
             Route::delete('/api/courses/{id}', [App\Http\Controllers\CourseController::class, 'destroy']);

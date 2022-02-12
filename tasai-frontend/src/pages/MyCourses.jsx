@@ -34,8 +34,9 @@ export const MyCourses = () => {
   const [progressData, setProgressData] = useState(undefined);
   const axiosCall = async () => {
     let res = await AxiosClient.get(
-      "http://127.0.0.1:8000/api/personaltrackers"
+        "http://127.0.0.1:8000/api/personaltrackers"
     );
+    console.log(res.data);
     setProgressData(res.data);
   };
   useEffect(() => {
@@ -43,51 +44,52 @@ export const MyCourses = () => {
   }, []);
   if (progressData === undefined) {
     return (
-      <div>
-        <LinearProgress />
-        <div
-          style={{
-            display: "flex",
-            width: "100vw",
-            height: "75vh",
-            overflow: "hidden",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-          }}
-        >
-          <CircularProgress color={"secondary"} />
+        <div>
+          <LinearProgress/>
+          <div
+              style={{
+                display: "flex",
+                width: "100vw",
+                height: "75vh",
+                overflow: "hidden",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+          >
+            <CircularProgress color={"secondary"}/>
+          </div>
         </div>
-      </div>
     );
-  } else if (progressData === [])
-    return (
+  } else if (progressData.length===0)
+  {
+  return (
       <div>
         <Container>
           <Paper className={classes.head}>
             <Typography
-              variant="h4"
-              textAlign={"left"}
-              style={{ fontFamily: "Montserrat, sans-serif" }}
+                variant="h4"
+                textAlign={"left"}
+                style={{fontFamily: "Montserrat, sans-serif"}}
             >
               Mano kursai
             </Typography>
           </Paper>
           <Paper elevation={2}>
             <Typography
-              style={{ fontFamily: "Montserrat, sans-serif" }}
-              variant="h5"
-              fontWeight="bold"
-              textAlign="left"
+                style={{fontFamily: "Montserrat, sans-serif"}}
+                variant="h5"
+                fontWeight="bold"
+                textAlign="left"
             >
               Dar neturite jokių kursų
             </Typography>
             <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-              }}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
             >
               <Button href={`/courses`} variant={"contained"}>
                 Atrasti kursus
@@ -96,7 +98,8 @@ export const MyCourses = () => {
           </Paper>
         </Container>
       </div>
-    );
+  );
+}
   else
     return (
       <div style={{ minHeight: "100vh" }}>
