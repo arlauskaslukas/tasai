@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {useParams} from "react-router";
-import {Button, Container, Paper, Typography} from "@mui/material";
+import {Button, Container, Grid, Paper, Typography} from "@mui/material";
 import {ArrowBack} from "@mui/icons-material";
 import DownloadIcon from '@mui/icons-material/Download';
+import DataFetchService from "../services/DataFetchService";
 
 const mockData = [
     {
@@ -19,6 +20,17 @@ const mockData = [
 
 export const ViewCourseTimetable = () => {
     const {id} = useParams();
+    const datafetchservice = new DataFetchService();
+    const [timetables, setTimetables] = useState([]);
+
+    useEffect(async ()=>{
+        let data = await datafetchservice.getCourseTimetable(id);
+        data.forEach(async element => {
+            element.uri = await datafetchservice.getTimetableiCalFileURI(element.id);
+        });
+        console.log(data);
+        setTimetables(data);
+    },[])
     return <>
         <Container style={{minHeight:'100vh'}}>
             <div style={{paddingTop:'50px'}}>
@@ -48,17 +60,28 @@ export const ViewCourseTimetable = () => {
                         </Button>
                     </div>
                 </div>
-                {mockData.map((entry)=>(
+                {timetables.map((entry)=>(
                     <Paper elevation={2} style={{padding:'25px', marginBlock:'25px'}}>
-                        <Typography variant={"h5"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
-                            {entry.entry_title}
-                        </Typography>
-                        <Typography variant={"body1"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
-                            Pamokos laikas: {entry.lesson_time}
-                        </Typography>
-                        <Typography variant={"body1"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
-                            Nuoroda prisijungimui: <a href={entry.link}>{entry.link}</a>
-                        </Typography>
+                        <Grid container spacing={2}>
+                            <Grid item xs={8}>
+                                <Typography variant={"h5"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
+                                    {entry.entry_title}
+                                </Typography>
+                                <Typography variant={"body1"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
+                                    Pamokos laikas: {entry.lesson_time}
+                                </Typography>
+                                <Typography variant={"body1"} textAlign={"left"} style={{fontFamily: "Montserrat, sans-serif",marginBottom:'25px'}}>
+                                    Nuoroda prisijungimui: <a href={entry.link}>{entry.link}</a>
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                {entry.uri!==null?<Button>
+                                    <a href={entry.uri} download>
+                                    Atsisiųsti pamokos iCal failą
+                                    </a>
+                                </Button>:<></>}
+                            </Grid>
+                        </Grid>
                     </Paper>
                 ))}
             </div>

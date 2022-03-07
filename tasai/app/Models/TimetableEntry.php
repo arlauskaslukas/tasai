@@ -17,4 +17,5 @@ class TimetableEntry extends Model
         'topic_id'
     ];
     public function topic() {return $this->belongsTo(Topic::class);}
+    public function course() {return $this->belongsTo(Course::class);}
 }

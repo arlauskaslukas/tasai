@@ -29,6 +29,10 @@ import { Footer } from "./components/Footer";
 import {ViewTestimonials} from "./pages/ViewTestimonials";
 import {NewTestimonial} from "./pages/NewTestimonial";
 import {ViewCourseTimetable} from "./pages/ViewCourseTimetable";
+import { DownloadTimetable } from "./pages/DownloadTimetable";
+import { ManageTimetables } from "./pages/ManageTimetables";
+import { NewTimetableEntry } from "./pages/NewTimetableEntry";
+import { EditTimetableEntry } from "./pages/EditTimetableEntry";
 
 function App() {
   return (
@@ -55,6 +59,7 @@ function App() {
               element={<ViewEnrolledTopic />}
             />
             <Route exact path={"/mycourses/:id/timetable"} element={<ViewCourseTimetable/>}/>
+            <Route exact path={"/mycourses/:id/timetable/download"} element={<DownloadTimetable/>}/>
             <Route exact path={"/admin"} element={<AdminDashboard />} />
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
             <Route exact path={"/admin/users"} element={<ManageUsers />} />
@@ -82,6 +87,9 @@ function App() {
               path={"/admin/assignment/edit/:id"}
               element={<EditAssignment />}
             />
+            <Route exact path={"/admin/timetable/edit/:id"} element={<EditTimetableEntry/>} />
+            <Route exact path={"/admin/timetables"} element={<ManageTimetables/>}/>
+            <Route exact path={"/admin/timetables/new"} element={<NewTimetableEntry/>}/>
             <Route exact path={"/profile"} element={<EditProfile />} />
             <Route exact path={"/testimonials"} element={<ViewTestimonials/>}/>
             <Route exact path={"/testimonials/new"} element={<NewTestimonial/>} />

@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 //Public routes
 Route::group(['middleware'=>['Cors']], function()
 {
+    Route::get('/api/export_timetable/{id}', [\App\Http\Controllers\TimetableEntryController::class, "export_course_event"]);
+    Route::get('/api/course_timetable/{id}', [\App\Http\Controllers\TimetableEntryController::class, "get_course_timetable"]);
     Route::get('/api/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
 
     Route::get('/api/progresstrackers', [App\Http\Controllers\ProgressTrackerController::class, 'index']);
@@ -75,9 +77,10 @@ Route::group(['middleware'=>['Cors']], function()
         Route::post('/api/testimonials', [\App\Http\Controllers\TestimonialController::class, 'store']);
         //admin-protected routes
         Route::group(['middleware'=>['admin']], function() {
+            Route::get("/api/course_timetables", [\App\Http\Controllers\TimetableEntryController::class, 'courses_timetables']);
             Route::post('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'store']);
             Route::put('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'update']);
-            Route::delete('/api/timetables', [App\Http\Controllers\TimetableEntryController::class, 'destroy']);
+            Route::delete('/api/timetables/{id}', [App\Http\Controllers\TimetableEntryController::class, 'destroy']);
 
             Route::post('/api/topics', [App\Http\Controllers\TopicController::class, 'store']);
             Route::put('/api/topics', [App\Http\Controllers\TopicController::class, 'update']);

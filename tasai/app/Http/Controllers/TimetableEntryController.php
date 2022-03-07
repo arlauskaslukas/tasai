@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\TimetableEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Spatie\CalendarLinks\Link;
+use Symfony\Component\ErrorHandler\Debug;
 
 class TimetableEntryController extends Controller
 {
@@ -15,18 +19,6 @@ class TimetableEntryController extends Controller
     public function index()
     {
         $array = TimetableEntry::all();
-        //array_push($array,new TimetableEntry(['id'=>1,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-        //    'link'=>'http://lorem.ipsum',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1,'topic_id'=>1]));
-        //array_push($array,new TimetableEntry(['id'=>2,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-        //    'link'=>'http://lorem.ipsum',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1,'topic_id'=>1]));
-        //array_push($array,new TimetableEntry(['id'=>3,'lesson_time'=>"2021-10-06 09:00",'entry_title'=>'lorem ipsum',
-        //    'link'=>'http://lorem.ipsum',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1,'topic_id'=>1]));
         return response($array, 200);
     }
 
@@ -106,9 +98,31 @@ class TimetableEntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+
+    public function destroy($id)
     {
-        TimetableEntry::destroy($request->id);
+        TimetableEntry::destroy($id);
         return response(array("response" => "ok"), 200);
+    }
+    public function export_course_event($id)
+    {
+        $entry = TimetableEntry::findOrFail($id);
+        $from = \DateTime::createFromFormat("Y-m-d H:i:s", $entry["lesson_time"]);
+        $to = $from->add(new \DateInterval('PT1H'));
+        $link = Link::create($entry["entry_title"],$from, $to)->description("Prisijungimas prie pamokos: ". $entry["link"]);
+        return response(array("response"=>"ok", "uri"=>$link->ics()),200);
+    }
+    public function get_course_timetable($id) {
+        $entries = TimetableEntry::where('course_id', $id)->get();
+        return response($entries, 200);
+    }
+    public function courses_timetables(Request $request)
+    {
+        $array = Course::all();
+        foreach($array as $course)
+        {
+            $course['timetable'] = $course->timetables()->get();
+        }
+        return response($array, 200);
     }
 }

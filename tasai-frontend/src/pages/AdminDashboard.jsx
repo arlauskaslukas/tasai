@@ -188,6 +188,37 @@ export const AdminDashboard = ({ LoginStatus }) => {
         </Grid>
         <Grid container spacing={2} style={{ marginTop: "5%" }}>
           <Grid item xs={12} md={6}>
+          <Paper className={classes.paper}>
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
+                Kursų tvarkaraščių centras
+              </Typography>
+              <div style={{ display: "inline-block" }}>
+                <Button
+                  className={classes.button}
+                  variant={"contained"}
+                  style={{
+                    marginBlock: "20px",
+                    backgroundColor: "#C11F6B",
+                    justifyContent: "space-around",
+                  }}
+                  href={"/admin/timetables"}
+                  startIcon={<VisibilityIcon />}
+                >
+                  Valdyti tvarkaraščius
+                </Button>
+              </div>
+            </Paper>      
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} style={{ marginTop: "5%" }}>
+          <Grid item xs={12} md={6}>
             <Paper className={classes.paper}>
               <Typography
                 style={{
