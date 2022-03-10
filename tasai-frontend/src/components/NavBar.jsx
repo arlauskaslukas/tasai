@@ -129,6 +129,9 @@ export const NavBar = () => {
               <Button href={"/testimonials"} color={"inherit"}>
                 Atsiliepimai
               </Button>
+              <Button href={"/newmodel"} color={"inherit"}>
+                  Naujas DNT modelis
+              </Button>
               {cookies.get("AdminStatus") === "1" ? (
                 <>
                   <Button color="inherit" href="/admin">

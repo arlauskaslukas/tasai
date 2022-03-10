@@ -33,6 +33,7 @@ import { DownloadTimetable } from "./pages/DownloadTimetable";
 import { ManageTimetables } from "./pages/ManageTimetables";
 import { NewTimetableEntry } from "./pages/NewTimetableEntry";
 import { EditTimetableEntry } from "./pages/EditTimetableEntry";
+import { NewANNModel } from "./pages/NewANNModel";
 
 function App() {
   return (
@@ -60,10 +61,12 @@ function App() {
             />
             <Route exact path={"/mycourses/:id/timetable"} element={<ViewCourseTimetable/>}/>
             <Route exact path={"/mycourses/:id/timetable/download"} element={<DownloadTimetable/>}/>
+            <Route exact path={"/newmodel"}  element={<NewANNModel/>}/>
             <Route exact path={"/admin"} element={<AdminDashboard />} />
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
             <Route exact path={"/admin/users"} element={<ManageUsers />} />
             <Route exact path={"/admin/topics"} element={<ManageTopics />} />
+
             <Route
               exact
               path={"/admin/assignments"}
@@ -87,10 +90,13 @@ function App() {
               path={"/admin/assignment/edit/:id"}
               element={<EditAssignment />}
             />
+
             <Route exact path={"/admin/timetable/edit/:id"} element={<EditTimetableEntry/>} />
             <Route exact path={"/admin/timetables"} element={<ManageTimetables/>}/>
             <Route exact path={"/admin/timetables/new"} element={<NewTimetableEntry/>}/>
+            
             <Route exact path={"/profile"} element={<EditProfile />} />
+            
             <Route exact path={"/testimonials"} element={<ViewTestimonials/>}/>
             <Route exact path={"/testimonials/new"} element={<NewTestimonial/>} />
           </Routes>

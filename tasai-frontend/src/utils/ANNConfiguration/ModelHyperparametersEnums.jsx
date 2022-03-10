@@ -1,0 +1,50 @@
+
+export default class ModelHyperparametersEnums {
+    constructor(){
+
+    }
+    static optimizers = ["Adam", "Adagrad", "Adadelta", "Adamax", "Ftrl", "RMSprop", "SGD"];
+    static LossFunctions = ["Binary Crossentropy", "Binary Focal Crossentropy", "Categorical Crossentropy", "Categorical Hinge", "Cosine Similarity", "Hinge loss", "Huber loss", "Kullback-Leibler divergence", "Hyperbolic cosine logarithm", "Mean Absolute Error", "Mean Absolute Percentage Error", "Mean Squared Error", "Mean Squared Logarithmic Error", "Poisson", "Sparse Categorical Crossentropy", "Squared Hinge"];
+    static Metrics = ["AUC",
+    "Accuracy",
+    "BinaryAccuracy",
+    "BinaryCrossentropy",
+    "BinaryIoU",
+    "CategoricalAccuracy",
+    "CategoricalCrossentropy",
+    "CategoricalHinge",
+    "CosineSimilarity",
+    "FalseNegatives",
+    "FalsePositives",
+    "Hinge",
+    "IoU",
+    "KLDivergence",
+    "LogCoshError",
+    "Mean",
+    "MeanAbsoluteError",
+    "MeanAbsolutePercentageError",
+    "MeanIoU",
+    "MeanMetricWrapper",
+    "MeanRelativeError",
+    "MeanSquaredError",
+    "MeanSquaredLogarithmicError",
+    "MeanTensor",
+    "OneHotIoU",
+    "OneHotMeanIoU",
+    "Poisson",
+    "Precision",
+    "PrecisionAtRecall",
+    "Recall",
+    "RecallAtPrecision",
+    "RootMeanSquaredError",
+    "SensitivityAtSpecificity",
+    "SparseCategoricalAccuracy",
+    "SparseCategoricalCrossentropy",
+    "SparseTopKCategoricalAccuracy",
+    "SpecificityAtSensitivity",
+    "SquaredHinge",
+    "Sum",
+    "TopKCategoricalAccuracy",
+    "TrueNegatives",
+    "TruePositives"];
+}
