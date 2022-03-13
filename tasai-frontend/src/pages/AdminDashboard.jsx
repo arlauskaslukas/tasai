@@ -188,7 +188,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
         </Grid>
         <Grid container spacing={2} style={{ marginTop: "5%" }}>
           <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
+            <Paper className={classes.paper}>
               <Typography
                 style={{
                   fontFamily: "Montserrat, sans-serif",
@@ -214,7 +214,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   Valdyti tvarkaraščius
                 </Button>
               </div>
-            </Paper>      
+            </Paper>
           </Grid>
         </Grid>
         <Grid container spacing={2} style={{ marginTop: "5%" }}>

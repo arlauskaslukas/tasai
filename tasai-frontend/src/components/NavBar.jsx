@@ -130,7 +130,7 @@ export const NavBar = () => {
                 Atsiliepimai
               </Button>
               <Button href={"/newmodel"} color={"inherit"}>
-                  Naujas DNT modelis
+                Naujas DNT modelis
               </Button>
               {cookies.get("AdminStatus") === "1" ? (
                 <>

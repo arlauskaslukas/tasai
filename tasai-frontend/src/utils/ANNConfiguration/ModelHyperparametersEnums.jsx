@@ -1,11 +1,34 @@
-
 export default class ModelHyperparametersEnums {
-    constructor(){
-
-    }
-    static optimizers = ["Adam", "Adagrad", "Adadelta", "Adamax", "Ftrl", "RMSprop", "SGD"];
-    static LossFunctions = ["Binary Crossentropy", "Binary Focal Crossentropy", "Categorical Crossentropy", "Categorical Hinge", "Cosine Similarity", "Hinge loss", "Huber loss", "Kullback-Leibler divergence", "Hyperbolic cosine logarithm", "Mean Absolute Error", "Mean Absolute Percentage Error", "Mean Squared Error", "Mean Squared Logarithmic Error", "Poisson", "Sparse Categorical Crossentropy", "Squared Hinge"];
-    static Metrics = ["AUC",
+  constructor() {}
+  static optimizers = [
+    "Adam",
+    "Adagrad",
+    "Adadelta",
+    "Adamax",
+    "Ftrl",
+    "RMSprop",
+    "SGD",
+  ];
+  static LossFunctions = [
+    "Binary Crossentropy",
+    "Binary Focal Crossentropy",
+    "Categorical Crossentropy",
+    "Categorical Hinge",
+    "Cosine Similarity",
+    "Hinge loss",
+    "Huber loss",
+    "Kullback-Leibler divergence",
+    "Hyperbolic cosine logarithm",
+    "Mean Absolute Error",
+    "Mean Absolute Percentage Error",
+    "Mean Squared Error",
+    "Mean Squared Logarithmic Error",
+    "Poisson",
+    "Sparse Categorical Crossentropy",
+    "Squared Hinge",
+  ];
+  static Metrics = [
+    "AUC",
     "Accuracy",
     "BinaryAccuracy",
     "BinaryCrossentropy",
@@ -46,5 +69,6 @@ export default class ModelHyperparametersEnums {
     "Sum",
     "TopKCategoricalAccuracy",
     "TrueNegatives",
-    "TruePositives"];
+    "TruePositives",
+  ];
 }

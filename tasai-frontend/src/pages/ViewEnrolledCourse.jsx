@@ -155,27 +155,30 @@ export const ViewEnrolledCourse = () => {
               ></Grid>
             </Grid>
           </Paper>
-            <Paper elevation={2}
-                   style={{
-                       display:'flex',
-                       flexDirection:'row',
-                       justifyContent:'space-between',
-                       alignItems:'center',
-                       paddingBlock:'20px',
-                       paddingInline:'25px'}}
+          <Paper
+            elevation={2}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingBlock: "20px",
+              paddingInline: "25px",
+            }}
+          >
+            <Typography
+              variant={"h5"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
             >
-                <Typography variant={"h5"}
-                            style={{
-                                fontFamily:'Montserrat, sans-serif',
-                                fontWeight:'bold'}}
-                >
-                    Kurso gyvų pamokų transliacijos tvarkaraštis
-                </Typography>
-                <Button variant={"contained"}
-                        href={`/mycourses/${id}/timetable`}>
-                    Peržiūrėti tvarkaraštį
-                </Button>
-            </Paper>
+              Kurso gyvų pamokų transliacijos tvarkaraštis
+            </Typography>
+            <Button variant={"contained"} href={`/mycourses/${id}/timetable`}>
+              Peržiūrėti tvarkaraštį
+            </Button>
+          </Paper>
           <Paper>
             <Typography
               style={{
