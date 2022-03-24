@@ -8,6 +8,8 @@ import {
 import {
   Accordion,
   AccordionDetails,
+  FormControl,
+  InputLabel,
   AccordionSummary,
   Button,
   Chip,
@@ -17,17 +19,20 @@ import {
   DialogTitle,
   Divider,
   Grid,
+  MenuItem,
   Paper,
+  Select,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LayerHyperparameters } from "../components/ANNConfiguration/LayerHyperparameters";
 import { LayerSelection } from "../components/ANNConfiguration/LayerSelection";
 import { LayerVisualization } from "../components/ANNConfiguration/LayerVisualization";
 import { ModelHyperparameters } from "../components/ANNConfiguration/ModelHyperparameters";
 import LayersEnums from "../utils/ANNConfiguration/LayersEnums";
+import CodeSnippet from "../../node_modules/carbon-components-react/es/components/CodeSnippet/CodeSnippet";
 
 export const NewANNModel = () => {
   const layers = LayersEnums.Layers;
@@ -35,8 +40,10 @@ export const NewANNModel = () => {
   const handleNewLayerDialogClose = () => setNewLayerDialogOpen(false);
   const handleNewLayerDialogOpen = () => setNewLayerDialogOpen(true);
   const [layerCategory, setLayerCategory] = useState(0);
+  const [availableLayers, setAvailableLayers] = useState(layers[0].layers);
   const [addedLayers, setAddedLayers] = useState([]);
   const [selectedLayer, setSelectedLayer] = useState("");
+  const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
   const [modelHyperparams, setModelHyperparams] = useState({
     optimizer: "Adam",
     loss: "Binary Crossentropy",
@@ -62,8 +69,9 @@ export const NewANNModel = () => {
     });
   };
 
-  const handleCategoryChange = (event, newValue) => {
-    setLayerCategory(newValue);
+  const handleCategoryChange = (event) => {
+    setLayerCategory(event.target.value);
+    changeAvailableLayers(event.target.value);
   };
   const handleLayerAddition = () => {
     setAddedLayers((layers) => [...layers, selectedLayer]);
@@ -72,9 +80,25 @@ export const NewANNModel = () => {
       { title: selectedLayer, id: addedLayers.length, hyperparameters: {} },
     ]);
   };
+  const changeAvailableLayers = (cat) => {
+    let res = layers.filter((layerType) => layerType.layerCatId === cat)[0];
+    setAvailableLayers(res.layers);
+    setSelectedLayer(res.layers[0]);
+  };
+  useEffect(() => {
+    changeAvailableLayers(layerCategory);
+  }, []);
 
   return (
     <>
+      <Dialog open={true}>
+        <DialogTitle>{"Jūsų sugeneruotas kodas"}</DialogTitle>
+        <DialogContent>
+          <CodeSnippet type="multi" hideCopyButton={true}>
+            Inserting sexy code here
+          </CodeSnippet>
+        </DialogContent>
+      </Dialog>
       <Dialog
         open={newLayerDialogOpen}
         onClose={handleNewLayerDialogClose}
@@ -82,25 +106,34 @@ export const NewANNModel = () => {
       >
         <DialogTitle>{"Naujo sluoksnio pridėjimas"}</DialogTitle>
         <DialogContent>
-          <Tabs
-            value={layerCategory}
-            onChange={handleCategoryChange}
-            variant="scrollable"
-            scrollButtons="auto"
-          >
-            {layers.map((layerType) => (
-              <Tab label={layerType.layerCat} />
-            ))}
-          </Tabs>
-          {layers.map((layerType) => (
-            <LayerSelection
+          <FormControl fullWidth style={{ marginBlock: "20px" }}>
+            <InputLabel id="layer-type">Sluoksnio tipas</InputLabel>
+            <Select
+              labelId="layer-type"
+              id="layer-type-select"
               value={layerCategory}
-              index={layerType.layerCatId}
-              selectLayerFunc={setSelectedLayer}
+              onChange={handleCategoryChange}
             >
-              {layerType.layers}
-            </LayerSelection>
-          ))}
+              {layers.map((layerType) => (
+                <MenuItem value={layerType.layerCatId}>
+                  {layerType.layerCat}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth style={{ marginBlock: "20px" }}>
+            <InputLabel id="layer">Sluoksnis</InputLabel>
+            <Select
+              labelId="layer"
+              id="layer-select"
+              value={selectedLayer}
+              onChange={(event) => setSelectedLayer(event.target.value)}
+            >
+              {availableLayers.map((layer) => (
+                <MenuItem value={layer}>{layer}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleNewLayerDialogClose}>Atšaukti</Button>

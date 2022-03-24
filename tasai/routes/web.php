@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 //Public routes
 Route::group(['middleware'=>['Cors']], function()
 {
+    Route::post("/api/generate_model", [\App\Http\Controllers\ANNController::class, "parseModelFromJson"]);
+
     Route::get('/api/export_timetable/{id}', [\App\Http\Controllers\TimetableEntryController::class, "export_course_event"]);
     Route::get('/api/course_timetable/{id}', [\App\Http\Controllers\TimetableEntryController::class, "get_course_timetable"]);
     Route::get('/api/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
