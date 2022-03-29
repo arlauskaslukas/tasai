@@ -33,6 +33,7 @@ import { LayerVisualization } from "../components/ANNConfiguration/LayerVisualiz
 import { ModelHyperparameters } from "../components/ANNConfiguration/ModelHyperparameters";
 import LayersEnums from "../utils/ANNConfiguration/LayersEnums";
 import CodeSnippet from "../../node_modules/carbon-components-react/es/components/CodeSnippet/CodeSnippet";
+import DataFetchService from "../services/DataFetchService";
 
 export const NewANNModel = () => {
   const layers = LayersEnums.Layers;
@@ -44,12 +45,14 @@ export const NewANNModel = () => {
   const [addedLayers, setAddedLayers] = useState([]);
   const [selectedLayer, setSelectedLayer] = useState("");
   const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
+  const dfs = new DataFetchService();
   const [modelHyperparams, setModelHyperparams] = useState({
     optimizer: "Adam",
     loss: "Binary Crossentropy",
     metrics: [],
   });
   const [layersHyperparams, setLayersHyperparams] = useState([]);
+  const [modelText, setModelText] = useState("");
 
   const changeHyperparamsVals = (idx, params) => {
     let mapped = layersHyperparams.map((layer) => {
@@ -59,6 +62,16 @@ export const NewANNModel = () => {
     });
     console.log(mapped);
     setLayersHyperparams(mapped);
+  };
+
+  const handleModelCodeGeneration = () => {
+    let res = await dfs.generateANNModel(
+      modelHyperparams.optimizer,
+      modelHyperparams.loss,
+      modelHyperparams.metrics,
+      layersHyperparams
+    );
+    setModelText()
   };
 
   const setHyperparams = (optimizerVal, lossVal) => {
@@ -91,13 +104,14 @@ export const NewANNModel = () => {
 
   return (
     <>
-      <Dialog open={true}>
+      <Dialog open={false}>
         <DialogTitle>{"Jūsų sugeneruotas kodas"}</DialogTitle>
         <DialogContent>
           <CodeSnippet type="multi" hideCopyButton={true}>
-            Inserting sexy code here
+            Inserting tensorflow code here
           </CodeSnippet>
         </DialogContent>
+        <DialogActions></DialogActions>
       </Dialog>
       <Dialog
         open={newLayerDialogOpen}
