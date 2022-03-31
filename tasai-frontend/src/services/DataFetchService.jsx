@@ -34,6 +34,7 @@ export default class DataFetchService {
       metrics: metrics,
       layers: layers,
     });
+    console.log(res.data);
     return res.data;
   }
 }

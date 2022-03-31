@@ -64,15 +64,21 @@ export const NewANNModel = () => {
     setLayersHyperparams(mapped);
   };
 
-  const handleModelCodeGeneration = () => {
+  const handleModelCodeGeneration = async () => {
     let res = await dfs.generateANNModel(
       modelHyperparams.optimizer,
       modelHyperparams.loss,
       modelHyperparams.metrics,
       layersHyperparams
     );
-    setModelText()
+    setModelText(res.model);
+    handleCodeSnippetOpen();
   };
+
+  const handleCodeSnippetOpen = () =>
+  {
+    setCodeSnippetOpen(!codeSnippetOpen);
+  }
 
   const setHyperparams = (optimizerVal, lossVal) => {
     setModelHyperparams({
@@ -104,14 +110,36 @@ export const NewANNModel = () => {
 
   return (
     <>
-      <Dialog open={false}>
+      <Dialog open={codeSnippetOpen}>
         <DialogTitle>{"Jūsų sugeneruotas kodas"}</DialogTitle>
         <DialogContent>
-          <CodeSnippet type="multi" hideCopyButton={true}>
-            Inserting tensorflow code here
-          </CodeSnippet>
+          <div style={{ overflow: "hidden", height: "100%", width: "100%" }}>
+            <div
+              style={{
+                paddingRight: 17,
+                height: "100%",
+                width: "100%",
+                boxSizing: "content-box",
+                overflow: "scroll"
+              }}
+            >
+            <CodeSnippet wrapText={true} type="multi" hideCopyButton={true}>
+              {
+                modelText === "" ? "Generating model code..." : modelText.toString()
+              }
+            </CodeSnippet>
+            </div>
+          </div>
         </DialogContent>
-        <DialogActions></DialogActions>
+        <DialogActions>
+          <Button
+              variant="contained"
+              autoFocus
+              onClick={handleCodeSnippetOpen}
+            >
+              Uždaryti
+            </Button>
+        </DialogActions>
       </Dialog>
       <Dialog
         open={newLayerDialogOpen}
@@ -220,6 +248,7 @@ export const NewANNModel = () => {
                   style={{ marginLeft: "20px" }}
                   color="success"
                   variant="contained"
+                  onClick={handleModelCodeGeneration}
                   startIcon={<SendAndArchiveOutlined />}
                 >
                   Generuoti kodą

@@ -24,13 +24,13 @@ class ANNController extends Controller
          * Append the model.compile() with optimizer, loss, and metrics
          * Prepend keras dependencies
          */
-        $layers = "[";
+        $layers = "[\n";
         foreach($request->layers as $layer)
         {
             $data = $this->parseLayer($layer);
             $layers = $layers . $data;
         }
-        $layers = $layers."]";
+        $layers = $layers."\n]";
         $model = $this->addDependencies()."model = keras.Sequential(".$layers.")\n\n".$this->addCompile($request);
         return response(["model"=>$model], 200);
     }
@@ -40,13 +40,31 @@ class ANNController extends Controller
         {
             $shape = $layer["hyperparameters"]["input_shape"];
             $batch_size = $layer["hyperparameters"]["batch_size"];
-            return "layers.Input(shape=($shape), batch_size=$batch_size)";
+            return "\tlayers.Input(shape=($shape), batch_size=$batch_size),\n";
         }
         elseif($layer['title'] == "Dense")
         {
             $activation = $layer["hyperparameters"]["activation"];
             $units = $layer["hyperparameters"]["units"];
-            return "layers.Dense($units, activation='$activation'),\n";
+            return "\tlayers.Dense($units, activation='$activation'),\n";
+        }
+        elseif($layer['title']=="Flatten")
+        {
+            $data_format = $layer["hyperparameters"]["data_format"];
+            return "\tlayers.Flatten(data_format='$data_format'), \n";
+        }
+        elseif($layer['title'] == "Dropout")
+        {
+            $rate = $layer['hyperparameters']['rate'];
+            return "\tlayers.Dropout(rate=$rate), \n";
+        }
+        elseif($layer['title'] == "Conv2D") {
+            $filters = $layer['hyperparameters']['filters'];
+            $kernel_size = $layer['hyperparameters']['kernel_size'];
+            $strides = $layer['hyperparameters']['strides'];
+            $padding = $layer['hyperparameters']['padding'];
+            $activation = $layer['hyperparameters']['activation'];
+            return "\tlayers.Conv2D($filters, $kernel_size, strides=$strides, padding='$padding', activation='$activation'),\n";
         }
     }
     private function addCompile($modeldata)
