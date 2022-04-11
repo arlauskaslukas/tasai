@@ -16,19 +16,6 @@ class TopicController extends Controller
     public function index()
     {
         $array = Topic::all();
-        //array_push($array,new Topic(['id'=>1,'title'=>'lorem ipsum','topic_order'=>1,
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1]));
-        //array_push($array,new Topic(['id'=>2,'title'=>'lorem ipsum','topic_order'=>2,
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1]));
-        //array_push($array,new Topic(['id'=>3, 'title'=>'lorem ipsum','topic_order'=>3,
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'theory'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'course_id'=>1]));
-        //
         return response($array, 200);
     }
 

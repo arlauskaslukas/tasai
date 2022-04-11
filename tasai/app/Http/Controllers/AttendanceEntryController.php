@@ -16,9 +16,13 @@ class AttendanceEntryController extends Controller
     public function index()
     {
         $array = AttendanceEntry::all();
-        //array_push($array, new AssignmentEntry(['id'=>1,'is_attending'=>true,'user_id'=>1,'topic_id'=>1]));
-        //array_push($array, new AssignmentEntry(['id'=>2,'is_attending'=>true,'user_id'=>2,'topic_id'=>1]));
-        //array_push($array, new AssignmentEntry(['id'=>3,'is_attending'=>true,'user_id'=>3,'topic_id'=>1]));
+        foreach ($array as $element)
+        {
+            $user = $element->user()->get(['name']);
+            $topic = $element->topic()->get(['title']);
+            $element['topic'] = $topic;
+            $element['user'] = $user;
+        }
         return response($array, 200);
     }
 
@@ -40,7 +44,13 @@ class AttendanceEntryController extends Controller
      */
     public function store(Request $request)
     {
-        $entry = new AttendanceEntry(['is_attending' => $request['is_attending'], 'user_id' => $request['user_id'], 'topic_id' => $request['topic_id']]);
+        $entry = new AttendanceEntry(
+            [
+                'is_attending' => $request['is_attending'],
+                'user_id' => $request['user_id'],
+                'topic_id' => $request['topic_id']
+            ]
+        );
         if ($entry->save()) return response($entry, 201);
         return response('', 409);
     }
@@ -55,6 +65,10 @@ class AttendanceEntryController extends Controller
     {
         $entry = AttendanceEntry::find($id);
         if ($entry == null) return response('', 404);
+        $user = $entry->user()->get(['name']);
+        $topic = $entry->topic()->get(['title']);
+        $entry['topic'] = $topic;
+        $entry['user'] = $user;
         return response($entry, 201);
     }
 
@@ -78,7 +92,13 @@ class AttendanceEntryController extends Controller
      */
     public function update(Request $request)
     {
-        AttendanceEntry::findOrFail($request['id'])->update(['is_attending' => $request['is_attending'], 'user_id' => $request['user_id'], 'topic_id' => $request['topic_id']]);
+        AttendanceEntry::findOrFail($request['id'])->update(
+            [
+                'is_attending' => $request['is_attending'],
+                'user_id' => $request['user_id'],
+                'topic_id' => $request['topic_id']
+            ]
+        );
         return response(array("response" => "ok"), 200);
     }
 
