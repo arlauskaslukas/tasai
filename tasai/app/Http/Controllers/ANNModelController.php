@@ -86,9 +86,12 @@ class ANNModelController extends Controller
      * @param  \App\Models\ANNModel  $aNNModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ANNModel $aNNModel)
+    public function update(Request $request, $id)
     {
-        //
+        $fields = $request->validate([
+            "optimizer"=>"required|string",
+            "loss"=>"required|string",
+        ]);
     }
 
     /**
