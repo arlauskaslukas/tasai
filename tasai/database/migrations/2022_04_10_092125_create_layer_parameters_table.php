@@ -15,7 +15,10 @@ class CreateLayerParametersTable extends Migration
     {
         Schema::create('layer_parameters', function (Blueprint $table) {
             $table->id();
-            
+            $table->string("name");
+            $table->string("type");
+            $table->string("value");
+            $table->foreignId("layer_id")->constrained("layers");
             $table->timestamps();
         });
     }

@@ -14,7 +14,8 @@ class ANNModelController extends Controller
      */
     public function index()
     {
-        //
+        $models = ANNModel::all();
+        return response($models, 200);
     }
 
     /**
@@ -33,9 +34,18 @@ class ANNModelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($title, $optimizer, $loss, $user_id)
     {
-        //
+        $model = new ANNModel(
+            [
+                'title'=> $title,
+                'optimizer'=>$optimizer,
+                'loss'=>$loss,
+                'user_id'=>$user_id
+            ]
+        );
+        if($model->save()) return "ok";
+        return "fail";
     }
 
     /**
@@ -44,9 +54,18 @@ class ANNModelController extends Controller
      * @param  \App\Models\ANNModel  $aNNModel
      * @return \Illuminate\Http\Response
      */
-    public function show(ANNModel $aNNModel)
+    public function show($id)
     {
-        //
+        $model = ANNModel::find($id);
+        if($model==null) return response(["message"=>"not found"], 404);
+        $layers = $model->layers()->get();
+        foreach ($layers as $layer)
+        {
+            $params = $layer->layerParameters()->get();
+            $layer["hyperparameters"] = $params;
+        }
+        $model["layers"] = $layers;
+        return response(["message"=>"ok", "model"=>$model], 200);
     }
 
     /**

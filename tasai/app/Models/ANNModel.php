@@ -9,4 +9,7 @@ class ANNModel extends Model
 {
     protected $table = "ann_models";
     use HasFactory;
+
+    public function layers() {return $this->hasMany(Layer::class);}
+    public function user() {return $this->belongsTo(User::class);}
 }

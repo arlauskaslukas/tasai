@@ -30,6 +30,6 @@ class CreateANNModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('a_n_n_models');
+        Schema::dropIfExists('ann_models');
     }
 }

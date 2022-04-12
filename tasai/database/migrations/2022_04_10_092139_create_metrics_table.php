@@ -15,6 +15,8 @@ class CreateMetricsTable extends Migration
     {
         Schema::create('metrics', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->foreignId('ann_model_id')->constrained('ann_models');
             $table->timestamps();
         });
     }
