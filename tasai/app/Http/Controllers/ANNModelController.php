@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ANNModel;
+use App\Models\Layer;
+use App\Models\LayerParameter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ANNModelController extends Controller
 {
@@ -34,26 +37,148 @@ class ANNModelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($title, $optimizer, $loss, $user_id)
+    public function store(Request $request)
     {
+        /*
+         * expected structure
+         * {
+         *      title,
+         *      optimizer,
+         *      loss,
+         *      user_id,
+         *      layers: [
+         *          {
+         *              type,
+         *              activation,
+         *              hyperparameters: {
+         *                  "key": "value"
+         *                  ...
+         *              }
+         *          },
+         *          ...
+         *      ]
+         * }
+         */
+        $fields = $request->validate([
+            "title"=>"required",
+            "optimizer"=>"required",
+            "loss"=>"required",
+            "user_id"=>"required",
+            "layers"=>"required"
+        ]);
         $model = new ANNModel(
             [
-                'title'=> $title,
-                'optimizer'=>$optimizer,
-                'loss'=>$loss,
-                'user_id'=>$user_id
+                'title'=> $request["title"],
+                'optimizer'=>$request["optimizer"],
+                'loss'=>$request["loss"],
+                'user_id'=>$request["user_id"]
             ]
         );
-        if($model->save()) return "ok";
-        return "fail";
+        if(!$model->save())
+        {
+            return response(["message"=>"error inserting model"], 409);
+        }
+        $layer_insertion_status = $this->insertChainOfLayers($request["layers"], $model->id);
+        if($layer_insertion_status["message"]!="ok")
+        {
+            return response($layer_insertion_status, 409);
+        }
+        return response(["message"=>"ok"], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ANNModel  $aNNModel
-     * @return \Illuminate\Http\Response
-     */
+
+    public function insertChainOfLayers($layers, $annModelId)
+    {
+        $nextId = null;
+        //in reverse order
+        for($i = count($layers) - 1; $i >= 0; $i--)
+        {
+            $layer = $layers[$i];
+            if($nextId == null)
+            {
+                $layerObject = new Layer([
+                    "type"=>$layer["type"],
+                    "activation"=>$layer["activation"],
+                    "ann_model_id"=>$annModelId
+                ]);
+            }
+            else {
+                $layerObject = new Layer([
+                    "type"=>$layer["type"],
+                    "activation"=>$layer["activation"],
+                    "ann_model_id"=>$annModelId,
+                    "next_layer_id"=>$nextId
+                ]);
+            }
+            if($layerObject->save())
+            {
+                $nextId = $layerObject->id;
+                $transformed_params = $this->transformpPassedParams($layer["hyperparameters"]);
+                $params_status = $this->saveLayerParameters($transformed_params, $nextId);
+                if($params_status["message"]!="ok")
+                {
+                    return $params_status;
+                }
+            }
+            else return ["message"=>"error saving layer", "layer"=>$layerObject];
+        }
+        return ["message"=>"ok"];
+    }
+
+    public function saveLayerParameters($parameters, $layer_id)
+    {
+        foreach($parameters as $parameter)
+        {
+            $parameterObject = new LayerParameter([
+                "name" => $parameter["name"],
+                "type" => $parameter["type"],
+                "value" => $parameter["value"],
+                "layer_id" => $layer_id
+            ]);
+            if(!$parameterObject->save())
+            {
+                return ["message"=>"parameter save failed", "parameter"=>$parameterObject];
+            }
+        }
+        return ["message"=>"ok"];
+    }
+
+    public function transformpPassedParams($hyperparameters)
+    {
+        $transformed_list = array();
+        foreach ($hyperparameters as $key => $value)
+        {
+            $element = [
+                "name" => $key,
+                "value" => $value,
+                "type" => $this->determineType($key)
+            ];
+            array_push($transformed_list, $element);
+        }
+        return $transformed_list;
+    }
+    private function determineType($name)
+    {
+        switch($name)
+        {
+            case "kernel_size":
+            case "input_shape":
+                return "tuple";
+            case "batch_size":
+            case "units":
+            case "strides":
+                return "int";
+            case "padding":
+            case "filters":
+            case "data_format":
+                return "string";
+            case "rate":
+                return "float";
+            default:
+                return "undefined";
+        }
+    }
+
     public function show($id)
     {
         $model = ANNModel::find($id);
