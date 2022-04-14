@@ -77,7 +77,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
             variant="h4"
             textAlign={"left"}
           >
-            Administratoriaus panelė
+            Admin dashboard
           </Typography>
         </Paper>
         <Grid container spacing={2}>
@@ -91,7 +91,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   fontWeight: "bold",
                 }}
               >
-                Kursų kontrolės centras
+                Courses management
               </Typography>
               <div style={{ display: "inline-block" }}>
                 <Button
@@ -104,7 +104,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   startIcon={<VisibilityIcon />}
                   href="/admin/courses"
                 >
-                  Valdyti kursus
+                  Manage courses
                 </Button>
                 <Button
                   className={classes.button}
@@ -112,7 +112,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   startIcon={<AddIcon />}
                   href="/admin/courses/new"
                 >
-                  Pridėti kursą
+                  Add course
                 </Button>
               </div>
             </Paper>
@@ -127,7 +127,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 variant="h6"
                 textAlign="left"
               >
-                Temų kontrolės centras
+                Topics management
               </Typography>
               <div style={{ display: "inline-block" }}>
                 <Button
@@ -141,7 +141,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                     justifyContent: "space-around",
                   }}
                 >
-                  Valdyti temas
+                  Manage topics
                 </Button>
                 <Button
                   className={classes.button}
@@ -152,7 +152,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   }}
                   href={"/admin/topics/new"}
                 >
-                  Pridėti temą
+                  Add topic
                 </Button>
               </div>
             </Paper>
@@ -167,7 +167,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 variant="h6"
                 textAlign="left"
               >
-                Naudotojų valdymo centras
+                Users management
               </Typography>
               <div style={{ display: "inline-block" }}>
                 <Button
@@ -180,7 +180,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                     backgroundColor: "#C11F6B",
                   }}
                 >
-                  Valdyti naudotojus
+                  Manage users
                 </Button>
               </div>
             </Paper>
@@ -197,7 +197,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 variant="h6"
                 textAlign="left"
               >
-                Kursų tvarkaraščių centras
+                Courses timetables management
               </Typography>
               <div style={{ display: "inline-block" }}>
                 <Button
@@ -211,7 +211,36 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   href={"/admin/timetables"}
                   startIcon={<VisibilityIcon />}
                 >
-                  Valdyti tvarkaraščius
+                  Manage timetables
+                </Button>
+              </div>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper className={classes.paper}>
+              <Typography
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "bold",
+                }}
+                variant="h6"
+                textAlign="left"
+              >
+                Attendance management
+              </Typography>
+              <div style={{ display: "inline-block" }}>
+                <Button
+                  className={classes.button}
+                  variant={"contained"}
+                  style={{
+                    marginBlock: "20px",
+                    backgroundColor: "#C11F6B",
+                    justifyContent: "space-around",
+                  }}
+                  href={"/admin/attendance"}
+                  startIcon={<VisibilityIcon />}
+                >
+                  Review attendance
                 </Button>
               </div>
             </Paper>
@@ -228,7 +257,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 variant="h6"
                 textAlign="left"
               >
-                Atsiskaitymų centras
+                Assignments management
               </Typography>
               <div style={{ display: "inline-block" }}>
                 <Button
@@ -242,7 +271,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   href={"/admin/assignments"}
                   startIcon={<VisibilityIcon />}
                 >
-                  Valdyti atsiskaitymus
+                  Manage assignments
                 </Button>
               </div>
             </Paper>
@@ -257,7 +286,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 variant="h6"
                 textAlign="left"
               >
-                Neseniai prie kursų prisijungę vartotojai
+                Recently joined users
               </Typography>
               <List>
                 {recentJoins.map((row) => (

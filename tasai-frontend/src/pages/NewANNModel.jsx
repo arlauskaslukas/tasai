@@ -34,6 +34,10 @@ import { ModelHyperparameters } from "../components/ANNConfiguration/ModelHyperp
 import LayersEnums from "../utils/ANNConfiguration/LayersEnums";
 import CodeSnippet from "../../node_modules/carbon-components-react/es/components/CodeSnippet/CodeSnippet";
 import DataFetchService from "../services/DataFetchService";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import { LoadingBackdrop } from "../components/LoadingBackdrop";
+import { SnackbarSuccess } from "../components/SnackbarSuccess";
+import { responsiveProperty } from "@mui/material/styles/cssUtils";
 
 export const NewANNModel = () => {
   const layers = LayersEnums.Layers;
@@ -45,7 +49,11 @@ export const NewANNModel = () => {
   const [addedLayers, setAddedLayers] = useState([]);
   const [selectedLayer, setSelectedLayer] = useState("");
   const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
+  const [saveModelSuccess, setSaveModelSuccess] = useState(false);
   const dfs = new DataFetchService();
+
+  const [toggleLoading, setToggleLoading] = useState(false);
+
   const [modelHyperparams, setModelHyperparams] = useState({
     optimizer: "Adam",
     loss: "Binary Crossentropy",
@@ -75,16 +83,31 @@ export const NewANNModel = () => {
     handleCodeSnippetOpen();
   };
 
-  const handleCodeSnippetOpen = () =>
-  {
-    setCodeSnippetOpen(!codeSnippetOpen);
-  }
+  const handleSave = async () => {
+    setToggleLoading(true);
+    let response = await dfs.saveANNModel(
+      "Luko hoedom",
+      modelHyperparams.optimizer,
+      modelHyperparams.loss,
+      modelHyperparams.metrics,
+      layersHyperparams
+    );
+    setToggleLoading(false);
+    if (response.message === "ok") {
+      setSaveModelSuccess(true);
+    }
+  };
 
-  const setHyperparams = (optimizerVal, lossVal) => {
+  const handleCodeSnippetOpen = () => {
+    setCodeSnippetOpen(!codeSnippetOpen);
+  };
+
+  const setHyperparams = (optimizerVal, lossVal, metrics) => {
     setModelHyperparams({
       ...modelHyperparams,
       optimizer: optimizerVal,
       loss: lossVal,
+      metrics: metrics,
     });
   };
 
@@ -104,12 +127,19 @@ export const NewANNModel = () => {
     setAvailableLayers(res.layers);
     setSelectedLayer(res.layers[0]);
   };
+
   useEffect(() => {
     changeAvailableLayers(layerCategory);
   }, []);
 
   return (
     <>
+      <LoadingBackdrop open={toggleLoading} />
+      <SnackbarSuccess
+        open={saveModelSuccess}
+        handleToggle={() => setSaveModelSuccess(!saveModelSuccess)}
+        text={"A model has been saved successfully"}
+      />
       <Dialog open={codeSnippetOpen}>
         <DialogTitle>{"Jūsų sugeneruotas kodas"}</DialogTitle>
         <DialogContent>
@@ -120,25 +150,21 @@ export const NewANNModel = () => {
                 height: "100%",
                 width: "100%",
                 boxSizing: "content-box",
-                overflow: "scroll"
+                overflow: "scroll",
               }}
             >
-            <CodeSnippet wrapText={true} type="multi" hideCopyButton={true}>
-              {
-                modelText === "" ? "Generating model code..." : modelText.toString()
-              }
-            </CodeSnippet>
+              <CodeSnippet wrapText={true} type="multi" hideCopyButton={true}>
+                {modelText === ""
+                  ? "Generating model code..."
+                  : modelText.toString()}
+              </CodeSnippet>
             </div>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button
-              variant="contained"
-              autoFocus
-              onClick={handleCodeSnippetOpen}
-            >
-              Uždaryti
-            </Button>
+          <Button variant="contained" autoFocus onClick={handleCodeSnippetOpen}>
+            Uždaryti
+          </Button>
         </DialogActions>
       </Dialog>
       <Dialog
@@ -229,48 +255,62 @@ export const NewANNModel = () => {
                 paddingTop: "20px",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Button
-                  onClick={handleNewLayerDialogOpen}
-                  color="info"
-                  variant="contained"
-                  startIcon={<AddCircleOutline />}
-                >
-                  Naujas modelio sluoksnis
-                </Button>
-                <Button
-                  style={{ marginLeft: "20px" }}
-                  color="success"
-                  variant="contained"
-                  onClick={handleModelCodeGeneration}
-                  startIcon={<SendAndArchiveOutlined />}
-                >
-                  Generuoti kodą
-                </Button>
-                <Button
-                  style={{ marginLeft: "20px" }}
-                  color="secondary"
-                  variant="contained"
-                  disabled
-                  startIcon={<BugReport />}
-                >
-                  Testuoti architektūrą
-                </Button>
-                <Button
-                  style={{ marginInline: "20px" }}
-                  color="warning"
-                  variant="contained"
-                  startIcon={<Upload />}
-                >
-                  Įkelti DNT architektūrą
-                </Button>
-              </div>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={4}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    onClick={handleNewLayerDialogOpen}
+                    color="info"
+                    variant="contained"
+                    startIcon={<AddCircleOutline />}
+                  >
+                    Naujas modelio sluoksnis
+                  </Button>
+                </Grid>
+                <Grid item xs={6} md={4}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    color="success"
+                    variant="contained"
+                    onClick={handleModelCodeGeneration}
+                    startIcon={<SendAndArchiveOutlined />}
+                  >
+                    Generuoti kodą
+                  </Button>
+                </Grid>
+                <Grid item xs={6} md={4}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    color="secondary"
+                    variant="contained"
+                    disabled
+                    startIcon={<BugReport />}
+                  >
+                    Testuoti architektūrą
+                  </Button>
+                </Grid>
+                <Grid item xs={6} md={4}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    color="warning"
+                    variant="contained"
+                    startIcon={<Upload />}
+                  >
+                    Įkelti DNT architektūrą
+                  </Button>
+                </Grid>
+                <Grid item xs={6} md={4}>
+                  <Button
+                    style={{ width: "100%", height: "100%" }}
+                    color="success"
+                    variant="contained"
+                    onClick={handleSave}
+                    startIcon={<SaveAltIcon />}
+                  >
+                    Išsaugoti DNT architektūrą
+                  </Button>
+                </Grid>
+              </Grid>
               <Paper
                 elevation={2}
                 style={{

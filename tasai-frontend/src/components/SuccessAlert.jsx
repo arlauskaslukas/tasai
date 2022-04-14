@@ -5,7 +5,6 @@ export const SuccessAlert = () => {
   return (
     <div>
       <Alert
-        variant="filled"
         severity="success"
         style={{ textAlign: "left", marginBlock: "50px" }}
       >

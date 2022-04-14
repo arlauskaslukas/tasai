@@ -5,7 +5,6 @@ export const Error = ({ title, subpoints = [] }) => {
   return (
     <div>
       <Alert
-        variant="filled"
         severity="error"
         style={{ textAlign: "left", marginBlock: "20px" }}
       >

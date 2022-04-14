@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Metric extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "ann_model_id"
+    ];
+    public function model() {return $this->belongsTo(ANNModel::class, "ann_model_id");}
 }

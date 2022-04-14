@@ -18,7 +18,6 @@ class CreateLayersTable extends Migration
             $table->foreignId("next_layer_id")->nullable()->constrained("layers");
             $table->foreignId("ann_model_id")->constrained("ann_models");
             $table->string("type");
-            $table->string("activation");
             $table->timestamps();
         });
     }

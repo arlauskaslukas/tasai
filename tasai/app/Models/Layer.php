@@ -12,7 +12,6 @@ class Layer extends Model
         "next_layer_id",
         "ann_model_id",
         "type",
-        "activation"
     ];
     public function model() {return $this->hasMany(ANNModel::class);}
     public function layerParameters() {return $this->hasMany(LayerParameter::class);}

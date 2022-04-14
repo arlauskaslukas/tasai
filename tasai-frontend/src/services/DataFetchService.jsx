@@ -37,4 +37,16 @@ export default class DataFetchService {
     console.log(res.data);
     return res.data;
   }
+  async saveANNModel(title, optimizer, loss, metrics, layers) {
+    let res = await AxiosClient.post(this.apiBaseUrl + "/save_model", {
+      optimizer: optimizer,
+      loss: loss,
+      metrics: metrics,
+      layers: layers,
+      title: title,
+      user_id: 1,
+    });
+    console.log(res);
+    return res.data;
+  }
 }

@@ -18,16 +18,17 @@ export const ModelHyperparameters = ({ callback }) => {
   const [metrics, setMetrics] = useState([
     { id: 0, chosen: false, title: "fill" },
   ]);
+  const [sendableMetrics, setSendableMetrics] = useState([]);
   const optimizers = ModelHyperparametersEnums.optimizers;
   const losses = ModelHyperparametersEnums.LossFunctions;
   const Metrics = ModelHyperparametersEnums.Metrics;
   const handleOptimizerChange = (event) => {
     setOptimizer(event.target.value);
-    callback(event.target.value, lossFunction);
+    callback(event.target.value, lossFunction, sendableMetrics);
   };
   const handleLossFunctionChange = (event) => {
     setLossFunction(event.target.value);
-    callback(optimizer, event.target.value);
+    callback(optimizer, event.target.value, sendableMetrics);
   };
   const handleMetricCheck = (id) => {
     let mapped = metrics.map((metric) => {
@@ -35,7 +36,15 @@ export const ModelHyperparameters = ({ callback }) => {
         ? { ...metric, chosen: !metric.chosen }
         : { ...metric };
     });
+    console.log(mapped);
     setMetrics(mapped);
+    let metricsForModel = mapped
+      .filter((metric) => metric.chosen)
+      .map((metric) => {
+        return { name: metric.title };
+      });
+    setSendableMetrics(metricsForModel);
+    callback(optimizer, lossFunction, metricsForModel);
   };
   useEffect(() => {
     let mappedMetrics = Metrics.map((metric, idx) => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ANNModel;
 use App\Models\Layer;
 use App\Models\LayerParameter;
+use App\Models\Metric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -46,10 +47,10 @@ class ANNModelController extends Controller
          *      optimizer,
          *      loss,
          *      user_id,
+         *      metrics: []
          *      layers: [
          *          {
          *              type,
-         *              activation,
          *              hyperparameters: {
          *                  "key": "value"
          *                  ...
@@ -64,7 +65,8 @@ class ANNModelController extends Controller
             "optimizer"=>"required",
             "loss"=>"required",
             "user_id"=>"required",
-            "layers"=>"required"
+            "layers"=>"required",
+            "metrics"=>"required",
         ]);
         $model = new ANNModel(
             [
@@ -78,6 +80,11 @@ class ANNModelController extends Controller
         {
             return response(["message"=>"error inserting model"], 409);
         }
+        $metrics_insertion_status = $this->insertMetrics($request['metrics'], $model->id);
+        if($metrics_insertion_status['message']!="ok")
+        {
+            return response($metrics_insertion_status, 409);
+        }
         $layer_insertion_status = $this->insertChainOfLayers($request["layers"], $model->id);
         if($layer_insertion_status["message"]!="ok")
         {
@@ -86,6 +93,22 @@ class ANNModelController extends Controller
         return response(["message"=>"ok"], 201);
     }
 
+    public function insertMetrics($metrics, $annModelId)
+    {
+        foreach($metrics as $metric)
+        {
+            $metricObject = new Metric([
+                "name"=>$metric["name"],
+                "ann_model_id"=>$annModelId
+            ]);
+
+            if(!$metricObject->save())
+            {
+                return ["message"=>"error saving metrics", "metric"=>$metricObject];
+            }
+        }
+        return ["message"=>"ok"];
+    }
 
     public function insertChainOfLayers($layers, $annModelId)
     {
@@ -97,15 +120,13 @@ class ANNModelController extends Controller
             if($nextId == null)
             {
                 $layerObject = new Layer([
-                    "type"=>$layer["type"],
-                    "activation"=>$layer["activation"],
+                    "type"=>$layer["title"],
                     "ann_model_id"=>$annModelId
                 ]);
             }
             else {
                 $layerObject = new Layer([
-                    "type"=>$layer["type"],
-                    "activation"=>$layer["activation"],
+                    "type"=>$layer["title"],
                     "ann_model_id"=>$annModelId,
                     "next_layer_id"=>$nextId
                 ]);
@@ -169,6 +190,7 @@ class ANNModelController extends Controller
             case "strides":
                 return "int";
             case "padding":
+            case "activation":
             case "filters":
             case "data_format":
                 return "string";
