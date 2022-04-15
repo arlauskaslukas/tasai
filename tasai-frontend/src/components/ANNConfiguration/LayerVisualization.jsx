@@ -28,8 +28,8 @@ const InputLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Įvesties forma: ({layerData.input_shape})</Typography>
-        <Typography>Paketo dydis: {layerData.batch_size}</Typography>
+        <Typography>Input shape: ({layerData.input_shape})</Typography>
+        <Typography>Batch size: {layerData.batch_size}</Typography>
       </div>
     </Paper>
   );
@@ -62,8 +62,8 @@ const DenseLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Aktyvacijos f-ja: {layerData.activation}</Typography>
-        <Typography>Neuronų skaičius: {layerData.units}</Typography>
+        <Typography>Activation: {layerData.activation}</Typography>
+        <Typography>Units: {layerData.units}</Typography>
       </div>
     </Paper>
   );
@@ -96,7 +96,7 @@ const FlattenLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Duomenų formatas: {layerData.data_format}</Typography>
+        <Typography>Data format: {layerData.data_format}</Typography>
       </div>
     </Paper>
   );
@@ -129,7 +129,7 @@ const DropoutLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Dažnis: {layerData.rate}</Typography>
+        <Typography>Rate: {layerData.rate}</Typography>
       </div>
     </Paper>
   );
@@ -162,9 +162,9 @@ const Conv2DLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Filtrai: {layerData.filters}</Typography>
-        <Typography>Konv. laukas: {layerData.kernel_size}</Typography>
-        <Typography>Žingsnis: {layerData.strides}</Typography>
+        <Typography>Filters: {layerData.filters}</Typography>
+        <Typography>Kernel size: {layerData.kernel_size}</Typography>
+        <Typography>Strides: {layerData.strides}</Typography>
       </div>
     </Paper>
   );

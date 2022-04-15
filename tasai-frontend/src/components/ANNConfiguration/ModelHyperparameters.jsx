@@ -60,7 +60,7 @@ export const ModelHyperparameters = ({ callback }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="optimizer">Modelio optimizatorius</InputLabel>
+        <InputLabel id="optimizer">Model optimizer</InputLabel>
         <Select
           labelId="optimizer"
           id="optimizer"
@@ -74,7 +74,7 @@ export const ModelHyperparameters = ({ callback }) => {
         </Select>
       </FormControl>
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="loss">Netektis</InputLabel>
+        <InputLabel id="loss">Loss</InputLabel>
         <Select
           labelId="loss"
           id="loss"
@@ -88,7 +88,7 @@ export const ModelHyperparameters = ({ callback }) => {
         </Select>
       </FormControl>
       <div style={{ marginBlock: "20px" }}>
-        <Typography variant="h6">Pasirinkite modelio metrikas</Typography>
+        <Typography variant="h6">Choose model metrics</Typography>
         <FormGroup style={{ display: "flex", justifyContent: "left" }}>
           <Grid container spacing={2} style={{ paddingLeft: "10%" }}>
             {metrics.map((metric) => (

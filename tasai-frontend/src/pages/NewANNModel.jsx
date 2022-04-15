@@ -38,6 +38,7 @@ import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { LoadingBackdrop } from "../components/LoadingBackdrop";
 import { SnackbarSuccess } from "../components/SnackbarSuccess";
 import { responsiveProperty } from "@mui/material/styles/cssUtils";
+import SaveIcon from '@mui/icons-material/Save';
 
 export const NewANNModel = () => {
   const layers = LayersEnums.Layers;
@@ -86,7 +87,7 @@ export const NewANNModel = () => {
   const handleSave = async () => {
     setToggleLoading(true);
     let response = await dfs.saveANNModel(
-      "Luko hoedom",
+      "Luko test modelis",
       modelHyperparams.optimizer,
       modelHyperparams.loss,
       modelHyperparams.metrics,
@@ -141,7 +142,7 @@ export const NewANNModel = () => {
         text={"A model has been saved successfully"}
       />
       <Dialog open={codeSnippetOpen}>
-        <DialogTitle>{"Jūsų sugeneruotas kodas"}</DialogTitle>
+        <DialogTitle>{"Your generated code"}</DialogTitle>
         <DialogContent>
           <div style={{ overflow: "hidden", height: "100%", width: "100%" }}>
             <div
@@ -163,7 +164,7 @@ export const NewANNModel = () => {
         </DialogContent>
         <DialogActions>
           <Button variant="contained" autoFocus onClick={handleCodeSnippetOpen}>
-            Uždaryti
+            Close
           </Button>
         </DialogActions>
       </Dialog>
@@ -175,7 +176,7 @@ export const NewANNModel = () => {
         <DialogTitle>{"Naujo sluoksnio pridėjimas"}</DialogTitle>
         <DialogContent>
           <FormControl fullWidth style={{ marginBlock: "20px" }}>
-            <InputLabel id="layer-type">Sluoksnio tipas</InputLabel>
+            <InputLabel id="layer-type">Layer type</InputLabel>
             <Select
               labelId="layer-type"
               id="layer-type-select"
@@ -204,14 +205,14 @@ export const NewANNModel = () => {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleNewLayerDialogClose}>Atšaukti</Button>
+          <Button onClick={handleNewLayerDialogClose}>Cancel</Button>
           <Button
             startIcon={<AddCircleOutline />}
             variant="contained"
             autoFocus
             onClick={handleLayerAddition}
           >
-            Pridėti
+            Add
           </Button>
         </DialogActions>
       </Dialog>
@@ -229,7 +230,7 @@ export const NewANNModel = () => {
             >
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography>Modelio hiperparametrai</Typography>
+                  <Typography>Model hyperparameters</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <ModelHyperparameters callback={setHyperparams} />
@@ -264,7 +265,7 @@ export const NewANNModel = () => {
                     variant="contained"
                     startIcon={<AddCircleOutline />}
                   >
-                    Naujas modelio sluoksnis
+                    New layer
                   </Button>
                 </Grid>
                 <Grid item xs={6} md={4}>
@@ -275,7 +276,7 @@ export const NewANNModel = () => {
                     onClick={handleModelCodeGeneration}
                     startIcon={<SendAndArchiveOutlined />}
                   >
-                    Generuoti kodą
+                    Generate code
                   </Button>
                 </Grid>
                 <Grid item xs={6} md={4}>
@@ -286,7 +287,7 @@ export const NewANNModel = () => {
                     disabled
                     startIcon={<BugReport />}
                   >
-                    Testuoti architektūrą
+                    Test the architecture
                   </Button>
                 </Grid>
                 <Grid item xs={6} md={4}>
@@ -296,7 +297,7 @@ export const NewANNModel = () => {
                     variant="contained"
                     startIcon={<Upload />}
                   >
-                    Įkelti DNT architektūrą
+                    Load ANN architecture
                   </Button>
                 </Grid>
                 <Grid item xs={6} md={4}>
@@ -305,9 +306,9 @@ export const NewANNModel = () => {
                     color="success"
                     variant="contained"
                     onClick={handleSave}
-                    startIcon={<SaveAltIcon />}
+                    startIcon={<SaveIcon />}
                   >
-                    Išsaugoti DNT architektūrą
+                    Save ANN architecture
                   </Button>
                 </Grid>
               </Grid>
@@ -336,17 +337,17 @@ export const NewANNModel = () => {
                     }}
                   >
                     <Typography textAlign={"right"}>
-                      Modelio pasirinktas optimizatorius:{" "}
+                      Optimizer:{" "}
                       {modelHyperparams.optimizer}
                     </Typography>
                     <Typography textAlign={"right"}>
-                      Modelio pasirinkta netekties funkcija:{" "}
+                      Loss function:{" "}
                       {modelHyperparams.loss}
                     </Typography>
                   </div>
                 </div>
 
-                <Typography>Prideti sluoksniai:</Typography>
+                <Typography>Added layers:</Typography>
                 <div
                   style={{
                     display: "flex",
