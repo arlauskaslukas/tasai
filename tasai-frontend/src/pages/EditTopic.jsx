@@ -95,19 +95,22 @@ export const EditTopic = () => {
 
     if (!_.isString(title) || _.isEqual(title, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Temos pavadinimas privalomas"]);
+      setErrors((errs) => [...errs, "Topic title is a mandatory field"]);
     }
     if (!_.isString(shortDesc) || _.isEqual(shortDesc, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Temos trumpas aprašymas privalomas"]);
+      setErrors((errs) => [
+        ...errs,
+        "Topic short description is a mandatory field",
+      ]);
     }
     if (!_.isString(theory) || _.isEqual(theory, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Teorijos laukas privalomas"]);
+      setErrors((errs) => [...errs, "Theory is a mandatory field"]);
     }
     if (_.isEqual(course_id, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso laukas privalomas"]);
+      setErrors((errs) => [...errs, "Course selection is a mandatory field"]);
     }
     return isDataValid;
   };
@@ -136,7 +139,7 @@ export const EditTopic = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              REDAGUOTI TEMĄ
+              UPDATE TOPIC
             </Typography>
             <div
               style={{
@@ -157,7 +160,7 @@ export const EditTopic = () => {
           {errors.length === 0 ? (
             <></>
           ) : (
-            <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+            <Error title={"Data submission error"} subpoints={errors} />
           )}
           {success ? (
             <>
@@ -169,7 +172,7 @@ export const EditTopic = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Kursas</InputLabel>
+                <InputLabel id="demo-simple-select-label">Course</InputLabel>
                 <Select
                   disabled
                   labelId="demo-simple-select-label"
@@ -188,7 +191,7 @@ export const EditTopic = () => {
               <TextField
                 disabled
                 fullWidth
-                label={"Temos eiliškumas"}
+                label={"Topic order"}
                 variant={"outlined"}
                 value={impliedOrder}
               />
@@ -196,7 +199,7 @@ export const EditTopic = () => {
             <Grid item xs={12} md={4}>
               <TextField
                 variant="outlined"
-                label="Temos pavadinimas"
+                label="Topic title"
                 required
                 value={title}
                 onChange={(val) => {
@@ -214,7 +217,7 @@ export const EditTopic = () => {
                 onChange={(val) => {
                   setShortDesc(val.target.value);
                 }}
-                label="Trumpas aprašymas"
+                label="Short description"
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -227,7 +230,7 @@ export const EditTopic = () => {
                 onChange={(val) => {
                   setTheory(val.target.value);
                 }}
-                label="Ilgas aprašymas"
+                label="Theory"
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -245,7 +248,7 @@ export const EditTopic = () => {
               variant="contained"
               endIcon={<Send />}
             >
-              Išsaugoti
+              Update
             </Button>
           </div>
         </Container>

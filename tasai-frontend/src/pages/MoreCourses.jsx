@@ -67,7 +67,7 @@ export const MoreCourses = () => {
         <Container>
           <Paper className={classes.head}>
             <Typography variant="h4" textAlign={"left"}>
-              Visi kursai
+              All courses
             </Typography>
           </Paper>
 
@@ -81,16 +81,16 @@ export const MoreCourses = () => {
                   {course.long_description}
                 </Typography>
                 <Typography variant="h6" textAlign="left" fontWeight="bold">
-                  Papildoma kurso informacija:
+                  Additional information:
                 </Typography>
                 <Typography variant="body1" textAlign="left">
-                  Kurso pradžia: {course.starts_at}
+                  Starts at: {course.starts_at}
                 </Typography>
                 <Typography variant="body1" textAlign="left">
-                  Kurso trukmė savaitėmis: {course.duration}
+                  Duration in weeks: {course.duration}
                 </Typography>
                 <Typography variant="body1" textAlign="left">
-                  Kurso kaina eurais: {course.cost}
+                  Cost in euros: {course.cost}
                 </Typography>
                 <div
                   style={{
@@ -101,7 +101,7 @@ export const MoreCourses = () => {
                   }}
                 >
                   <Button variant={"contained"} href={`/course/${course.id}`}>
-                    Peržiūrėti kurso temas
+                    Peek into topics
                   </Button>
                 </div>
               </AccordionDetails>

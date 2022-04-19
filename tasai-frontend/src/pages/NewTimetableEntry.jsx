@@ -62,23 +62,23 @@ export const NewTimetableEntry = () => {
 
     if (!_.isString(lesson) || _.isEqual(lesson, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos pavadinimas nenurodytas"]);
+      setErrors((errs) => [...errs, "Lesson title is mandatory field"]);
     }
     if (_.isEqual(course, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kursas nepasirinktas"]);
+      setErrors((errs) => [...errs, "Course selection is mandatory"]);
     }
     if (_.isEqual(topic, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Tema nepasirinkta"]);
+      setErrors((errs) => [...errs, "Topic selection is mandatory"]);
     }
     if (_.isEqual(date, "") || _.isNull(date)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos laikas nepasirinktas"]);
+      setErrors((errs) => [...errs, "Lesson time is mandatory"]);
     }
     if (_.isEqual(link, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos nuoroda nenurodyta"]);
+      setErrors((errs) => [...errs, "Join link is mandatory"]);
     }
     return isDataValid;
   };
@@ -134,7 +134,7 @@ export const NewTimetableEntry = () => {
               variant="h4"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
-              NAUJAS TVARKARAŠČIO ĮRAŠAS
+              NEW TIMETABLE ENTRY
             </Typography>
             <div
               style={{
@@ -148,13 +148,13 @@ export const NewTimetableEntry = () => {
                 href="/admin/timetables"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
             </div>
             {errors.length === 0 ? (
               <></>
             ) : (
-              <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+              <Error title={"Data submission error"} subpoints={errors} />
             )}
             {success ? (
               <>
@@ -168,7 +168,7 @@ export const NewTimetableEntry = () => {
                 <Grid container spacing={2} style={{ paddingBlock: "20px" }}>
                   <Grid item xs={12} md={8}>
                     <FormControl fullWidth>
-                      <InputLabel id="course-label">Kursas</InputLabel>
+                      <InputLabel id="course-label">Course</InputLabel>
                       <Select
                         labelId="course-label"
                         id="course-select"
@@ -186,7 +186,7 @@ export const NewTimetableEntry = () => {
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth>
-                      <InputLabel id="topic-label">Tema</InputLabel>
+                      <InputLabel id="topic-label">Topic</InputLabel>
                       <Select
                         labelId="topic-label"
                         id="topic-select"
@@ -206,7 +206,7 @@ export const NewTimetableEntry = () => {
                   <Grid item xs={12} md={4}>
                     <TextField
                       style={{ width: "100%" }}
-                      label="Pamokos pavadinimas"
+                      label="Lesson title"
                       value={lesson}
                       onChange={(event) => setLesson(event.target.value)}
                     />
@@ -214,7 +214,7 @@ export const NewTimetableEntry = () => {
                   <Grid item xs={12} md={4}>
                     <TextField
                       style={{ width: "100%" }}
-                      label="Pamokos nuoroda"
+                      label="Join link"
                       value={link}
                       onChange={(event) => setLink(event.target.value)}
                     />
@@ -223,7 +223,7 @@ export const NewTimetableEntry = () => {
                     <DateTimePicker
                       disablePast
                       required
-                      label="Pamokos pradžios laikas"
+                      label="Lesson start time"
                       value={date}
                       onChange={(val) => {
                         setDate(val);
@@ -246,7 +246,7 @@ export const NewTimetableEntry = () => {
                   }}
                 >
                   <Button variant={"contained"} onClick={handleButtonClick}>
-                    Išsaugoti
+                    Save
                   </Button>
                 </div>
               </Paper>

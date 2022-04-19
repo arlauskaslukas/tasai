@@ -67,22 +67,25 @@ export const CreateAssignment = () => {
 
     if (!_.isString(title) || _.isEqual(title, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Atsiskaitymo pavadinimas privalomas"]);
+      setErrors((errs) => [...errs, "Assignment title is a mandatory field"]);
     }
     if (!_.isString(shortDesc) || _.isEqual(shortDesc, "")) {
       isDataValid = false;
       setErrors((errs) => [
         ...errs,
-        "Atsiskaitymo trumpas aprašymas privalomas",
+        "Assignment description is a mandatory field",
       ]);
     }
     if (_.isEqual(deadline, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Atsiskaitymo pateikimo data privaloma"]);
+      setErrors((errs) => [
+        ...errs,
+        "Assignment deadline is a mandatory field",
+      ]);
     }
     if (topic_id < 1) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Temos pasirinkimas privalomas"]);
+      setErrors((errs) => [...errs, "Topic selection is mandatory"]);
     }
     return isDataValid;
   };
@@ -111,7 +114,7 @@ export const CreateAssignment = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURTI NAUJĄ ATSISKAITYMĄ
+              CREATE NEW ASSIGNMENT
             </Typography>
             <div
               style={{
@@ -132,7 +135,7 @@ export const CreateAssignment = () => {
           {errors.length === 0 ? (
             <></>
           ) : (
-            <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+            <Error title={"Data submission error"} subpoints={errors} />
           )}
           {success ? (
             <>
@@ -144,7 +147,7 @@ export const CreateAssignment = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Tema</InputLabel>
+                <InputLabel id="demo-simple-select-label">Topic</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -163,7 +166,7 @@ export const CreateAssignment = () => {
             <Grid item xs={12} md={4}>
               <TextField
                 variant="outlined"
-                label="Atsiskaitymo pavadinimas"
+                label="Assignment title"
                 required
                 value={title}
                 onChange={(val) => {
@@ -175,7 +178,7 @@ export const CreateAssignment = () => {
             <Grid item xs={12} md={4}>
               <DateTimePicker
                 fullWidth
-                label="Atsiskaitymo pateikimo data"
+                label="Assignment deadline"
                 value={deadline}
                 onChange={(value) => setDeadline(value)}
                 renderInput={(params) => <TextField fullWidth {...params} />}
@@ -190,7 +193,7 @@ export const CreateAssignment = () => {
                 onChange={(val) => {
                   setShortDesc(val.target.value);
                 }}
-                label="Trumpas aprašymas"
+                label="Description"
                 style={{ width: "100%" }}
               />
             </Grid>
@@ -208,7 +211,7 @@ export const CreateAssignment = () => {
               variant="contained"
               endIcon={<Send />}
             >
-              Išsaugoti
+              Submit
             </Button>
           </div>
         </Container>

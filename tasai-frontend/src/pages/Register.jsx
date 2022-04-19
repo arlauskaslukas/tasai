@@ -76,7 +76,7 @@ export const Register = () => {
               color="#F41D6F"
               marginTop={"20%"}
             >
-              REGISTRUOTIS
+              REGISTER
             </Typography>
             <TextField
               required
@@ -85,7 +85,7 @@ export const Register = () => {
                 setName(event.target.value);
               }}
               variant="outlined"
-              label="Jūsų vardas"
+              label="Username"
               style={{ width: "50%", marginTop: "5vh" }}
             />
             <TextField
@@ -95,7 +95,7 @@ export const Register = () => {
                 setEmail(event.target.value);
               }}
               variant="outlined"
-              label="Elektroninis paštas"
+              label="Email"
               style={{ width: "50%", marginTop: "5vh" }}
             />
             <TextField
@@ -106,7 +106,7 @@ export const Register = () => {
               }}
               type="password"
               variant="outlined"
-              label="Slaptažodis"
+              label="Password"
               style={{ width: "50%", marginTop: "5vh" }}
             />
             <Button
@@ -114,10 +114,10 @@ export const Register = () => {
               onClick={() => handleRegistration()}
               style={{ marginTop: "5vh", backgroundColor: "#0091AD" }}
             >
-              Registruotis
+              Register
             </Button>
             <Typography variant="h6" style={{ marginBlock: "2vh" }}>
-              Jau turite paskyrą?
+              Already have an account?
             </Typography>
             <div
               style={{
@@ -132,7 +132,7 @@ export const Register = () => {
                 href={"/login"}
                 style={{ backgroundColor: "#F41D6F" }}
               >
-                Prisijungti
+                Login
               </Button>
             </div>
           </div>

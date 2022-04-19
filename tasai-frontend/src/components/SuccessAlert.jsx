@@ -8,8 +8,8 @@ export const SuccessAlert = () => {
         severity="success"
         style={{ textAlign: "left", marginBlock: "50px" }}
       >
-        <AlertTitle>Operacija sėkminga</AlertTitle>
-        Jūsų duomenys buvo sėkmingai nusiųsti į duomenų bazę.
+        <AlertTitle>Action success</AlertTitle>
+        Action has been successfully sent to DB.
       </Alert>
     </div>
   );

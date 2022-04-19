@@ -78,11 +78,11 @@ export const EditProfile = () => {
 
     if (!_.isString(username) || _.isEqual(username, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Naudotojo vardas privalomas"]);
+      setErrors((errs) => [...errs, "Username is a mandatory field"]);
     }
     if (!_.isString(email) || _.isEqual(email, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Elektroninis paštas privalomas"]);
+      setErrors((errs) => [...errs, "Email is a mandatory field"]);
     }
     return isDataValid;
   };
@@ -112,13 +112,13 @@ export const EditProfile = () => {
           <div>
             <Paper className={classes.head}>
               <Typography variant="h4" textAlign={"left"}>
-                Profilio redagavimas
+                Update profile information
               </Typography>
             </Paper>
             {errors.length === 0 ? (
               <></>
             ) : (
-              <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+              <Error title={"Data submission error"} subpoints={errors} />
             )}
             {success ? (
               <>
@@ -133,7 +133,7 @@ export const EditProfile = () => {
                   value={username === undefined ? "" : username}
                   onChange={(val) => setUsername(val.target.value)}
                   fullWidth
-                  label="Naudotojo vardas"
+                  label="Username"
                 />
               </Grid>
               <Grid item xs={12} style={{ paddingBlock: "20px" }}>
@@ -141,7 +141,7 @@ export const EditProfile = () => {
                   value={email === undefined ? "" : email}
                   onChange={(val) => setEmail(val.target.value)}
                   fullWidth
-                  label="Elektroninis paštas"
+                  label="Email"
                 />
               </Grid>
             </Grid>
@@ -158,7 +158,7 @@ export const EditProfile = () => {
                 variant="contained"
                 endIcon={<Send />}
               >
-                Išsaugoti
+                Update
               </Button>
             </div>
           </div>

@@ -100,7 +100,7 @@ export const ManageCourses = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ VALDYMAS
+              COURSES MANAGEMENT
             </Typography>
             <div
               style={{
@@ -116,14 +116,14 @@ export const ManageCourses = () => {
                 href="/admin"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
               <Button
                 variant="contained"
                 href="/admin/courses/new"
                 startIcon={<Add />}
               >
-                Pridėti naują kursą
+                NEW COURSE
               </Button>
             </div>
           </div>
@@ -135,22 +135,22 @@ export const ManageCourses = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite pašalinti šį įrašą?"}
+              {"Do you want to delete this course?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Pavadinimas: {selectedEntry.title}</li>
+                <li>Title: {selectedEntry.title}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button onClick={() => handleClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleConfirmation()}
               >
-                Ištrinti
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -163,19 +163,19 @@ export const ManageCourses = () => {
                 <TableHead className={classes.head}>
                   <TableRow>
                     <TableCell style={{ fontWeight: "bold" }}>
-                      Kurso ID
+                      Course ID
                     </TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Kurso pavadinimas
+                      Title
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso pradžios data
+                      Start date
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso kaina
+                      Price
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Veiksmai
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>

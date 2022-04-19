@@ -96,7 +96,7 @@ export const ViewCourses = () => {
                     style={{ fontFamily: "Montserrat, sans-serif" }}
                     fontWeight={"bold"}
                   >
-                    Pradžios data:
+                    Start date:
                   </Typography>
                   <Typography style={{ fontFamily: "Montserrat, sans-serif" }}>
                     {course.starts_at}
@@ -107,7 +107,7 @@ export const ViewCourses = () => {
                     style={{ fontFamily: "Montserrat, sans-serif" }}
                     fontWeight={"bold"}
                   >
-                    Kurso kaina:
+                    Cost:
                   </Typography>
                   <Typography style={{ fontFamily: "Montserrat, sans-serif" }}>
                     {course.cost}
@@ -118,7 +118,7 @@ export const ViewCourses = () => {
                     style={{ fontFamily: "Montserrat, sans-serif" }}
                     fontWeight={"bold"}
                   >
-                    Trukmė savaitėmis:
+                    Duration in weeks:
                   </Typography>
                   <Typography style={{ fontFamily: "Montserrat, sans-serif" }}>
                     {course.duration}
@@ -138,10 +138,10 @@ export const ViewCourses = () => {
                   href={"/morecourses"}
                   style={{ backgroundColor: "#A73579" }}
                 >
-                  Daugiau kursų
+                  More courses
                 </Button>
                 <Button variant={"contained"} href={`/course/${course.id}`}>
-                  Peržiūrėti
+                  Discover
                 </Button>
               </div>
             </Paper>

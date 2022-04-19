@@ -69,7 +69,23 @@ class AttendanceEntryController extends Controller
         $topic = $entry->topic()->get(['title']);
         $entry['topic'] = $topic;
         $entry['user'] = $user;
-        return response($entry, 201);
+        return response($entry, 200);
+    }
+
+    public function checkIfUserHasParticipated(Request $request)
+    {
+        $fields = $request->validate([
+            "topic_id"=> "required"
+        ]);
+        $user_id = auth()->user()->id;
+        $maybe_attendance = AttendanceEntry::where([
+            ["topic_id", '=', $request->topic_id],
+            ["user_id", "=", $user_id]
+        ])->first();
+        if($maybe_attendance==null){
+            return response(["message"=>false], 200);
+        }
+        return response(["message"=>$maybe_attendance->is_attending==1], 200);
     }
 
     /**

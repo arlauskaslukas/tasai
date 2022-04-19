@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Button, Container, Grid, Paper, Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  LinearProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
+import {
+  ArrowBack,
+  Check,
+  DataObject,
+  EmailTwoTone,
+} from "@mui/icons-material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DataFetchService from "../services/DataFetchService";
+import CheckIcon from "@mui/icons-material/Check";
 
 const mockData = [
   {
@@ -21,107 +35,169 @@ const mockData = [
 export const ViewCourseTimetable = () => {
   const { id } = useParams();
   const datafetchservice = new DataFetchService();
-  const [timetables, setTimetables] = useState([]);
+  const [timetables, setTimetables] = useState(undefined);
+  const [uris, setUris] = useState([]);
+  const [participations, setParticipations] = useState([]);
 
-  useEffect(async () => {
-    let data = await datafetchservice.getCourseTimetable(id);
+  async function dataProcessing(data) {
     data.forEach(async (element) => {
-      element.uri = await datafetchservice.getTimetableiCalFileURI(element.id);
+      let uri = await datafetchservice.getTimetableiCalFileURI(element.id);
+      setUris((olduris) => [...olduris, uri]);
+      let participation = await datafetchservice.checkIfUserParticipated(
+        element.topic_id
+      );
+      setParticipations((oldparticipations) => [
+        ...oldparticipations,
+        participation,
+      ]);
     });
     console.log(data);
+    return data;
+  }
+
+  useEffect(async () => {
+    let data = [];
+    await datafetchservice
+      .getCourseTimetable(id)
+      .then((obj) => {
+        return dataProcessing(obj);
+      })
+      .then((obj) => (data = obj));
+    console.log(data[0].participation);
     setTimetables(data);
   }, []);
-  return (
-    <>
-      <Container style={{ minHeight: "100vh" }}>
-        <div style={{ paddingTop: "50px" }}>
-          <Typography
-            textAlign={"start"}
-            variant="h4"
-            style={{ fontFamily: "Montserrat, sans-serif" }}
-          >
-            KURSO GYVŲ PAMOKŲ TRANSLIACIJOS TVARKARAŠTIS
-          </Typography>
-          <div
-            style={{
-              display: "flex",
-              marginBlock: "30px",
-            }}
-          >
+  if (timetables === undefined) {
+    return (
+      <div>
+        <LinearProgress />
+        <div
+          style={{
+            display: "flex",
+            width: "100vw",
+            height: "100vh",
+            overflow: "hidden",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+          }}
+        >
+          <CircularProgress color={"secondary"} />
+        </div>
+      </div>
+    );
+  } else
+    return (
+      <>
+        <Container style={{ minHeight: "100vh" }}>
+          <div style={{ paddingTop: "50px" }}>
+            <Typography
+              textAlign={"start"}
+              variant="h4"
+              style={{ fontFamily: "Montserrat, sans-serif" }}
+            >
+              COURSE LIVE LESSONS TIMETABLE
+            </Typography>
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
+                marginBlock: "30px",
               }}
             >
-              <Button
-                variant="contained"
-                startIcon={<ArrowBack />}
-                href={`/mycourses/${id}`}
-                style={{ backgroundColor: "#B7094C " }}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
               >
-                Atgal
-              </Button>
-              <Button variant="contained" startIcon={<DownloadIcon />}>
-                Atsisiųsti tvarkaraštį kalendoriaus programai
-              </Button>
+                <Button
+                  variant="contained"
+                  startIcon={<ArrowBack />}
+                  href={`/mycourses/${id}`}
+                  style={{ backgroundColor: "#B7094C " }}
+                >
+                  Atgal
+                </Button>
+                <Button variant="contained" startIcon={<DownloadIcon />}>
+                  Download iCal file
+                </Button>
+              </div>
             </div>
+            {timetables.map((entry, idx) => (
+              <Paper
+                elevation={2}
+                style={{ padding: "25px", marginBlock: "25px" }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={8}>
+                    <Typography
+                      variant={"h5"}
+                      textAlign={"left"}
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        marginBottom: "25px",
+                      }}
+                    >
+                      {entry.entry_title}
+                    </Typography>
+                    <Typography
+                      variant={"body1"}
+                      textAlign={"left"}
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        marginBottom: "25px",
+                      }}
+                    >
+                      Lesson time: {entry.lesson_time}
+                    </Typography>
+                    <Typography
+                      variant={"body1"}
+                      textAlign={"left"}
+                      style={{
+                        fontFamily: "Montserrat, sans-serif",
+                        marginBottom: "25px",
+                      }}
+                    >
+                      Join link: <a href={entry.link}>{entry.link}</a>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      {uris[idx] !== undefined ? (
+                        <Button variant="contained" color="secondary">
+                          <a href={uris[idx]} download>
+                            Download iCal file
+                          </a>
+                        </Button>
+                      ) : (
+                        <></>
+                      )}
+                      {participations[idx] ? (
+                        <Button
+                          variant="contained"
+                          color="success"
+                          startIcon={<CheckIcon />}
+                        >
+                          Participation marked
+                        </Button>
+                      ) : (
+                        <Button variant="contained" color="primary">
+                          Mark participation
+                        </Button>
+                      )}
+                    </div>
+                  </Grid>
+                </Grid>
+              </Paper>
+            ))}
           </div>
-          {timetables.map((entry) => (
-            <Paper
-              elevation={2}
-              style={{ padding: "25px", marginBlock: "25px" }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={8}>
-                  <Typography
-                    variant={"h5"}
-                    textAlign={"left"}
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      marginBottom: "25px",
-                    }}
-                  >
-                    {entry.entry_title}
-                  </Typography>
-                  <Typography
-                    variant={"body1"}
-                    textAlign={"left"}
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      marginBottom: "25px",
-                    }}
-                  >
-                    Pamokos laikas: {entry.lesson_time}
-                  </Typography>
-                  <Typography
-                    variant={"body1"}
-                    textAlign={"left"}
-                    style={{
-                      fontFamily: "Montserrat, sans-serif",
-                      marginBottom: "25px",
-                    }}
-                  >
-                    Nuoroda prisijungimui: <a href={entry.link}>{entry.link}</a>
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  {entry.uri !== null ? (
-                    <Button>
-                      <a href={entry.uri} download>
-                        Atsisiųsti pamokos iCal failą
-                      </a>
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                </Grid>
-              </Grid>
-            </Paper>
-          ))}
-        </div>
-      </Container>
-    </>
-  );
+        </Container>
+      </>
+    );
 };

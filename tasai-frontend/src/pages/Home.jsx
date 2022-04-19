@@ -37,7 +37,7 @@ export const Home = () => {
         fontWeight="bold"
         style={{ marginBottom: "25px", fontFamily: "Montserrat, sans-serif" }}
       >
-        Sukurk savo pirmą neuroninį tinklą su mumis!
+        Create your first artificial neural network with us!
       </Typography>
       <Button
         variant="contained"
@@ -49,7 +49,7 @@ export const Home = () => {
           fontFamily: "Montserrat, sans-serif",
         }}
       >
-        Peržiūrėk siūlomus kursus
+        Browse suggested courses
       </Button>
       {cookies.get("Authorization") === undefined ? (
         <>
@@ -58,7 +58,7 @@ export const Home = () => {
             color="white"
             style={{ marginBottom: "25px" }}
           >
-            Jau esi užsiregistravęs?
+            Already registered?
           </Typography>
           <Button
             href="/login"
@@ -66,7 +66,7 @@ export const Home = () => {
             size={"large"}
             style={{ marginBottom: "25px" }}
           >
-            Prisijunk
+            Login
           </Button>
         </>
       ) : (

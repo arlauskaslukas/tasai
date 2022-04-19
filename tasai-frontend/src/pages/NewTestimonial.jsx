@@ -50,18 +50,15 @@ export const NewTestimonial = () => {
 
     if (!_.isString(testimonial) || _.isEqual(testimonial, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Atsiliepimo laukas privalomas"]);
+      setErrors((errs) => [...errs, "Testimonial field is mandatory"]);
     }
     if (_.isEqual(course, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kursas nepasirinktas"]);
+      setErrors((errs) => [...errs, "Course selection is mandatory"]);
     }
     if (_.isEqual(rating, 0)) {
       isDataValid = false;
-      setErrors((errs) => [
-        ...errs,
-        "Vertinimas turi būti intervale nuo 1 iki 5",
-      ]);
+      setErrors((errs) => [...errs, "Rating must be in interval from 1 to 5"]);
     }
     return isDataValid;
   };
@@ -115,7 +112,7 @@ export const NewTestimonial = () => {
               variant="h4"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
-              NAUJAS ATSILIEPIMAS
+              NEW TESTIMONIAL
             </Typography>
             <div
               style={{
@@ -129,7 +126,7 @@ export const NewTestimonial = () => {
                 href="/testimonials"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
             </div>
             {errors.length === 0 ? (
@@ -149,7 +146,7 @@ export const NewTestimonial = () => {
                 <Grid container spacing={2} style={{ paddingBlock: "20px" }}>
                   <Grid item xs={12} md={8}>
                     <FormControl fullWidth>
-                      <InputLabel id="course-label">Kursas</InputLabel>
+                      <InputLabel id="course-label">Course</InputLabel>
                       <Select
                         labelId="course-label"
                         id="course-select"
@@ -166,9 +163,7 @@ export const NewTestimonial = () => {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={4}>
-                    <Typography component={"legend"}>
-                      Kursų įvertinimas
-                    </Typography>
+                    <Typography component={"legend"}>Course rating</Typography>
                     <Rating
                       value={rating}
                       onChange={(event, newVal) => setRating(newVal)}
@@ -192,7 +187,7 @@ export const NewTestimonial = () => {
                   }}
                 >
                   <Button variant={"contained"} onClick={handleButtonClick}>
-                    Siųsti atsiliepimą
+                    Send testimonial
                   </Button>
                 </div>
               </Paper>

@@ -49,4 +49,14 @@ export default class DataFetchService {
     console.log(res);
     return res.data;
   }
+  async checkIfUserParticipated(topic_id) {
+    let res = await AxiosClient.post(
+      this.apiBaseUrl + "/checkattendancestatus",
+      {
+        topic_id: topic_id,
+      }
+    );
+    console.log(res.data.message);
+    return res.data.message;
+  }
 }

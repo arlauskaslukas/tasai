@@ -11,7 +11,7 @@ export const LayerSelection = ({ children, value, index, selectLayerFunc }) => {
     <div hidden={value !== index}>
       {value === index && (
         <FormControl fullWidth style={{ marginBlock: "20px" }}>
-          <InputLabel id="layer">Sluoksnis</InputLabel>
+          <InputLabel id="layer">Layer</InputLabel>
           <Select
             labelId="layer"
             id="layer"

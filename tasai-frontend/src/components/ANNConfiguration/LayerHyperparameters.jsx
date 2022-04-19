@@ -22,11 +22,11 @@ function LayerHyperparametersDistributor(title, updateFunction) {
   } else if (title === "Dense") {
     return <DenseLayerHyperparameters updateFunction={updateFunction} />;
   } else if (title === "Flatten") {
-    return <FlattenLayerHyperparameters updateFunction={updateFunction}/>;
+    return <FlattenLayerHyperparameters updateFunction={updateFunction} />;
   } else if (title === "Dropout") {
-    return <DropoutLayerHyperparameters updateFunction={updateFunction}/>
+    return <DropoutLayerHyperparameters updateFunction={updateFunction} />;
   } else if (title === "Conv2D") {
-    return <Conv2DLayerHyperparameters updateFunction={updateFunction}/>
+    return <Conv2DLayerHyperparameters updateFunction={updateFunction} />;
   }
 }
 
@@ -51,21 +51,21 @@ const InputLayerHyperparameters = ({ updateFunction }) => {
         }}
       >
         <Button color="warning" variant="contained" startIcon={<Delete />}>
-          Ištrinti sluoksnį
+          Delete Layer
         </Button>
       </div>
       <TextField
         required
         fullWidth
         style={{ marginBlock: "20px" }}
-        label={"Įvesties forma"}
+        label={"Input shape"}
         value={inputShape}
         onChange={handleInputShapeChange}
         variant="outlined"
       />
       <TextField
         fullWidth
-        label="Paketo dydis (batch size)"
+        label="Batch size"
         value={batchSize}
         onChange={handleBatchSizeChange}
         variant="outlined"
@@ -96,19 +96,19 @@ const DenseLayerHyperparameters = ({ updateFunction }) => {
         }}
       >
         <Button color="warning" variant="contained" startIcon={<Delete />}>
-          Ištrinti sluoksnį
+          Delete Layer
         </Button>
       </div>
       <TextField
         required
         fullWidth
-        label={"Neuronų skaičius sluoksnyje"}
+        label={"Units"}
         value={units}
         onChange={handleUnitsChange}
         variant={"outlined"}
       />
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="loss">Aktyvacija</InputLabel>
+        <InputLabel id="loss">Activation</InputLabel>
         <Select
           labelId="activation"
           id="activation"
@@ -127,7 +127,7 @@ const DenseLayerHyperparameters = ({ updateFunction }) => {
 };
 
 const FlattenLayerHyperparameters = ({ updateFunction }) => {
-  const DataFormats = ['channels_first', 'channels_last'];
+  const DataFormats = ["channels_first", "channels_last"];
   const [dataFormat, setDataFormat] = useState("channels_last");
   const handleDataFormatChange = (event) => {
     setDataFormat(event.target.value);
@@ -143,11 +143,11 @@ const FlattenLayerHyperparameters = ({ updateFunction }) => {
         }}
       >
         <Button color="warning" variant="contained" startIcon={<Delete />}>
-          Ištrinti sluoksnį
+          Delete Layer
         </Button>
       </div>
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="data_format">Duomenų formatas</InputLabel>
+        <InputLabel id="data_format">Data format</InputLabel>
         <Select
           labelId="data_format"
           id="data_format"
@@ -168,27 +168,21 @@ const DropoutLayerHyperparameters = ({ updateFunction }) => {
   const [rate, setRate] = useState(0.1);
   const num_regex = new RegExp("([0](\\.[1-9]*){0,1})|(1)");
   const handleRateChange = (event) => {
-    if(event.target.value === "")
-    {
+    if (event.target.value === "") {
       setRate("");
-      updateFunction({rate: "None"})
-    } else if(!num_regex.test(event.target.value))
-    {
+      updateFunction({ rate: "None" });
+    } else if (!num_regex.test(event.target.value)) {
       setRate(0);
-      updateFunction({rate: 0});
-    } else if(event.target.value > 1)
-    {
+      updateFunction({ rate: 0 });
+    } else if (event.target.value > 1) {
       setRate(1);
-      updateFunction({ rate: 1 });  
-    } else if(event.target.value < 0)
-    {
+      updateFunction({ rate: 1 });
+    } else if (event.target.value < 0) {
       setRate(0);
-      updateFunction({rate: 0});
-    }
-    else
-    {
+      updateFunction({ rate: 0 });
+    } else {
       setRate(event.target.value);
-      updateFunction({rate: event.target.value})
+      updateFunction({ rate: event.target.value });
     }
   };
   return (
@@ -201,20 +195,22 @@ const DropoutLayerHyperparameters = ({ updateFunction }) => {
         }}
       >
         <Button color="warning" variant="contained" startIcon={<Delete />}>
-          Ištrinti sluoksnį
+          Delete Layer
         </Button>
       </div>
-      <TextField value={rate} required
+      <TextField
+        value={rate}
+        required
         fullWidth
         style={{ marginBlock: "20px" }}
-        label={"Dažnis"}
+        label={"Rate"}
         inputMode={"numeric"}
         onChange={handleRateChange}
-        variant="outlined"/>
+        variant="outlined"
+      />
     </>
   );
 };
-
 
 export const LayerHyperparameters = ({ title, idx, parentUpdateFunc }) => {
   const updateFunction = (params) => {
@@ -225,7 +221,7 @@ export const LayerHyperparameters = ({ title, idx, parentUpdateFunc }) => {
       <Accordion style={{ marginBlock: "20px" }}>
         <AccordionSummary expandIcon={<ExpandMore />}>
           <Typography>
-            Sluoksnio nr. {idx} - {title} hiperparametrai
+            Layer {idx} - {title} hyperparameters
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -245,31 +241,61 @@ const Conv2DLayerHyperparameters = ({ updateFunction }) => {
   const activations = LayersEnums.Activations;
   const [activation, setActivation] = useState("");
 
-  const handleFiltersChange = event => {
+  const handleFiltersChange = (event) => {
     setFilters(event.target.value);
-    updateFunction({filters: event.target.value, kernel_size: kernelSize, strides: strides, padding: padding, activation: activation});
-  }
+    updateFunction({
+      filters: event.target.value,
+      kernel_size: kernelSize,
+      strides: strides,
+      padding: padding,
+      activation: activation,
+    });
+  };
 
-  const handleKernelSizeChange = event => {
+  const handleKernelSizeChange = (event) => {
     setKernelSize(event.target.value);
-    updateFunction({filters: filters, kernel_size: event.target.value, strides: strides, padding: padding, activation: activation});
-  }
+    updateFunction({
+      filters: filters,
+      kernel_size: event.target.value,
+      strides: strides,
+      padding: padding,
+      activation: activation,
+    });
+  };
 
-  const handleStridesChange = event => {
+  const handleStridesChange = (event) => {
     setStrides(event.target.value);
-    updateFunction({filters: filters, kernel_size: kernelSize, strides: event.target.value, padding: padding, activation: activation});
-  }
+    updateFunction({
+      filters: filters,
+      kernel_size: kernelSize,
+      strides: event.target.value,
+      padding: padding,
+      activation: activation,
+    });
+  };
 
-  const handlePaddingChange = event => {
+  const handlePaddingChange = (event) => {
     setPadding(event.target.value);
-    updateFunction({filters: filters, kernel_size: kernelSize, strides: strides, padding: event.target.value, activation: activation});
-  }
+    updateFunction({
+      filters: filters,
+      kernel_size: kernelSize,
+      strides: strides,
+      padding: event.target.value,
+      activation: activation,
+    });
+  };
 
-  const handleActivationChange = event => {
+  const handleActivationChange = (event) => {
     setActivation(event.target.value);
-    updateFunction({filters: filters, kernel_size: kernelSize, strides: strides, padding: padding, activation: event.target.value});
-  }
-  
+    updateFunction({
+      filters: filters,
+      kernel_size: kernelSize,
+      strides: strides,
+      padding: padding,
+      activation: event.target.value,
+    });
+  };
+
   return (
     <>
       <div
@@ -280,30 +306,39 @@ const Conv2DLayerHyperparameters = ({ updateFunction }) => {
         }}
       >
         <Button color="warning" variant="contained" startIcon={<Delete />}>
-          Ištrinti sluoksnį
+          Delete Layer
         </Button>
       </div>
-      <TextField value={filters} required
+      <TextField
+        value={filters}
+        required
         fullWidth
         style={{ marginBlock: "20px" }}
-        label={"Filtrų skaičius"}
+        label={"Filters"}
         inputMode={"numeric"}
         onChange={handleFiltersChange}
-        variant="outlined"/>
-        <TextField value={kernelSize} required
+        variant="outlined"
+      />
+      <TextField
+        value={kernelSize}
+        required
         fullWidth
         style={{ marginBlock: "20px" }}
-        label={"Konvoliucijos lango dydis"}
+        label={"Kernel size"}
         onChange={handleKernelSizeChange}
-        variant="outlined"/>
-        <TextField value={strides} required
+        variant="outlined"
+      />
+      <TextField
+        value={strides}
+        required
         fullWidth
         style={{ marginBlock: "20px" }}
-        label={"Žingsnio dydis"}
+        label={"Stride"}
         onChange={handleStridesChange}
-        variant="outlined"/>
-        <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="padding">Apkarpymas</InputLabel>
+        variant="outlined"
+      />
+      <FormControl fullWidth style={{ marginBlock: "20px" }}>
+        <InputLabel id="padding">Padding</InputLabel>
         <Select
           labelId="padding"
           id="padding"
@@ -317,7 +352,7 @@ const Conv2DLayerHyperparameters = ({ updateFunction }) => {
         </Select>
       </FormControl>
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="loss">Aktyvacija</InputLabel>
+        <InputLabel id="loss">Activation</InputLabel>
         <Select
           labelId="activation"
           id="activation"
@@ -325,7 +360,7 @@ const Conv2DLayerHyperparameters = ({ updateFunction }) => {
           label="activation"
           onChange={handleActivationChange}
         >
-          <MenuItem value={""}>Linear</MenuItem>
+          <MenuItem value={"Linear"}>Linear</MenuItem>
           {activations.map((val) => (
             <MenuItem value={val}>{val}</MenuItem>
           ))}

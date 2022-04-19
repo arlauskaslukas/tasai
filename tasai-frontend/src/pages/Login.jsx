@@ -89,7 +89,7 @@ export const Login = () => {
                 color="#B7094C"
                 marginTop={"20%"}
               >
-                PRISIJUNGTI
+                LOGIN
               </Typography>
               <TextField
                 type="email"
@@ -97,7 +97,7 @@ export const Login = () => {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 variant="outlined"
-                label="Prisijungimo paštas"
+                label="Email"
                 style={{ width: "50%", marginTop: "5vh" }}
               />
               <TextField
@@ -106,7 +106,7 @@ export const Login = () => {
                 required
                 onChange={(event) => setPwd(event.target.value)}
                 variant="outlined"
-                label="Slaptažodis"
+                label="Password"
                 style={{ width: "50%", marginTop: "5vh" }}
               />
               <Button
@@ -114,11 +114,11 @@ export const Login = () => {
                 variant="contained"
                 style={{ marginTop: "5vh", backgroundColor: "#0091AD" }}
               >
-                Prisijungti
+                Login
               </Button>
 
               <Typography variant="h6" style={{ marginBlock: "2vh" }}>
-                Neturite paskyros?
+                Haven't got an account?
               </Typography>
               <div
                 style={{
@@ -129,7 +129,7 @@ export const Login = () => {
                 }}
               >
                 <Button variant="contained" href={"/register"}>
-                  Registruotis
+                  Register
                 </Button>
               </div>
             </div>

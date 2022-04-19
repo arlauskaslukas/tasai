@@ -72,6 +72,7 @@ Route::group(['middleware'=>['Cors']], function()
         Route::delete('/api/assignmententries', [App\Http\Controllers\AssignmentEntryController::class, 'destroy']);
         Route::post('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'store']);
         Route::put('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'update']);
+        Route::post("/api/checkattendancestatus", [\App\Http\Controllers\AttendanceEntryController::class, 'checkIfUserHasParticipated']);
         Route::post('/api/progresstrackers', [App\Http\Controllers\ProgressTrackerController::class, 'store']);
         Route::put('/api/progresstrackers/', [App\Http\Controllers\ProgressTrackerController::class, 'update']);
         Route::get('/api/personaltrackers', [\App\Http\Controllers\ProgressTrackerController::class, 'getPersonalTrackers']);

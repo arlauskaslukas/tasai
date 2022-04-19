@@ -104,7 +104,7 @@ export const ViewCourse = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
           <Paper className={classes.head}>
             <Typography variant="h4" textAlign={"left"}>
@@ -115,16 +115,16 @@ export const ViewCourse = () => {
             <Grid container>
               <Grid item xs={12} md={8}>
                 <Typography variant="h5" textAlign={"left"}>
-                  Kurso informacija
+                  Course information
                 </Typography>
                 <Typography variant="body1" textAlign={"left"}>
-                  Kurso pradžia: {courseData.starts_at}
+                  Course start: {courseData.starts_at}
                 </Typography>
                 <Typography variant="body1" textAlign={"left"}>
-                  Kurso trukmė savaitėmis: {courseData.duration}
+                  Duration in weeks: {courseData.duration}
                 </Typography>
                 <Typography variant="body1" textAlign={"left"}>
-                  Kurso kaina eurais: {courseData.cost}
+                  Price in euros: {courseData.cost}
                 </Typography>
               </Grid>
               <Grid
@@ -139,11 +139,11 @@ export const ViewCourse = () => {
               >
                 {cookies.get("Authorization") === undefined ? (
                   <Typography variant="subtitle1">
-                    Norint pradėti mokytis reikia prisijungti
+                    You have to log in to start learning
                   </Typography>
                 ) : isEnrolled ? (
                   <Button disabled variant="contained">
-                    Pradėti mokytis
+                    Start learning
                   </Button>
                 ) : (
                   <Button
@@ -152,7 +152,7 @@ export const ViewCourse = () => {
                     }}
                     variant="contained"
                   >
-                    Pradėti mokytis
+                    Enroll
                   </Button>
                 )}
               </Grid>
@@ -160,7 +160,7 @@ export const ViewCourse = () => {
           </Paper>
           <Paper>
             <Typography variant="h5" textAlign={"left"}>
-              Kurso temos
+              Course topics
             </Typography>
           </Paper>
           {courseData.topics.map((topic) => (

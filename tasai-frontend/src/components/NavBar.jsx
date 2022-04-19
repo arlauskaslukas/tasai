@@ -121,21 +121,21 @@ export const NavBar = () => {
               }}
             >
               <Button href="/" color="inherit">
-                Namai
+                Home
               </Button>
               <Button href="/courses" color="inherit">
-                Kursai
+                Courses
               </Button>
               <Button href={"/testimonials"} color={"inherit"}>
-                Atsiliepimai
+                Testimonials
               </Button>
               <Button href={"/newmodel"} color={"inherit"}>
-                Naujas DNT modelis
+                New ANN model
               </Button>
               {cookies.get("AdminStatus") === "1" ? (
                 <>
                   <Button color="inherit" href="/admin">
-                    Admin panelė
+                    Admin panel
                   </Button>
                 </>
               ) : (
@@ -144,22 +144,22 @@ export const NavBar = () => {
               {cookies.get("Authorization") === undefined ? (
                 <>
                   <Button href={"/register"} color="inherit">
-                    Registruotis
+                    Register
                   </Button>
                   <Button href={"/login"} color="inherit">
-                    Prisijungti
+                    Login
                   </Button>
                 </>
               ) : (
                 <>
                   <Button href={"/mycourses"} color="inherit">
-                    Mano kursai
+                    My courses
                   </Button>
                   <Button color="inherit" href="/profile">
-                    Profilis
+                    Profile
                   </Button>
                   <Button onClick={() => handleLogout()} color="inherit">
-                    Atsijungti
+                    Logout
                   </Button>
                 </>
               )}
@@ -201,7 +201,7 @@ export const NavBar = () => {
             <ListItemIcon>
               <Home />
             </ListItemIcon>
-            <ListItemText primary={"Namai"} />
+            <ListItemText primary={"Home"} />
           </ListItem>
           <ListItem
             button
@@ -213,7 +213,7 @@ export const NavBar = () => {
             <ListItemIcon>
               <Book />
             </ListItemIcon>
-            <ListItemText primary={"Kursai"} />
+            <ListItemText primary={"Courses"} />
           </ListItem>
           {cookies.get("AdminStatus") === "1" ? (
             <ListItem
@@ -226,7 +226,7 @@ export const NavBar = () => {
               <ListItemIcon>
                 <Settings />
               </ListItemIcon>
-              <ListItemText primary={"Admin panelė"} />
+              <ListItemText primary={"Admin panel"} />
             </ListItem>
           ) : (
             <></>
@@ -241,12 +241,12 @@ export const NavBar = () => {
                 onClick={() =>
                   (window.location.href = "http://localhost:3000/register")
                 }
-                key={"Registruotis"}
+                key={"Register"}
               >
                 <ListItemIcon>
                   <PersonAdd />
                 </ListItemIcon>
-                <ListItemText primary={"Registruotis"} />
+                <ListItemText primary={"Register"} />
               </ListItem>
 
               <ListItem
@@ -254,12 +254,12 @@ export const NavBar = () => {
                 onClick={() =>
                   (window.location.href = "http://localhost:3000/login")
                 }
-                key={"Prisijungti"}
+                key={"Login"}
               >
                 <ListItemIcon>
                   <Person />
                 </ListItemIcon>
-                <ListItemText primary={"Prisijungti"} />
+                <ListItemText primary={"Login"} />
               </ListItem>
             </>
           ) : (
@@ -274,14 +274,14 @@ export const NavBar = () => {
                 <ListItemIcon>
                   <Book />
                 </ListItemIcon>
-                <ListItemText primary={"Mano kursai"} />
+                <ListItemText primary={"My courses"} />
               </ListItem>
               <ListItem
                 button
                 onClick={() =>
                   (window.location.href = "http://localhost:3000/profile")
                 }
-                key={"Profilis"}
+                key={"Profile"}
               >
                 <ListItemIcon>
                   <Person />
@@ -296,7 +296,7 @@ export const NavBar = () => {
                 <ListItemIcon>
                   <Logout />
                 </ListItemIcon>
-                <ListItemText primary={"Atsijungti"} />
+                <ListItemText primary={"Logout"} />
               </ListItem>
             </>
           )}

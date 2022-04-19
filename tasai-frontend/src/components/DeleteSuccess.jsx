@@ -9,8 +9,8 @@ export const DeleteSuccess = () => {
         severity="success"
         style={{ textAlign: "left", marginBlock: "50px", width: "100%" }}
       >
-        <AlertTitle>Operacija sėkminga</AlertTitle>
-        Įrašas sėkmingai ištrintas.
+        <AlertTitle>Action success</AlertTitle>
+        Entry deleted successfully.
       </Alert>
     </div>
   );

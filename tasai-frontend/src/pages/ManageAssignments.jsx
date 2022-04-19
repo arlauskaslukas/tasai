@@ -112,7 +112,7 @@ export const ManageAssignments = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              ATSISKAITYMŲ VALDYMAS
+              ASSIGNMENTS MANAGEMENT
             </Typography>
             <div
               style={{
@@ -128,14 +128,14 @@ export const ManageAssignments = () => {
                 href="/admin"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
               <Button
                 variant="contained"
                 href="/admin/assignments/new"
                 startIcon={<Add />}
               >
-                Pridėti naują atsiskaitymą
+                NEW ASSIGNMENT
               </Button>
             </div>
           </div>
@@ -147,22 +147,22 @@ export const ManageAssignments = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite pašalinti šį įrašą?"}
+              {"Do you really want to delete this assignment?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Pavadinimas: {selectedEntry.title}</li>
+                <li>Title: {selectedEntry.title}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button onClick={() => handleClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleConfirmation()}
               >
-                Ištrinti
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -172,20 +172,18 @@ export const ManageAssignments = () => {
               <Table>
                 <TableHead className={classes.head}>
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>
-                      Atsiskaitymo ID
-                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Atsiskaitymo pavadinimas
+                      Title
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Susietos temos ID
+                      Related topic ID
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Atsiskaitymo pateikimo data
+                      Deadline
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Veiksmai
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>

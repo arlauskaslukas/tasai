@@ -78,23 +78,23 @@ export const EditTimetableEntry = () => {
 
     if (!_.isString(lesson) || _.isEqual(lesson, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos pavadinimas nenurodytas"]);
+      setErrors((errs) => [...errs, "Lesson title is a mandatory field"]);
     }
     if (_.isEqual(course, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kursas nepasirinktas"]);
+      setErrors((errs) => [...errs, "Course field is mandatory"]);
     }
     if (_.isEqual(topic, 0)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Tema nepasirinkta"]);
+      setErrors((errs) => [...errs, "Topic selection is mandatory"]);
     }
     if (_.isEqual(date, "") || _.isNull(date)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos laikas nepasirinktas"]);
+      setErrors((errs) => [...errs, "Lesson date-time is mandatory"]);
     }
     if (_.isEqual(link, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Pamokos nuoroda nenurodyta"]);
+      setErrors((errs) => [...errs, "Join link is mandatory"]);
     }
     return isDataValid;
   };
@@ -151,7 +151,7 @@ export const EditTimetableEntry = () => {
               variant="h4"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
-              NAUJAS TVARKARAŠČIO ĮRAŠAS
+              NEW TIMETABLE ENTRY
             </Typography>
             <div
               style={{
@@ -171,7 +171,7 @@ export const EditTimetableEntry = () => {
             {errors.length === 0 ? (
               <></>
             ) : (
-              <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+              <Error title={"Data submission error"} subpoints={errors} />
             )}
             {success ? (
               <>
@@ -185,7 +185,7 @@ export const EditTimetableEntry = () => {
                 <Grid container spacing={2} style={{ paddingBlock: "20px" }}>
                   <Grid item xs={12} md={8}>
                     <FormControl fullWidth>
-                      <InputLabel id="course-label">Kursas</InputLabel>
+                      <InputLabel id="course-label">Course</InputLabel>
                       <Select
                         labelId="course-label"
                         id="course-select"
@@ -203,7 +203,7 @@ export const EditTimetableEntry = () => {
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth>
-                      <InputLabel id="topic-label">Tema</InputLabel>
+                      <InputLabel id="topic-label">Topic</InputLabel>
                       <Select
                         labelId="topic-label"
                         id="topic-select"
@@ -223,7 +223,7 @@ export const EditTimetableEntry = () => {
                   <Grid item xs={12} md={4}>
                     <TextField
                       style={{ width: "100%" }}
-                      label="Pamokos pavadinimas"
+                      label="Lesson title"
                       value={lesson}
                       onChange={(event) => setLesson(event.target.value)}
                     />
@@ -231,7 +231,7 @@ export const EditTimetableEntry = () => {
                   <Grid item xs={12} md={4}>
                     <TextField
                       style={{ width: "100%" }}
-                      label="Pamokos nuoroda"
+                      label="Lesson join link"
                       value={link}
                       onChange={(event) => setLink(event.target.value)}
                     />
@@ -240,7 +240,7 @@ export const EditTimetableEntry = () => {
                     <DateTimePicker
                       disablePast
                       required
-                      label="Pamokos pradžios laikas"
+                      label="Lesson date-time"
                       value={date}
                       onChange={(val) => {
                         setDate(val);
@@ -263,7 +263,7 @@ export const EditTimetableEntry = () => {
                   }}
                 >
                   <Button variant={"contained"} onClick={handleButtonClick}>
-                    Išsaugoti
+                    Update
                   </Button>
                 </div>
               </Paper>

@@ -26,7 +26,7 @@ export const DownloadTimetable = () => {
             variant="h4"
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
-            ATSISIUNČIAMI ŠIE KURSAI:
+            DOWNLOADING THESE COURSES:
           </Typography>
           <div
             style={{
@@ -47,10 +47,10 @@ export const DownloadTimetable = () => {
                 href={`/mycourses/${id}`}
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                BACK
               </Button>
               <Button variant="contained" startIcon={<DownloadIcon />}>
-                Atsisiųsti
+                DOWNLOAD
               </Button>
             </div>
           </div>
@@ -77,7 +77,7 @@ export const DownloadTimetable = () => {
                   marginBottom: "25px",
                 }}
               >
-                Pamokos laikas: {entry.lesson_time}
+                LESSON TIME: {entry.lesson_time}
               </Typography>
               <Typography
                 variant={"body1"}
@@ -87,7 +87,7 @@ export const DownloadTimetable = () => {
                   marginBottom: "25px",
                 }}
               >
-                Nuoroda prisijungimui: <a href={entry.link}>{entry.link}</a>
+                JOIN LINK: <a href={entry.link}>{entry.link}</a>
               </Typography>
             </Paper>
           ))}

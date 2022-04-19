@@ -120,10 +120,10 @@ export const ViewEnrolledTopic = () => {
               style={{
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: "bold",
+                marginTop: "25px",
               }}
               variant="body1"
               textAlign={"left"}
-              style={{ marginTop: "25px" }}
             >
               {topicData.theory}
             </Typography>
@@ -141,7 +141,7 @@ export const ViewEnrolledTopic = () => {
                   variant="h4"
                   textAlign={"left"}
                 >
-                  Atsiskaitymai
+                  Assignments
                 </Typography>
                 {topicData.assignments.map((assignment) => (
                   <Accordion>
@@ -184,7 +184,7 @@ export const ViewEnrolledTopic = () => {
                             fontWeight={"bold"}
                             textAlign="center"
                           >
-                            Atsiskaitymo pateikimo data
+                            Deadline
                           </Typography>
                           <Typography
                             style={{

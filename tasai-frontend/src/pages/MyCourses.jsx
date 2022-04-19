@@ -63,7 +63,7 @@ export const MyCourses = () => {
     );
   } else if (progressData.length === 0) {
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
           <Paper className={classes.head}>
             <Typography
@@ -71,27 +71,35 @@ export const MyCourses = () => {
               textAlign={"left"}
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
-              Mano kursai
+              My courses
             </Typography>
           </Paper>
-          <Paper elevation={2}>
+          <Paper
+            elevation={2}
+            style={{
+              minHeight: "40vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
+          >
             <Typography
               style={{ fontFamily: "Montserrat, sans-serif" }}
               variant="h5"
               fontWeight="bold"
-              textAlign="left"
+              textAlign="center"
             >
-              Dar neturite jokių kursų
+              You don't have any courses yet
             </Typography>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: "center",
               }}
             >
               <Button href={`/courses`} variant={"contained"}>
-                Atrasti kursus
+                Discover courses
               </Button>
             </div>
           </Paper>
@@ -108,7 +116,7 @@ export const MyCourses = () => {
               variant="h4"
               textAlign={"left"}
             >
-              Mano kursai
+              My courses
             </Typography>
           </Paper>
           {progressData.map((progress) => {
@@ -137,7 +145,7 @@ export const MyCourses = () => {
                       href={`/mycourses/${progress.course_id}`}
                       variant={"contained"}
                     >
-                      Mokytis
+                      Learn
                     </Button>
                   </div>
                 </Paper>

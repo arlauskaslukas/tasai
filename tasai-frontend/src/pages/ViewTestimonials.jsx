@@ -25,7 +25,7 @@ export const ViewTestimonials = () => {
             variant={"h3"}
             style={{ fontFamily: "Montserrat, sans-serif" }}
           >
-            Atsiliepimai apie mūsų kursus
+            Testimonial about our courses
           </Typography>
         </div>
         <div style={{ minHeight: "50vh", marginTop: "25px" }}>
@@ -54,10 +54,10 @@ export const ViewTestimonials = () => {
                 marginBottom: "25px",
               }}
             >
-              NORI PATEIKTI SAVO ATSILIEPIMĄ?
+              Want to add your testimonial?
             </Typography>
             <Button href={"/testimonials/new"} variant={"contained"}>
-              Pateikti atsiliepimą
+              Submit testimonial
             </Button>
           </div>
         )}

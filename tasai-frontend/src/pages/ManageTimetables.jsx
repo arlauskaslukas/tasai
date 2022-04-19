@@ -104,7 +104,7 @@ export const ManageTimetables = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ TVARKARAŠČIŲ VALDYMAS
+              TIMETABLES MANAGEMENT
             </Typography>
             <div
               style={{
@@ -120,14 +120,14 @@ export const ManageTimetables = () => {
                 href="/admin"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                BACK
               </Button>
               <Button
                 variant="contained"
                 href="/admin/timetables/new"
                 startIcon={<Add />}
               >
-                Pridėti naują įrašą
+                NEW ENTRY
               </Button>
             </div>
           </div>
@@ -139,22 +139,22 @@ export const ManageTimetables = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite pašalinti šį įrašą?"}
+              {"Do you want to delete this entry?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Pavadinimas: {selectedEntry.entry_title}</li>
+                <li>Title: {selectedEntry.entry_title}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button onClick={() => handleClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleConfirmation()}
               >
-                Ištrinti
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -170,14 +170,15 @@ export const ManageTimetables = () => {
                 {row.timetable.length == 0 ? (
                   <>
                     <Typography>
-                      Jokių tvarkaraščių šiam kursui nebuvo priskirta.
+                      No timetable entries related to this course have been
+                      found.
                     </Typography>
                     <Button
                       variant="contained"
                       href="/admin/timetables/new"
                       startIcon={<Add />}
                     >
-                      Pridėti naują įrašą
+                      NEW ENTRY
                     </Button>
                   </>
                 ) : (
@@ -190,31 +191,31 @@ export const ManageTimetables = () => {
                         <TableHead className={classes.head}>
                           <TableRow>
                             <TableCell style={{ fontWeight: "bold" }}>
-                              Įrašo ID
+                              Entry ID
                             </TableCell>
                             <TableCell
                               align="right"
                               style={{ fontWeight: "bold" }}
                             >
-                              Pamokos pavadinimas
+                              Title
                             </TableCell>
                             <TableCell
                               style={{ fontWeight: "bold" }}
                               align="right"
                             >
-                              Pamokos data
+                              Date
                             </TableCell>
                             <TableCell
                               style={{ fontWeight: "bold" }}
                               align="right"
                             >
-                              Nuoroda į pamoką
+                              Join link
                             </TableCell>
                             <TableCell
                               style={{ fontWeight: "bold" }}
                               align="right"
                             >
-                              Veiksmai
+                              Actions
                             </TableCell>
                           </TableRow>
                         </TableHead>

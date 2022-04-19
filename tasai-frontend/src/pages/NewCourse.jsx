@@ -46,27 +46,33 @@ export const NewCourse = () => {
 
     if (!_.isString(title) || _.isEqual(title, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso pavadinimas privalomas"]);
+      setErrors((errs) => [...errs, "Course title is a mandatory field"]);
     }
     if (!_.isString(shortDesc) || _.isEqual(shortDesc, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
+      setErrors((errs) => [
+        ...errs,
+        "Course short description is a mandatory field",
+      ]);
     }
     if (!_.isString(longDesc) || _.isEqual(longDesc, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso trumpas aprašymas privalomas"]);
+      setErrors((errs) => [
+        ...errs,
+        "Course long description is a mandatory field",
+      ]);
     }
     if (_.isEqual(startDate, "")) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso pradžios datos laukas privalomas"]);
+      setErrors((errs) => [...errs, "Course start date is a mandatory field"]);
     }
     if (!num_regex.test(duration)) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso trukmės laukas privalomas"]);
+      setErrors((errs) => [...errs, "Course duration is a mandatory field"]);
     }
     if (cost < 0.0) {
       isDataValid = false;
-      setErrors((errs) => [...errs, "Kurso kaina negali būti neigiama"]);
+      setErrors((errs) => [...errs, "Course price cannot be less than zero"]);
     }
     return isDataValid;
   };
@@ -76,7 +82,7 @@ export const NewCourse = () => {
       <Container>
         <div>
           <Typography textAlign={"start"} variant="h4">
-            REDAGUOTI KURSĄ
+            NEW COURSE
           </Typography>
           <div
             style={{
@@ -90,14 +96,14 @@ export const NewCourse = () => {
               href="/admin/courses"
               style={{ backgroundColor: "#B7094C " }}
             >
-              Atgal
+              BACK
             </Button>
           </div>
         </div>
         {errors.length === 0 ? (
           <></>
         ) : (
-          <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+          <Error title={"Data submission error"} subpoints={errors} />
         )}
         {success ? (
           <>
@@ -110,7 +116,7 @@ export const NewCourse = () => {
           <Grid item xs={12} md={3}>
             <TextField
               variant="outlined"
-              label="Kurso pavadinimas"
+              label="Course title"
               required
               value={title}
               onChange={(val) => {
@@ -122,7 +128,7 @@ export const NewCourse = () => {
           <Grid item xs={12} md={3}>
             <TextField
               variant="outlined"
-              label="Kurso trukmė"
+              label="Course duration in weeks"
               required
               value={duration}
               onChange={(val) => {
@@ -135,7 +141,7 @@ export const NewCourse = () => {
             <DatePicker
               disablePast
               required
-              label="Kurso pradžia"
+              label="Course start date"
               value={startDate}
               onChange={(val) => {
                 setStartDate(val);
@@ -153,7 +159,7 @@ export const NewCourse = () => {
               onChange={(val) => {
                 setCost(val.target.value);
               }}
-              label="Kurso kaina"
+              label="Course price"
               style={{ width: "100%" }}
             />
           </Grid>
@@ -166,7 +172,7 @@ export const NewCourse = () => {
               onChange={(val) => {
                 setShortDesc(val.target.value);
               }}
-              label="Trumpas aprašymas"
+              label="Short description"
               style={{ width: "100%" }}
             />
           </Grid>
@@ -179,7 +185,7 @@ export const NewCourse = () => {
               onChange={(val) => {
                 setLongDesc(val.target.value);
               }}
-              label="Ilgas aprašymas"
+              label="Longer description"
               style={{ width: "100%" }}
             />
           </Grid>
@@ -197,7 +203,7 @@ export const NewCourse = () => {
             variant="contained"
             endIcon={<Send />}
           >
-            Išsaugoti
+            SEND
           </Button>
         </div>
       </Container>

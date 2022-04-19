@@ -137,7 +137,7 @@ export const ManageUsers = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              NAUDOTOJŲ VALDYMAS
+              USER MANAGEMENT
             </Typography>
             <div
               style={{
@@ -153,7 +153,7 @@ export const ManageUsers = () => {
                 href="/admin"
                 style={{ backgroundColor: "#B7094C" }}
               >
-                Atgal
+                Back
               </Button>
             </div>
           </div>
@@ -165,22 +165,22 @@ export const ManageUsers = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite užblokuoti šį naudotoją?"}
+              {"Do you want to block this user?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Nauidotojo vardas: {selectedEntry.name}</li>
+                <li>Username: {selectedEntry.name}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleBlockClose()}>Atšaukti</Button>
+              <Button onClick={() => handleBlockClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleBlockConfirmation()}
               >
-                Blokuoti
+                Block
               </Button>
             </DialogActions>
           </Dialog>
@@ -192,22 +192,22 @@ export const ManageUsers = () => {
             aria-describedby="alert-dialog-description2"
           >
             <DialogTitle id="alert-dialog-title2">
-              {"Ar tikrai norite atblokuoti šį naudotoją"}
+              {"Do you want to unblock this user?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Nauidotojo vardas: {selectedEntry.name}</li>
+                <li>Username: {selectedEntry.name}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleUnblockClose()}>Atšaukti</Button>
+              <Button onClick={() => handleUnblockClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleUnblockConfirmation()}
               >
-                Atblokuoti
+                Unblock
               </Button>
             </DialogActions>
           </Dialog>
@@ -216,7 +216,7 @@ export const ManageUsers = () => {
             variant="h5"
             style={{ marginBlock: "20px", textAlign: "left" }}
           >
-            AKTYVŪS NAUDOTOJAI
+            ACTIVE USERS
           </Typography>
 
           <div>
@@ -224,20 +224,18 @@ export const ManageUsers = () => {
               <Table>
                 <TableHead className={classes.head}>
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>
-                      Naudotojo ID
-                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Naudotojo vardas
+                      Username
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Naudotojo elektroninis paštas
+                      Email
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Naudotojo rolė
+                      Role
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Veiksmai
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -250,9 +248,7 @@ export const ManageUsers = () => {
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">
-                        {row.is_admin == "1"
-                          ? "Administratorius"
-                          : "Naudotojas"}
+                        {row.is_admin == "1" ? "Admin" : "User"}
                       </TableCell>
                       <TableCell>
                         <div
@@ -277,7 +273,7 @@ export const ManageUsers = () => {
                               startIcon={<Close />}
                               aria-label="Block user"
                             >
-                              Blokuoti
+                              Block
                             </Button>
                           )}
                         </div>
@@ -293,7 +289,7 @@ export const ManageUsers = () => {
             variant="h5"
             style={{ marginBlock: "20px", textAlign: "left" }}
           >
-            UŽBLOKUOTI NAUDOTOJAI
+            BLOCKED USERS
           </Typography>
 
           <div>
@@ -301,20 +297,18 @@ export const ManageUsers = () => {
               <Table>
                 <TableHead className={classes.head}>
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>
-                      Naudotojo ID
-                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Naudotojo vardas
+                      Username
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Naudotojo elektroninis paštas
+                      Email
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Naudotojo rolė
+                      Role
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Veiksmai
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -327,9 +321,7 @@ export const ManageUsers = () => {
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">
-                        {row.is_admin == "1"
-                          ? "Administratorius"
-                          : "Naudotojas"}
+                        {row.is_admin == "1" ? "Admin" : "User"}
                       </TableCell>
                       <TableCell>
                         <div
@@ -354,7 +346,7 @@ export const ManageUsers = () => {
                               startIcon={<Person />}
                               aria-label="Block user"
                             >
-                              Atblokuoti
+                              Unblock
                             </Button>
                           )}
                         </div>

@@ -110,7 +110,7 @@ export const ViewEnrolledCourse = () => {
                   variant="h5"
                   textAlign={"left"}
                 >
-                  Kurso informacija
+                  Course information
                 </Typography>
                 <Typography
                   style={{
@@ -120,7 +120,7 @@ export const ViewEnrolledCourse = () => {
                   variant="body1"
                   textAlign={"left"}
                 >
-                  Kurso pradžia: {courseData.starts_at}
+                  Course starts at: {courseData.starts_at}
                 </Typography>
                 <Typography
                   style={{
@@ -130,7 +130,7 @@ export const ViewEnrolledCourse = () => {
                   variant="body1"
                   textAlign={"left"}
                 >
-                  Kurso trukmė savaitėmis: {courseData.duration}
+                  Duration in weeks: {courseData.duration}
                 </Typography>
                 <Typography
                   style={{
@@ -173,10 +173,10 @@ export const ViewEnrolledCourse = () => {
                 fontWeight: "bold",
               }}
             >
-              Kurso gyvų pamokų transliacijos tvarkaraštis
+              Course live lessons timetable
             </Typography>
             <Button variant={"contained"} href={`/mycourses/${id}/timetable`}>
-              Peržiūrėti tvarkaraštį
+              Review live lessons
             </Button>
           </Paper>
           <Paper>
@@ -188,7 +188,7 @@ export const ViewEnrolledCourse = () => {
               variant="h5"
               textAlign={"left"}
             >
-              Kurso temos
+              Course topics
             </Typography>
           </Paper>
           {courseData.topics.map((topic) => (
@@ -225,7 +225,7 @@ export const ViewEnrolledCourse = () => {
                     href={`/mycourses/${id}/topic/${topic.id}`}
                     variant={"contained"}
                   >
-                    Mokytis
+                    Learn
                   </Button>
                 </div>
               </AccordionDetails>

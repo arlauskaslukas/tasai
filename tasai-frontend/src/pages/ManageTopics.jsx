@@ -100,7 +100,7 @@ export const ManageTopics = () => {
         <Container>
           <div>
             <Typography textAlign={"start"} variant="h4">
-              KURSŲ TEMŲ VALDYMAS
+              TOPICS MANAGEMENT
             </Typography>
             <div
               style={{
@@ -116,14 +116,14 @@ export const ManageTopics = () => {
                 href="/admin"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
               <Button
                 variant="contained"
                 href="/admin/topics/new"
                 startIcon={<Add />}
               >
-                Pridėti naują temą
+                NEW TOPIC
               </Button>
             </div>
           </div>
@@ -135,22 +135,22 @@ export const ManageTopics = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite pašalinti šį įrašą?"}
+              {"Do you want to delete this topic?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
               <ul>
                 <li>ID: {selectedEntry.id}</li>
-                <li>Pavadinimas: {selectedEntry.title}</li>
+                <li>Title: {selectedEntry.title}</li>
               </ul>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleClose()}>Atšaukti</Button>
+              <Button onClick={() => handleClose()}>Cancel</Button>
               <Button
                 variant="contained"
                 autoFocus
                 onClick={() => handleConfirmation()}
               >
-                Ištrinti
+                Delete
               </Button>
             </DialogActions>
           </Dialog>
@@ -160,20 +160,18 @@ export const ManageTopics = () => {
               <Table>
                 <TableHead className={classes.head}>
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>
-                      Temos ID
-                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>ID</TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
-                      Temos pavadinimas
+                      Title
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Temos eiliškumas
+                      Order
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Kurso ID
+                      Course ID
                     </TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">
-                      Veiksmai
+                      Actions
                     </TableCell>
                   </TableRow>
                 </TableHead>
