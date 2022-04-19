@@ -59,4 +59,10 @@ export default class DataFetchService {
     console.log(res.data.message);
     return res.data.message;
   }
+  async sendAttendance(topic_id) {
+    let res = await AxiosClient.post(this.apiBaseUrl + "/saveattendance", {
+      topic_id: topic_id,
+    });
+    return res.data.message;
+  }
 }

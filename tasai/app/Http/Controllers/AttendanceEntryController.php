@@ -88,6 +88,49 @@ class AttendanceEntryController extends Controller
         return response(["message"=>$maybe_attendance->is_attending==1], 200);
     }
 
+    public function saveOrUpdateParticipation(Request $request)
+    {
+        $fields = $request->validate([
+            "topic_id"=> "required"
+        ]);
+        $user_id = auth()->user()->id;
+        $maybe_attendance = AttendanceEntry::where([
+            ["topic_id", '=', $request->topic_id],
+            ["user_id", "=", $user_id]
+        ])->first();
+        if($maybe_attendance==null){
+            $attendance = new AttendanceEntry([
+                'is_attending' => 1,
+                'user_id' => $user_id,
+                'topic_id' => $request['topic_id']]
+            );
+            if($attendance->save())
+            {
+                return response(["message"=>"ok"], 201);
+            }
+            else
+            {
+                return response(["message"=>"error"], 409);
+            }
+        }
+        else
+        {
+            if($maybe_attendance->update(
+                ["is_attending" =>
+                    $maybe_attendance["is_attending"] == 0 ? 1 : 0
+                ]
+            ))
+            {
+                return response(["message"=>"ok"], 201);
+            }
+            else
+            {
+                return response(["message"=>"error"], 409);
+            }
+        }
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

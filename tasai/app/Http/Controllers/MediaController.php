@@ -42,8 +42,13 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'file'=>'required',
+            'topic_id'=>'required'
+        ]);
+        $filename = $request->file('file')->store('CourseMedia');
         $media = new Media([
-            'filename' => $request->filename,
+            'filename' => $filename,
             'topic_id' => $request->topic_id
         ]);
         if ($media->save()) return response($media, 201);

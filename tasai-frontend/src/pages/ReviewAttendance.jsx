@@ -132,33 +132,6 @@ export const ReviewAttendance = () => {
               </Button>
             </div>
           </div>
-
-          <Dialog
-            open={dialogOpen}
-            onClose={() => handleClose()}
-            aria-labelLedby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Ar tikrai norite pašalinti šį įrašą?"}
-            </DialogTitle>
-            <DialogContent id="alert-dialog-description">
-              <ul>
-                <li>ID: {selectedEntry.id}</li>
-                <li>Pavadinimas: {selectedEntry.title}</li>
-              </ul>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => handleClose()}>Atšaukti</Button>
-              <Button
-                variant="contained"
-                autoFocus
-                onClick={() => handleConfirmation()}
-              >
-                Ištrinti
-              </Button>
-            </DialogActions>
-          </Dialog>
           {success ? <DeleteSuccess /> : <></>}
           <div>
             <TableContainer component={Paper} style={{ padding: "20px" }}>

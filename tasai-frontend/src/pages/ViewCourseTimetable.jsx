@@ -55,6 +55,19 @@ export const ViewCourseTimetable = () => {
     return data;
   }
 
+  const sendAttendance = (idx, topic_id) => {
+    datafetchservice.sendAttendance(topic_id).then((message) => {
+      if (message === "ok") {
+        let mapped = participations.map((participation, pid) => {
+          return pid === idx ? true : participation;
+        });
+        setParticipations(mapped);
+      } else {
+        //errorhandle
+      }
+    });
+  };
+
   useEffect(async () => {
     let data = [];
     await datafetchservice
@@ -170,10 +183,13 @@ export const ViewCourseTimetable = () => {
                       }}
                     >
                       {uris[idx] !== undefined ? (
-                        <Button variant="contained" color="secondary">
-                          <a href={uris[idx]} download>
-                            Download iCal file
-                          </a>
+                        <Button
+                          href={uris[idx]}
+                          variant="contained"
+                          color="secondary"
+                          download
+                        >
+                          Download iCal file
                         </Button>
                       ) : (
                         <></>
@@ -187,7 +203,11 @@ export const ViewCourseTimetable = () => {
                           Participation marked
                         </Button>
                       ) : (
-                        <Button variant="contained" color="primary">
+                        <Button
+                          onClick={() => sendAttendance(idx, entry.topic_id)}
+                          variant="contained"
+                          color="primary"
+                        >
                           Mark participation
                         </Button>
                       )}
