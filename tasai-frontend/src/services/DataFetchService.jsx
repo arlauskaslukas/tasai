@@ -14,6 +14,10 @@ export default class DataFetchService {
     );
     return res.data.topics;
   }
+  async getTopics() {
+    const res = await AxiosClient.get(this.apiBaseUrl + `/topics`);
+    return res.data;
+  }
   async getTimetableiCalFileURI(id) {
     let res = await AxiosClient.get(
       this.apiBaseUrl + `/export_timetable/${id}`

@@ -154,6 +154,19 @@ export const AdminDashboard = ({ LoginStatus }) => {
                 >
                   Add topic
                 </Button>
+                <Button
+                  className={classes.button}
+                  variant={"contained"}
+                  href={"/admin/media"}
+                  startIcon={<VisibilityIcon />}
+                  style={{
+                    marginBlock: "20px",
+                    backgroundColor: "#C11F6B",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  Manage media
+                </Button>
               </div>
             </Paper>
           </Grid>

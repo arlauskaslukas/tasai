@@ -35,6 +35,8 @@ import { NewTimetableEntry } from "./pages/NewTimetableEntry";
 import { EditTimetableEntry } from "./pages/EditTimetableEntry";
 import { NewANNModel } from "./pages/NewANNModel";
 import { ReviewAttendance } from "./pages/ReviewAttendance";
+import { ManageMedia } from "./pages/ManageMedia";
+import { NewMedia } from "./pages/NewMedia";
 
 function App() {
   return (
@@ -75,7 +77,7 @@ function App() {
             <Route exact path={"/admin/courses"} element={<ManageCourses />} />
             <Route exact path={"/admin/users"} element={<ManageUsers />} />
             <Route exact path={"/admin/topics"} element={<ManageTopics />} />
-
+            <Route exact path="/admin/media" element={<ManageMedia />} />
             <Route
               exact
               path={"/admin/assignments"}
@@ -115,6 +117,8 @@ function App() {
               path={"/admin/timetables/new"}
               element={<NewTimetableEntry />}
             />
+            <Route exact path="/admin/media/new" element={<NewMedia />} />
+
             <Route
               exact
               path={"/admin/attendance"}
