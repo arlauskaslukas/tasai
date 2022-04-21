@@ -110,7 +110,7 @@ export const NavBar = () => {
           )}
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            TotalAI
+            Artificia
           </Typography>
           {size === "lg" ? (
             <div

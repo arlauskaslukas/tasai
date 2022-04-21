@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Media;
+use Faker\Core\File;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller

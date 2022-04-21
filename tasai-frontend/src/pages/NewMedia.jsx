@@ -70,19 +70,17 @@ export const NewMedia = () => {
   };
 
   const SendToDB = async () => {
-    AxiosClient.post("http://127.0.0.1:8000/api/media", {
-      topic_id: topic,
-      file: file,
-    });
+    let formData = new FormData();
+    formData.append("topic_id", topic);
+    formData.append("file", file);
+    AxiosClient.post("http://127.0.0.1:8000/api/media", formData, {headers:{
+      "Content-Type": "multipart/form-data",
+    }});
   };
 
   const readFile = (event) => {
     let files = event.target.files;
-    let reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = (e) => {
-      setFile(e.target.result);
-    };
+    setFile(files[0]);
   };
 
   if (cookies.get("Authorization") === undefined) {

@@ -29,7 +29,7 @@ export const Home = () => {
         fontWeight="bold"
         color="white"
       >
-        TotalAI
+        ARTIFICIA ACADEMY
       </Typography>
       <Typography
         variant="h5"

@@ -76,7 +76,6 @@ export const ViewCourseTimetable = () => {
         return dataProcessing(obj);
       })
       .then((obj) => (data = obj));
-    console.log(data[0].participation);
     setTimetables(data);
   }, []);
   if (timetables === undefined) {

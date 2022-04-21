@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertTitle,
   Button,
   CircularProgress,
   Container,
@@ -71,7 +73,7 @@ export const ManageMedia = () => {
   const SendToDB = async () => {
     let identifier = Number(selectedEntry.id);
     const res = await AxiosClient.delete(
-      `http://127.0.0.1:8000/api/assignments`,
+      `http://127.0.0.1:8000/api/media`,
       {
         data: {
           id: identifier,
@@ -150,6 +152,10 @@ export const ManageMedia = () => {
               {"Do you really want to delete this media entry?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
+              <Alert severity="warning" style={{ textAlign: "left", marginBlock: "50px"}}> 
+                <AlertTitle>Heads up!</AlertTitle>
+                The following action will only remove the reference to the file. Physical file removal on disk should be done manually.
+              </Alert>
               <ul>
                 <li>ID: {selectedEntry.id}</li>
                 <li>File: {selectedEntry.filename}</li>
