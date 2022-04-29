@@ -72,14 +72,11 @@ export const ManageMedia = () => {
 
   const SendToDB = async () => {
     let identifier = Number(selectedEntry.id);
-    const res = await AxiosClient.delete(
-      `http://127.0.0.1:8000/api/media`,
-      {
-        data: {
-          id: identifier,
-        },
-      }
-    );
+    const res = await AxiosClient.delete(`http://127.0.0.1:8000/api/media`, {
+      data: {
+        id: identifier,
+      },
+    });
     setSuccess(res.data.message === "ok");
   };
 
@@ -152,9 +149,13 @@ export const ManageMedia = () => {
               {"Do you really want to delete this media entry?"}
             </DialogTitle>
             <DialogContent id="alert-dialog-description">
-              <Alert severity="warning" style={{ textAlign: "left", marginBlock: "50px"}}> 
+              <Alert
+                severity="warning"
+                style={{ textAlign: "left", marginBlock: "50px" }}
+              >
                 <AlertTitle>Heads up!</AlertTitle>
-                The following action will only remove the reference to the file. Physical file removal on disk should be done manually.
+                The following action will only remove the reference to the file.
+                Physical file removal on disk should be done manually.
               </Alert>
               <ul>
                 <li>ID: {selectedEntry.id}</li>

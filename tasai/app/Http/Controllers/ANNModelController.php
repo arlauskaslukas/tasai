@@ -27,6 +27,29 @@ class ANNModelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getModel(Request $request) {
+        $request->validate(
+            [
+                "id"=>"required"
+            ]
+        );
+        $annmodel = ANNModel::findOrFail($request["id"]);
+        $metrics = $annmodel->metrics()->get(["name"]);
+        $annmodel['metrics'] = $metrics;
+        $layers = $annmodel->layers()->get();
+        foreach ($layers as $layer)
+        {
+            $layerparams = $layer->layerParameters()->get();
+            $transformedParams = array();
+            foreach ($layerparams as $layerparam) {
+                $transformedParams[$layerparam["name"]] = $layerparam["value"];
+            }
+            $layer["hyperparameters"] = $transformedParams;
+        }
+        $annmodel["layers"] = $layers;
+        return response($annmodel, 200);
+    }
     public function create()
     {
         //
@@ -250,5 +273,10 @@ class ANNModelController extends Controller
     public function destroy(ANNModel $aNNModel)
     {
         //
+    }
+    public function user_models(Request $request)
+    {
+        $models = auth()->user()->models()->get();
+        return response($models, 200);
     }
 }

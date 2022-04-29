@@ -17,6 +17,8 @@ class ANNModel extends Model
         "user_id"
     ];
 
-    public function layers() {return $this->hasMany(Layer::class);}
+    public function layers() {return $this->hasMany(Layer::class, "ann_model_id");}
     public function user() {return $this->belongsTo(User::class);}
+    public function assignment_entries() {$this->hasMany(AssignmentEntry::class);}
+    public function metrics() {return $this->hasMany(Metric::class, "ann_model_id");}
 }

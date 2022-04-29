@@ -29,7 +29,6 @@ export const NewMedia = () => {
   const [file, setFile] = useState(undefined);
   const [errors, setErrors] = useState([]);
   const [success, setSuccess] = useState(false);
-  const [description, setDescription] = useState("");
   const cookies = new Cookies();
   const datafetchservice = new DataFetchService();
 
@@ -73,9 +72,11 @@ export const NewMedia = () => {
     let formData = new FormData();
     formData.append("topic_id", topic);
     formData.append("file", file);
-    AxiosClient.post("http://127.0.0.1:8000/api/media", formData, {headers:{
-      "Content-Type": "multipart/form-data",
-    }});
+    AxiosClient.post("http://127.0.0.1:8000/api/media", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   };
 
   const readFile = (event) => {

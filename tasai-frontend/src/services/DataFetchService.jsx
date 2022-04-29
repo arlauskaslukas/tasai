@@ -69,4 +69,62 @@ export default class DataFetchService {
     });
     return res.data.message;
   }
+  async getUserModels() {
+    let res = await AxiosClient.get(this.apiBaseUrl + "/user_models");
+    return res.data;
+  }
+  async uploadFileAssignmentEntry(assignment_id, file) {
+    let returnable = "ok";
+    let formData = new FormData();
+    formData.append("assignment_id", assignment_id);
+    formData.append("file", file);
+    AxiosClient.post(this.apiBaseUrl + "/assignmententries", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((val) => {
+        returnable = "ok";
+      })
+      .catch((reason) => {
+        returnable = "error";
+      });
+    return returnable;
+  }
+  async uploadANNAssignmentEntry(assignment_id, model) {
+    let returnable = "ok";
+    AxiosClient.post(this.apiBaseUrl + "/assignmententries", {
+      assignment_id: assignment_id,
+      model: model,
+    })
+      .then((val) => {
+        returnable = "ok";
+      })
+      .catch((reason) => {
+        returnable = "error";
+      });
+    return returnable;
+  }
+  async getAssignmentEntries() {
+    let res = await AxiosClient.get(this.apiBaseUrl + "/assignmententries");
+    return res.data;
+  }
+  async getFile(filename) {
+    return await AxiosClient.post(
+      this.apiBaseUrl + "/retrievefile",
+      {
+        filename: filename,
+      },
+      {
+        responseType: "blob",
+      }
+    );
+  }
+
+  async getModel(id) {
+    let res = await AxiosClient.post(this.apiBaseUrl + "/getmodel", {
+      id: id,
+    });
+    return res.data;
+  }
 }

@@ -13,6 +13,6 @@ class Layer extends Model
         "ann_model_id",
         "type",
     ];
-    public function model() {return $this->hasMany(ANNModel::class);}
+    public function model() {return $this->hasMany(ANNModel::class, "ann_model_id");}
     public function layerParameters() {return $this->hasMany(LayerParameter::class);}
 }

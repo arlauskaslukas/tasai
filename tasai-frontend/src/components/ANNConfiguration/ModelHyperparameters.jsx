@@ -11,8 +11,9 @@ import {
 import React, { useEffect, useState } from "react";
 import ModelHyperparametersEnums from "../../utils/ANNConfiguration/ModelHyperparametersEnums";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import _ from "lodash";
 
-export const ModelHyperparameters = ({ callback }) => {
+export const ModelHyperparameters = ({ callback, disabled, initvals = {} }) => {
   const [optimizer, setOptimizer] = useState("Adam");
   const [lossFunction, setLossFunction] = useState("Binary Crossentropy");
   const [metrics, setMetrics] = useState([
@@ -54,6 +55,17 @@ export const ModelHyperparameters = ({ callback }) => {
         title: metric,
       };
     });
+    if (disabled) {
+      console.log(initvals);
+      mappedMetrics = mappedMetrics.map((metric) => {
+        let status = initvals.metrics.includes(metric);
+        console.log(status);
+        return {
+          ...metric,
+          chosen: status,
+        };
+      });
+    }
     setMetrics(mappedMetrics);
   }, []);
 
@@ -62,6 +74,7 @@ export const ModelHyperparameters = ({ callback }) => {
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
         <InputLabel id="optimizer">Model optimizer</InputLabel>
         <Select
+          disabled={disabled}
           labelId="optimizer"
           id="optimizer"
           value={optimizer}
@@ -76,6 +89,7 @@ export const ModelHyperparameters = ({ callback }) => {
       <FormControl fullWidth style={{ marginBlock: "20px" }}>
         <InputLabel id="loss">Loss</InputLabel>
         <Select
+          disabled={disabled}
           labelId="loss"
           id="loss"
           value={lossFunction}
@@ -103,6 +117,7 @@ export const ModelHyperparameters = ({ callback }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      disabled={disabled}
                       checked={metric.chosen}
                       onChange={() => handleMetricCheck(metric.id)}
                     />

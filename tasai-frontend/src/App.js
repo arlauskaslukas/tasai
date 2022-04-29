@@ -37,6 +37,7 @@ import { NewANNModel } from "./pages/NewANNModel";
 import { ReviewAttendance } from "./pages/ReviewAttendance";
 import { ManageMedia } from "./pages/ManageMedia";
 import { NewMedia } from "./pages/NewMedia";
+import { ManageAssignmentEntries } from "./pages/ManageAssignmentEntries";
 
 function App() {
   return (
@@ -82,6 +83,11 @@ function App() {
               exact
               path={"/admin/assignments"}
               element={<ManageAssignments />}
+            />
+            <Route
+              exact
+              path="/admin/assignments/entries"
+              element={<ManageAssignmentEntries />}
             />
             <Route exact path={"/admin/courses/new"} element={<NewCourse />} />
             <Route
@@ -136,6 +142,11 @@ function App() {
               exact
               path={"/testimonials/new"}
               element={<NewTestimonial />}
+            />
+            <Route
+              exact
+              path={`/admin/models/:id`}
+              element={<NewANNModel reviewing={true} />}
             />
           </Routes>
         </BrowserRouter>

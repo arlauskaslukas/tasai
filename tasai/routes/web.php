@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 //ENABLE WHEN POSTING INTO PRODUCTION OR YOU ARE A SHIT DEV
 
 //Public routes
-Route::group(['middleware'=>['Cors']], function()
-{
+//Route::group(['middleware'=>['Cors']], function()
+//{
     Route::post("/api/generate_model", [\App\Http\Controllers\ANNController::class, "parseModelFromJson"]);
     Route::post("/api/save_model", [\App\Http\Controllers\ANNModelController::class, 'store']);
 
@@ -56,6 +56,7 @@ Route::group(['middleware'=>['Cors']], function()
 
     Route::get('/api/testimonials', [\App\Http\Controllers\TestimonialController::class,'index']);
 
+    Route::post('/api/getmodel', [\App\Http\Controllers\ANNModelController::class,'getModel']);
 //auth routes
     Route::post('/api/register', [\App\Http\Controllers\AuthController::class, 'register']);
     Route::post('/api/login', [\App\Http\Controllers\AuthController::class, 'login']);
@@ -70,6 +71,7 @@ Route::group(['middleware'=>['Cors']], function()
         Route::post('/api/assignmententries', [App\Http\Controllers\AssignmentEntryController::class, 'store']);
         Route::put('/api/assignmententries', [App\Http\Controllers\AssignmentEntryController::class, 'update']);
         Route::delete('/api/assignmententries', [App\Http\Controllers\AssignmentEntryController::class, 'destroy']);
+        Route::post('/api/retrievefile', [\App\Http\Controllers\AssignmentEntryController::class, 'retrieveFile']);
         Route::post('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'store']);
         Route::put('/api/attendances', [App\Http\Controllers\AttendanceEntryController::class, 'update']);
         Route::post("/api/checkattendancestatus", [\App\Http\Controllers\AttendanceEntryController::class, 'checkIfUserHasParticipated']);
@@ -81,6 +83,7 @@ Route::group(['middleware'=>['Cors']], function()
         Route::get('/api/users/{user_id}/courseprogress/{course_id}', [App\Http\Controllers\UserController::class, 'course_progress']);
         Route::get('/api/topics/{topic_id}/assignments', [\App\Http\Controllers\TopicController::class, 'topic_assignments']);
         Route::post('/api/testimonials', [\App\Http\Controllers\TestimonialController::class, 'store']);
+        Route::get('/api/user_models', [\App\Http\Controllers\ANNModelController::class, 'user_models']);
         //admin-protected routes
         Route::group(['middleware'=>['admin']], function() {
             Route::get("/api/course_timetables", [\App\Http\Controllers\TimetableEntryController::class, 'courses_timetables']);
@@ -118,7 +121,7 @@ Route::group(['middleware'=>['Cors']], function()
             Route::post('/api/restoreuser', [App\Http\Controllers\UserController::class, 'restoreBlocked']);
         });
     });
-});
+//});
 
 //for all other routes - 404 not found
 Route::get('/api/{route?}', function () {

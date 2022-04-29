@@ -1,5 +1,6 @@
 import {
   AddCircleOutline,
+  ArrowBack,
   BugReport,
   ExpandMore,
   SendAndArchiveOutlined,
@@ -38,9 +39,11 @@ import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { LoadingBackdrop } from "../components/LoadingBackdrop";
 import { SnackbarSuccess } from "../components/SnackbarSuccess";
 import { responsiveProperty } from "@mui/material/styles/cssUtils";
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
+import { useParams } from "react-router";
+import { add } from "lodash";
 
-export const NewANNModel = () => {
+export const NewANNModel = ({ reviewing = false }) => {
   const layers = LayersEnums.Layers;
   const [newLayerDialogOpen, setNewLayerDialogOpen] = useState(false);
   const handleNewLayerDialogClose = () => setNewLayerDialogOpen(false);
@@ -52,6 +55,8 @@ export const NewANNModel = () => {
   const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
   const [saveModelSuccess, setSaveModelSuccess] = useState(false);
   const dfs = new DataFetchService();
+
+  let { id } = useParams();
 
   const [toggleLoading, setToggleLoading] = useState(false);
 
@@ -131,7 +136,41 @@ export const NewANNModel = () => {
 
   useEffect(() => {
     changeAvailableLayers(layerCategory);
+    if (reviewing) {
+      dfs.getModel(id).then((result) => {
+        setHyperparams(
+          result.optimizer,
+          result.loss,
+          result.metrics.map((metric) => metric.name)
+        );
+        result.layers.map((layer) => {
+          setAddedLayers((existingLayers) => [...existingLayers, layer.type]);
+          setLayersHyperparams((existingLayers) => [
+            ...existingLayers,
+            {
+              title: layer.type,
+              id: addedLayers.length,
+              hyperparameters: layer.hyperparameters,
+            },
+          ]);
+        });
+      });
+      console.log(modelHyperparams);
+    }
   }, []);
+
+  const flattenObject = (kvp) => {
+    let arr = [];
+    for (const key in kvp) {
+      arr.push(
+        <Typography variant="body1">
+          {key} - {kvp[key]}
+        </Typography>
+      );
+      console.log(kvp[key]);
+    }
+    return arr;
+  };
 
   return (
     <>
@@ -173,7 +212,7 @@ export const NewANNModel = () => {
         onClose={handleNewLayerDialogClose}
         style={{ minWidth: "50vw" }}
       >
-        <DialogTitle>{"Naujo sluoksnio pridėjimas"}</DialogTitle>
+        <DialogTitle>{"New layer"}</DialogTitle>
         <DialogContent>
           <FormControl fullWidth style={{ marginBlock: "20px" }}>
             <InputLabel id="layer-type">Layer type</InputLabel>
@@ -228,21 +267,80 @@ export const NewANNModel = () => {
                 paddingTop: "20px",
               }}
             >
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography>Model hyperparameters</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ModelHyperparameters callback={setHyperparams} />
-                </AccordionDetails>
-              </Accordion>
+              {reviewing ? (
+                <>
+                  <div style={{ display: "flex", padding: "20px" }}>
+                    <Button
+                      href="/admin/assignments/entries"
+                      variant="contained"
+                      startIcon={<ArrowBack />}
+                    >
+                      BACK TO ASSIGNMENT ENTRIES
+                    </Button>
+                  </div>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <Typography>Model hyperparameters</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="body1">
+                          Optimizer: {modelHyperparams.optimizer}
+                        </Typography>
+                        <Typography variant="body1">
+                          Loss function: {modelHyperparams.loss}
+                        </Typography>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "left",
+                        }}
+                      >
+                        <Typography variant="body1">Chosen metrics:</Typography>
+                        {modelHyperparams.metrics.map((metric) => (
+                          <Typography variant="body1">{metric}</Typography>
+                        ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                </>
+              ) : (
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Typography>Model hyperparameters</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ModelHyperparameters
+                      disabled={reviewing}
+                      initvals={modelHyperparams}
+                      callback={setHyperparams}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+              )}
               <Divider color="#000000" style={{ marginBlock: "20px" }} />
+
               {addedLayers.map((layer, idx) => (
-                <LayerHyperparameters
-                  title={layer}
-                  idx={idx}
-                  parentUpdateFunc={changeHyperparamsVals}
-                />
+                <>
+                  {reviewing ? (
+                    <></>
+                  ) : (
+                    <LayerHyperparameters
+                      title={layer}
+                      idx={idx}
+                      disabled={reviewing}
+                      parentUpdateFunc={changeHyperparamsVals}
+                    />
+                  )}
+                </>
               ))}
             </Paper>
           </Grid>
@@ -263,6 +361,7 @@ export const NewANNModel = () => {
                     onClick={handleNewLayerDialogOpen}
                     color="info"
                     variant="contained"
+                    disabled={reviewing}
                     startIcon={<AddCircleOutline />}
                   >
                     New layer
@@ -273,6 +372,7 @@ export const NewANNModel = () => {
                     style={{ width: "100%", height: "100%" }}
                     color="success"
                     variant="contained"
+                    disabled={reviewing}
                     onClick={handleModelCodeGeneration}
                     startIcon={<SendAndArchiveOutlined />}
                   >
@@ -295,6 +395,7 @@ export const NewANNModel = () => {
                     style={{ width: "100%", height: "100%" }}
                     color="warning"
                     variant="contained"
+                    disabled={reviewing}
                     startIcon={<Upload />}
                   >
                     Load ANN architecture
@@ -305,6 +406,7 @@ export const NewANNModel = () => {
                     style={{ width: "100%", height: "100%" }}
                     color="success"
                     variant="contained"
+                    disabled={reviewing}
                     onClick={handleSave}
                     startIcon={<SaveIcon />}
                   >
@@ -337,12 +439,10 @@ export const NewANNModel = () => {
                     }}
                   >
                     <Typography textAlign={"right"}>
-                      Optimizer:{" "}
-                      {modelHyperparams.optimizer}
+                      Optimizer: {modelHyperparams.optimizer}
                     </Typography>
                     <Typography textAlign={"right"}>
-                      Loss function:{" "}
-                      {modelHyperparams.loss}
+                      Loss function: {modelHyperparams.loss}
                     </Typography>
                   </div>
                 </div>

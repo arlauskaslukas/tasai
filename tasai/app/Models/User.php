@@ -57,4 +57,5 @@ class User extends Authenticatable
         return $this->hasMany(AttendanceEntry::class);
     }
     public function testimonials() { return $this->hasMany(Testimonial::class);}
+    public function models() { return $this->hasMany(ANNModel::class);}
 }

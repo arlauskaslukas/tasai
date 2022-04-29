@@ -15,7 +15,7 @@ class CreateAssignmententriesTable extends Migration
     {
         Schema::create('assignmententries', function (Blueprint $table) {
             $table->id();
-            $table->string('filename');
+            $table->string('filename')->nullable();
             $table->integer('rating');
             $table->foreignId('assignment_id')->constrained('assignments');
             $table->foreignId('user_id')->constrained('users');

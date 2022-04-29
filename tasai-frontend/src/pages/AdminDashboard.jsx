@@ -64,7 +64,7 @@ export const AdminDashboard = ({ LoginStatus }) => {
         backgroundColor: "#E6EAF2",
         backgroundSize: "cover",
         height: "100vh",
-        paddingBlock: "50px",
+        paddingBlock: "100px",
       }}
     >
       <Container>
@@ -285,6 +285,19 @@ export const AdminDashboard = ({ LoginStatus }) => {
                   startIcon={<VisibilityIcon />}
                 >
                   Manage assignments
+                </Button>
+                <Button
+                  className={classes.button}
+                  variant={"contained"}
+                  style={{
+                    marginBlock: "20px",
+                    backgroundColor: "#C11F6B",
+                    justifyContent: "space-around",
+                  }}
+                  href={"/admin/assignments/entries"}
+                  startIcon={<VisibilityIcon />}
+                >
+                  Review user submissions
                 </Button>
               </div>
             </Paper>

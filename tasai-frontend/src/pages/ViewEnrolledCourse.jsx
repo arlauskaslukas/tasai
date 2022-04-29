@@ -132,16 +132,6 @@ export const ViewEnrolledCourse = () => {
                 >
                   Duration in weeks: {courseData.duration}
                 </Typography>
-                <Typography
-                  style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: "bold",
-                  }}
-                  variant="body1"
-                  textAlign={"left"}
-                >
-                  Kurso kaina eurais: {courseData.cost}
-                </Typography>
               </Grid>
               <Grid
                 item
@@ -179,7 +169,7 @@ export const ViewEnrolledCourse = () => {
               Review live lessons
             </Button>
           </Paper>
-          <Paper>
+          <Paper style={{ padding: "20px" }}>
             <Typography
               style={{
                 fontFamily: "Montserrat, sans-serif",
@@ -190,47 +180,47 @@ export const ViewEnrolledCourse = () => {
             >
               Course topics
             </Typography>
-          </Paper>
-          {courseData.topics.map((topic) => (
-            <Accordion key={topic.id}>
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography
-                  style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {topic.title}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  style={{
-                    fontFamily: "Montserrat, sans-serif",
-                    fontWeight: "bold",
-                  }}
-                  variant={"body1"}
-                  textAlign="left"
-                >
-                  {topic.short_description}
-                </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Button
-                    href={`/mycourses/${id}/topic/${topic.id}`}
-                    variant={"contained"}
+            {courseData.topics.map((topic) => (
+              <Accordion key={topic.id} style={{ marginTop: "20px" }}>
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Typography
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: "bold",
+                    }}
                   >
-                    Learn
-                  </Button>
-                </div>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+                    {topic.title}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    style={{
+                      fontFamily: "Montserrat, sans-serif",
+                      fontWeight: "bold",
+                    }}
+                    variant={"body1"}
+                    textAlign="left"
+                  >
+                    {topic.short_description}
+                  </Typography>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button
+                      href={`/mycourses/${id}/topic/${topic.id}`}
+                      variant={"contained"}
+                    >
+                      Learn
+                    </Button>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Paper>
         </Container>
       </div>
     );
