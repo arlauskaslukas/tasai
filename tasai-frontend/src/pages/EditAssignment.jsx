@@ -1,5 +1,5 @@
-import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker, DateTimePicker } from "@mui/lab";
+import {ArrowBack, Send} from "@mui/icons-material";
+import {DateTimePicker} from "@mui/lab";
 import {
   Button,
   CircularProgress,
@@ -15,11 +15,11 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
-import { useParams } from "react-router";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
+import {useParams} from "react-router";
 
 export const EditAssignment = () => {
   let { id } = useParams();
@@ -51,7 +51,7 @@ export const EditAssignment = () => {
     setDeadline(res.data.deadline);
     setShortDesc(res.data.description);
     setTopic_id(res.data.topic_id);
-    axiosCall(res.data.topic_id);
+    await axiosCall(res.data.topic_id);
   };
 
   const axiosCall = async (value) => {

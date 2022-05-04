@@ -18,35 +18,13 @@ class CourseController extends Controller
     public function index()
     {
         $array = Course::all();
-        //array_push($array,new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'duration'=>10,'cost'=>'90']));
-        //array_push($array,new Course(['id'=>2,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'duration'=>10,'cost'=>'90']));
-        //array_push($array,new Course(['id'=>3,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'duration'=>10,'cost'=>'90']));
         return response($array, 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -74,17 +52,13 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $course = Course::find($id);
         if ($course == null) return response('', 404);
-        //$course =new Course(['id'=>1,'starts_at'=>"2021-10-06",'title'=>'lorem ipsum',
-        //    'short_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'long_description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam volutpat vulputate faucibus. Donec porttitor magna felis, nec tincidunt sem blandit.',
-        //    'duration'=>10,'cost'=>'90']);
         return response($course, 200);
     }
 
@@ -116,21 +90,10 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -143,11 +106,10 @@ class CourseController extends Controller
                 'long_description' => 'required|string',
                 'duration' => 'required|numeric|min:1',
                 'cost' => 'required|numeric|min:0',
-                'id'=>'required|numeric'
+                'id' => 'required|numeric'
             ]
         );
-        if(($course=Course::find($request->id))!=null)
-        {
+        if (($course = Course::find($request->id)) != null) {
             $course->update(['starts_at' => $request['starts_at'], 'title' => $request['title'],
                 'short_description' => $request['short_description'],
                 'long_description' => $request['long_description'],
@@ -161,17 +123,16 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         error_log($id);
-        if(Course::find($id)!=null)
-        {
+        if (Course::find($id) != null) {
             Course::destroy($id);
             return response(array("message" => "ok"), 200);
         }
-        return response(['message'=>"Course with such id was not found"], 404);
+        return response(['message' => "Course with such id was not found"], 404);
     }
 }

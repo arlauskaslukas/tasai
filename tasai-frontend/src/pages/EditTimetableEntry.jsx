@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Cookies from "universal-cookie/es6";
 import {
-  Button,
-  Container,
-  Paper,
-  Typography,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  LinearProgress,
-  CircularProgress,
-  Rating,
-  TextField,
+    Button,
+    CircularProgress,
+    Container,
+    FormControl,
+    Grid,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Paper,
+    Select,
+    TextField,
+    Typography,
 } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
+import {ArrowBack} from "@mui/icons-material";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 import _ from "lodash";
 import DataFetchService from "../services/DataFetchService";
-import { DateTimePicker } from "@mui/lab";
-import { useParams } from "react-router";
+import {DateTimePicker} from "@mui/lab";
+import {useParams} from "react-router";
 import moment from "moment";
 
 export const EditTimetableEntry = () => {
@@ -73,7 +72,6 @@ export const EditTimetableEntry = () => {
 
   const Validate = () => {
     let isDataValid = true;
-    let num_regex = new RegExp("[1-9][0-9]*");
     setErrors([]);
 
     if (!_.isString(lesson) || _.isEqual(lesson, "")) {
@@ -102,13 +100,13 @@ export const EditTimetableEntry = () => {
   const handleButtonClick = async () => {
     setSuccess(false);
     if (Validate()) {
-      let res = await SendToDB();
+      await SendToDB();
       setSuccess(true);
     }
   };
 
   const SendToDB = async () => {
-    AxiosClient.put("http://127.0.0.1:8000/api/timetables", {
+    await AxiosClient.put("http://127.0.0.1:8000/api/timetables", {
       id: id,
       entry_title: lesson,
       link: link,

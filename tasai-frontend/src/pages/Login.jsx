@@ -1,6 +1,5 @@
-import { WindowSharp } from "@mui/icons-material";
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import {Button, Grid, TextField, Typography} from "@mui/material";
+import React, {useState} from "react";
 import Cookies from "universal-cookie/es6";
 import background from "../assets/background.svg";
 import AxiosClient from "../utils/AxiosClient";
@@ -63,7 +62,7 @@ export const Login = () => {
               justifyContent: "center",
             }}
           >
-            <img src={Logo} style={{ maxWidth: "30vw" }} />
+            <img src={Logo} style={{ maxWidth: "30vw" }} alt={"logo"} />
           </Grid>
           <Grid
             item

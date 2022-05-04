@@ -56,10 +56,9 @@ class ProgressTrackerController extends Controller
         $fields = $request->validate([
             'course_id' => 'required|numeric'
         ]);
-        error_log(Auth::user()->id);
         $progresstracker = new ProgressTracker(['completed_topics'=>0,
             'course_id'=>$fields['course_id'],
-            'user_id'=>Auth::user()->id]);
+            'user_id'=>auth()->user()->id]);
         if ($progresstracker->save()) {
             return response($progresstracker, 201);
         }
@@ -68,12 +67,12 @@ class ProgressTrackerController extends Controller
 
     public function getPersonalTrackers()
     {
-        if(!Auth::user())
+        if(!auth()->user())
         {
             return response('', 404);
         }
-        error_log(Auth::user()->id);
-        $trackers = ProgressTracker::where('user_id', Auth::user()->id)->get();
+        error_log(auth()->user()->id);
+        $trackers = ProgressTracker::where('user_id', auth()->user()->id)->get();
         foreach($trackers as $tracker)
         {
             $tracker['course'] = $tracker->course()->get();
@@ -122,16 +121,16 @@ class ProgressTrackerController extends Controller
             'id' => 'required|numeric',
             'completed_topics' => 'required|numeric'
         ]);
-        if(($progresstracker=ProgressTracker::find($fields->id))!=null)
+        if(($progresstracker=ProgressTracker::find($request->id))!=null)
         {
-            if(auth()->user()->id!=$fields->user_id)
+            if(auth()->user()->id!=$request->user_id)
             {
                 return response(['message'=>'Unauthenticated'], 401);
             }
-            $progresstracker->update(['completed_topics' => $fields->completed_topics]);
+            $progresstracker->update(['completed_topics' => $request->completed_topics]);
             return response(array("response" => "ok"), 200);
         }
-        return response(['message'=>'Progress tracker not found'], 400);
+        return response(['message'=>'Progress tracker not found'], 404);
     }
 
     /**
@@ -145,10 +144,11 @@ class ProgressTrackerController extends Controller
         $fields = $request->validate([
             'id' => 'required|numeric',
         ]);
-        if(ProgressTracker::find($fields->id)!=null) {
-            ProgressTracker::destroy($fields->id);
+        if(ProgressTracker::find($request->id)!=null) {
+            ProgressTracker::destroy($request->id);
             return response(array("message" => "ok"), 200);
         }
-        return response(['message'=>'Progress tracker not found'], 400);
+        return response(['message'=>'Progress tracker not found'], 404
+        );
     }
 }

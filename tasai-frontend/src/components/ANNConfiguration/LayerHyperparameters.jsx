@@ -1,20 +1,18 @@
-import { Delete, ExpandMore } from "@mui/icons-material";
+import {Delete, ExpandMore} from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
 } from "@mui/material";
-import { flexbox } from "@mui/system";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import LayersEnums from "../../utils/ANNConfiguration/LayersEnums";
-import _, { update } from "lodash";
 
 function LayerHyperparametersDistributor(title, updateFunction) {
   if (title === "Input") {

@@ -1,8 +1,7 @@
-import { Button, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import {Button, Typography} from "@mui/material";
+import React from "react";
 import Cookies from "universal-cookie/es6";
 import bg2 from "../assets/bg2.svg";
-import AxiosClient from "../utils/AxiosClient";
 import Logo from "../assets/logo.svg";
 
 export const Home = () => {
@@ -22,7 +21,7 @@ export const Home = () => {
         justifyContent: "center",
       }}
     >
-      <img src={Logo} style={{ maxWidth: "10vw" }} />
+      <img src={Logo} style={{ maxWidth: "10vw" }} alt={"Logo"} />
       <Typography
         style={{ marginBottom: "30px" }}
         variant="h2"

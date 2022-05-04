@@ -1,38 +1,23 @@
+import {Book, Home, Logout, Menu, Person, PersonAdd, Settings,} from "@mui/icons-material";
 import {
-  Home,
-  Menu,
-  Mail,
-  MoveToInbox,
-  Book,
-  Settings,
-  Person,
-  Logout,
-  PersonAdd,
-} from "@mui/icons-material";
-import {
-  AppBar,
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
+    AppBar,
+    Button,
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Toolbar,
+    Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { Typography } from "@mui/material";
-import { Button } from "@mui/material";
-import { useLayoutEffect } from "react";
+import React, {useLayoutEffect, useState} from "react";
 import Cookies from "universal-cookie/es6";
 import AxiosClient from "../utils/AxiosClient";
-import { styled, useTheme } from "@mui/material/styles";
+import {styled, useTheme} from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom";
 
 const useWindowSize = () => {
   const [size, setSize] = useState(window.innerWidth >= 900 ? "lg" : "sm");

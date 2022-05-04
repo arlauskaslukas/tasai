@@ -1,20 +1,25 @@
-import { ExpandMore, Send } from "@mui/icons-material";
+import {ExpandMore} from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Grid,
+    LinearProgress,
+    Paper,
+    Typography,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import {makeStyles} from "@mui/styles";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
 import Cookies from "universal-cookie/es6";
+import StripeContainer from "../components/stripe/StripeContainer";
 import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +46,8 @@ export const ViewCourse = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const { id } = useParams();
   const classes = useStyles();
+  const [paymentSubmitted, setPaymentSubmitted] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [courseData, setCourseData] = useState(undefined);
   const axiosCall = async () => {
     let trackerData = await AxiosClient.get(
@@ -66,6 +73,20 @@ export const ViewCourse = () => {
       }
     );
     console.log(res);
+  };
+
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handlePaymentReceived = () => {
+    setPaymentSubmitted(true);
+    handleEnrollClick();
+    axiosCall().then((data) => setIsDialogOpen(false));
   };
 
   useEffect(() => {
@@ -105,6 +126,25 @@ export const ViewCourse = () => {
   } else
     return (
       <div style={{ minHeight: "100vh" }}>
+        <Dialog
+          open={isDialogOpen}
+          onClose={() => handleCloseDialog()}
+          aria-labelLedby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Rate assignment entry"}
+          </DialogTitle>
+          <DialogContent id="alert-dialog-description">
+            <StripeContainer
+              course_id={id}
+              onCompletePurchase={handlePaymentReceived}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => handleCloseDialog()}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
         <Container>
           <Paper className={classes.head}>
             <Typography variant="h4" textAlign={"left"}>
@@ -148,7 +188,7 @@ export const ViewCourse = () => {
                 ) : (
                   <Button
                     onClick={() => {
-                      handleEnrollClick();
+                      handleOpenDialog();
                     }}
                     variant="contained"
                   >

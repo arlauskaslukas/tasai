@@ -1,30 +1,24 @@
 import {
-  Button,
-  CircularProgress,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  LinearProgress,
-  Paper,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
+    Button,
+    CircularProgress,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    LinearProgress,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { ArrowBack, Close, Person, RoomRounded } from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { makeStyles } from "@mui/styles";
+import React, {useEffect, useState} from "react";
+import {ArrowBack, Close, Person} from "@mui/icons-material";
+import {makeStyles} from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({
@@ -131,7 +125,7 @@ export const ManageUsers = () => {
         </div>
       </div>
     );
-  } else if (data !== undefined)
+  } else
     return (
       <div>
         <Container>

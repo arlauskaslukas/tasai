@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import ics from "ics";
-import { useParams } from "react-router";
-import { Button, Container, Paper, Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
+import {Button, Container, Paper, Typography} from "@mui/material";
+import {ArrowBack} from "@mui/icons-material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DataFetchService from "../services/DataFetchService";
 
@@ -15,7 +14,7 @@ export const DownloadTimetable = () => {
     let data = datafetchservice.getCourseTimetable(id);
     console.log(data);
     setTimetables(data);
-  }, []);
+  }, [id]);
 
   return (
     <>

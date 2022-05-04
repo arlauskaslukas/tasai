@@ -1,15 +1,7 @@
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {Button, CircularProgress, Container, Grid, LinearProgress, Paper, Typography,} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
-import { makeStyles } from "@mui/styles";
+import {makeStyles} from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   head: {

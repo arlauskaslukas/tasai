@@ -1,4 +1,5 @@
 import _ from "lodash";
+
 const RegexTools = () => {
   const formatDate = (string) => {
     let returnable = _.replace(string, new RegExp(".[0-9]*Z"), "");

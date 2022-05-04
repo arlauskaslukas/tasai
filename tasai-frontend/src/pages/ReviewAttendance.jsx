@@ -1,32 +1,24 @@
 import {
-  Button,
-  CircularProgress,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  LinearProgress,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
+    Button,
+    CircularProgress,
+    Container,
+    LinearProgress,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { ArrowBack, RoomRounded } from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { makeStyles } from "@mui/styles";
+import {ArrowBack} from "@mui/icons-material";
+import {makeStyles} from "@mui/styles";
 import _ from "lodash";
 import AxiosClient from "../utils/AxiosClient";
-import { DeleteSuccess } from "../components/DeleteSuccess";
+import {DeleteSuccess} from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -106,7 +98,7 @@ export const ReviewAttendance = () => {
         </div>
       </div>
     );
-  } else if (data !== undefined)
+  } else
     return (
       <div style={{ minHeight: "100vh" }}>
         <Container>

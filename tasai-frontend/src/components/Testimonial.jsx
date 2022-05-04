@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Rating, Typography } from "@mui/material";
+import {Paper, Rating, Typography} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 export const Testimonial = ({ rating, testimonial, user, course }) => {

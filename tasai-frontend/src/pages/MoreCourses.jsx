@@ -1,17 +1,17 @@
-import { ExpandMore } from "@mui/icons-material";
+import {ExpandMore} from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  CircularProgress,
-  Container,
-  LinearProgress,
-  Paper,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Container,
+    LinearProgress,
+    Paper,
+    Typography,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+import {makeStyles} from "@mui/styles";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({

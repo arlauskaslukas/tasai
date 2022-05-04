@@ -7,36 +7,17 @@ use App\Models\User;
 use App\Models\Course;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use function PHPUnit\Framework\isEmpty;
 use const http\Client\Curl\AUTH_ANY;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function index()
     {
         $array = User::all();
-        //array_push($array,new User(['id'=>1,'name'=>"dummy1",'email'=>'dummy1@email.com',
-        //    'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        //array_push($array,new User(['id'=>2,'name'=>"dummy2",'email'=>'dummy2@email.com',
-        //    'password'=>'eNcRyPteD', 'is_admin'=>true]));
-        //array_push($array,new User(['id'=>3,'name'=>"dummy3",'email'=>'dummy3@email.com',
-        //    'password'=>'eNcRyPteD', 'is_admin'=>true]));
         return response($array, 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
     }
 
     public function progress_trackers($user_id)
@@ -55,12 +36,12 @@ class UserController extends Controller
     {
         $user = User::find($user_id);
         if ($user == null) return response('', 404);
-        $progresstracker = $user->progress_trackers()->where('course_id', $course_id)->get();
-        if ($progresstracker) {
+        $progresstracker = $user->progress_trackers()->where('course_id', $course_id)->first();
+        if (!$progresstracker) {
             $user['progress'] = "This user has not enrolled in the course with specified id";
             return response($user, 200);
         } else {
-            $progresstracker[0]['course_info'] = $progresstracker[0]->course()->get();
+            $progresstracker['course_info'] = $progresstracker->course()->get();
             $user['progress'] = $progresstracker;
         }
         return response($user, 200);
@@ -78,10 +59,8 @@ class UserController extends Controller
             'name' => $request->name, 'email' => $request->email,
             'password' => $request->password, 'is_admin' => '0'
         ]);
-        if ($user->save()) {
-            return response($user, 201);
-        }
-        return response('', 409);
+        $user->save();
+        return response($user, 201);
     }
 
     /**
@@ -97,40 +76,16 @@ class UserController extends Controller
         return response('', 404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
-        if(!Auth::user() || Auth::user()->id!=$request['id'])
-            return response(array("message"=>"Unauthorized"), 401);
         $user = User::find($request->id);
         if ($user == null) return response('', 404);
+        if(!auth::user() || auth::user()->id!=$request['id'])
+            return response(array("message"=>"Unauthorized"), 401);
         $user->update(['name' => $request->name, 'email' => $request->email]);
         return response(array("response" => "ok"), 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         $user = User::find($request->id);

@@ -1,35 +1,35 @@
-import { ExpandMore } from "@mui/icons-material";
+import {ExpandMore} from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Alert,
-  AlertTitle,
-  DialogActions,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Alert,
+    AlertTitle,
+    Button,
+    CircularProgress,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Grid,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Paper,
+    Select,
+    Typography,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import {makeStyles} from "@mui/styles";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
 import Cookies from "universal-cookie/es6";
 import AxiosClient from "../utils/AxiosClient";
-import _, { isTypedArray } from "lodash";
+import _ from "lodash";
 import DataFetchService from "../services/DataFetchService";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 
 const useStyles = makeStyles((theme) => ({
   head: {

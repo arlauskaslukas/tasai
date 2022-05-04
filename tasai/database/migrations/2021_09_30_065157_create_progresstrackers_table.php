@@ -16,8 +16,8 @@ class CreateProgresstrackersTable extends Migration
         Schema::create('progresstrackers', function (Blueprint $table) {
             $table->id();
             $table->integer('completed_topics');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('user_id')->constrained('users')->onDelete("cascade");
+            $table->foreignId('course_id')->constrained('courses')->onDelete("cascade");
             $table->timestamps();
         });
     }

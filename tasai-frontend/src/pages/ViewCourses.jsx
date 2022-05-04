@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from "react";
-import AxiosClient from "../utils/AxiosClient";
+import React, {useEffect, useState} from "react";
 import suggested1 from "../assets/suggested1.svg";
 import suggested2 from "../assets/suggested2.svg";
 import suggested3 from "../assets/suggested3.svg";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
-} from "@mui/material";
+import {Button, CircularProgress, Grid, LinearProgress, Paper, Typography,} from "@mui/material";
 import axios from "axios";
 
 export const ViewCourses = () => {

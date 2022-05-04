@@ -1,36 +1,33 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  CircularProgress,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  LinearProgress,
-  Paper,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    LinearProgress,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { ArrowBack, ExpandMore, RoomRounded } from "@mui/icons-material";
+import React, {useEffect, useState} from "react";
+import {ArrowBack, ExpandMore} from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import { makeStyles } from "@mui/styles";
+import {makeStyles} from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
-import qs from "qs";
-import { DeleteSuccess } from "../components/DeleteSuccess";
+import {DeleteSuccess} from "../components/DeleteSuccess";
 import DataFetchService from "../services/DataFetchService";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +95,7 @@ export const ManageTimetables = () => {
         </div>
       </div>
     );
-  } else if (data !== undefined)
+  } else
     return (
       <div>
         <Container>
@@ -135,7 +132,7 @@ export const ManageTimetables = () => {
           <Dialog
             open={dialogOpen}
             onClose={() => handleClose()}
-            aria-labelLedby="alert-dialog-title"
+            aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
@@ -167,7 +164,7 @@ export const ManageTimetables = () => {
                 <Typography>{row.title}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                {row.timetable.length == 0 ? (
+                {row.timetable.length === 0 ? (
                   <>
                     <Typography>
                       No timetable entries related to this course have been
