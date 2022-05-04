@@ -1,4 +1,4 @@
-import { Chip, Paper, Typography } from "@mui/material";
+import {Chip, Paper, Typography} from "@mui/material";
 import React from "react";
 
 const InputLayerVisualization = ({ title, id, layerData }) => {

@@ -16,8 +16,7 @@ class AttendanceEntryController extends Controller
     public function index()
     {
         $array = AttendanceEntry::all();
-        foreach ($array as $element)
-        {
+        foreach ($array as $element) {
             $user = $element->user()->get(['name']);
             $topic = $element->topic()->get(['title']);
             $element['topic'] = $topic;
@@ -31,15 +30,11 @@ class AttendanceEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,14 +46,14 @@ class AttendanceEntryController extends Controller
                 'topic_id' => $request['topic_id']
             ]
         );
-        if ($entry->save()) return response($entry, 201);
-        return response('', 409);
+        $entry->save();
+        return response($entry, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -75,78 +70,53 @@ class AttendanceEntryController extends Controller
     public function checkIfUserHasParticipated(Request $request)
     {
         $fields = $request->validate([
-            "topic_id"=> "required"
+            "topic_id" => "required"
         ]);
         $user_id = auth()->user()->id;
         $maybe_attendance = AttendanceEntry::where([
             ["topic_id", '=', $request->topic_id],
             ["user_id", "=", $user_id]
         ])->first();
-        if($maybe_attendance==null){
-            return response(["message"=>false], 200);
+        if ($maybe_attendance == null) {
+            return response(["message" => false], 200);
         }
-        return response(["message"=>$maybe_attendance->is_attending==1], 200);
+        return response(["message" => $maybe_attendance->is_attending == 1], 200);
     }
 
     public function saveOrUpdateParticipation(Request $request)
     {
         $fields = $request->validate([
-            "topic_id"=> "required"
+            "topic_id" => "required"
         ]);
         $user_id = auth()->user()->id;
         $maybe_attendance = AttendanceEntry::where([
             ["topic_id", '=', $request->topic_id],
             ["user_id", "=", $user_id]
         ])->first();
-        if($maybe_attendance==null){
+        if ($maybe_attendance == null) {
             $attendance = new AttendanceEntry([
-                'is_attending' => 1,
-                'user_id' => $user_id,
-                'topic_id' => $request['topic_id']]
+                    'is_attending' => 1,
+                    'user_id' => $user_id,
+                    'topic_id' => $request['topic_id']]
             );
-            if($attendance->save())
-            {
-                return response(["message"=>"ok"], 201);
-            }
-            else
-            {
-                return response(["message"=>"error"], 409);
-            }
-        }
-        else
-        {
-            if($maybe_attendance->update(
+            $attendance->save();
+            return response(["message" => "ok"], 201);
+        } else {
+            $maybe_attendance->update(
                 ["is_attending" =>
                     $maybe_attendance["is_attending"] == 0 ? 1 : 0
                 ]
-            ))
-            {
-                return response(["message"=>"ok"], 201);
-            }
-            else
-            {
-                return response(["message"=>"error"], 409);
-            }
+            );
+            return response(["message" => "ok"], 200);
         }
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -164,7 +134,7 @@ class AttendanceEntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)

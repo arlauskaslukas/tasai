@@ -1,47 +1,33 @@
+import {AddCircleOutline, ArrowBack, BugReport, ExpandMore, SendAndArchiveOutlined, Upload,} from "@mui/icons-material";
 import {
-  AddCircleOutline,
-  ArrowBack,
-  BugReport,
-  ExpandMore,
-  SendAndArchiveOutlined,
-  Upload,
-} from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionDetails,
-  FormControl,
-  InputLabel,
-  AccordionSummary,
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  MenuItem,
-  Paper,
-  Select,
-  Tab,
-  Tabs,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Select,
+    Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { LayerHyperparameters } from "../components/ANNConfiguration/LayerHyperparameters";
-import { LayerSelection } from "../components/ANNConfiguration/LayerSelection";
-import { LayerVisualization } from "../components/ANNConfiguration/LayerVisualization";
-import { ModelHyperparameters } from "../components/ANNConfiguration/ModelHyperparameters";
+import React, {useEffect, useState} from "react";
+import {LayerHyperparameters} from "../components/ANNConfiguration/LayerHyperparameters";
+import {LayerVisualization} from "../components/ANNConfiguration/LayerVisualization";
+import {ModelHyperparameters} from "../components/ANNConfiguration/ModelHyperparameters";
 import LayersEnums from "../utils/ANNConfiguration/LayersEnums";
 import CodeSnippet from "../../node_modules/carbon-components-react/es/components/CodeSnippet/CodeSnippet";
 import DataFetchService from "../services/DataFetchService";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
-import { LoadingBackdrop } from "../components/LoadingBackdrop";
-import { SnackbarSuccess } from "../components/SnackbarSuccess";
-import { responsiveProperty } from "@mui/material/styles/cssUtils";
+import {LoadingBackdrop} from "../components/LoadingBackdrop";
+import {SnackbarSuccess} from "../components/SnackbarSuccess";
 import SaveIcon from "@mui/icons-material/Save";
-import { useParams } from "react-router";
-import { add } from "lodash";
+import {useParams} from "react-router";
 
 export const NewANNModel = ({ reviewing = false }) => {
   const layers = LayersEnums.Layers;

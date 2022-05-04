@@ -127,4 +127,12 @@ export default class DataFetchService {
     });
     return res.data;
   }
+  async handlePayment(paymentMethodId, amount, course_id) {
+    let res = await AxiosClient.post(this.apiBaseUrl + "/payment", {
+      paymentMethodId: paymentMethodId,
+      course_id: course_id,
+      amount: amount,
+    });
+    return res.data;
+  }
 }

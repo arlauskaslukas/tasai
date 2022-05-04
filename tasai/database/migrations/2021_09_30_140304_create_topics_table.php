@@ -19,7 +19,7 @@ class CreateTopicsTable extends Migration
             $table->integer('topic_order');
             $table->string('short_description');
             $table->longText('theory');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

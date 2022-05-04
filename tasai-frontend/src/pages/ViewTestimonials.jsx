@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Testimonial } from "../components/Testimonial";
-import { Button, Container, Divider, Grid, Typography } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Testimonial} from "../components/Testimonial";
+import {Button, Container, Divider, Grid, Typography} from "@mui/material";
 import axios from "axios";
 import Cookies from "universal-cookie/es6";
 

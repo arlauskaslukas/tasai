@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AssignmentEntryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $result = Topic::all();
@@ -61,22 +56,11 @@ class AssignmentEntryController extends Controller
         return Storage::download("public/$file");
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $fields = $request->validate([
@@ -109,12 +93,6 @@ class AssignmentEntryController extends Controller
         return response('', 409);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $entry = AssignmentEntry::find($id);
@@ -122,24 +100,6 @@ class AssignmentEntryController extends Controller
         return response($entry, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $fields = $request->validate([
@@ -164,12 +124,6 @@ class AssignmentEntryController extends Controller
         return response(array("message" => "ok"), 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         $fields = $request->validate([
@@ -186,4 +140,5 @@ class AssignmentEntryController extends Controller
         }
         return response(["message"=>"Assignment entry with such id is not found"], 404);
     }
+
 }

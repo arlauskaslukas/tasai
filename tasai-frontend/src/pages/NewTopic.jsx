@@ -1,25 +1,22 @@
-import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker } from "@mui/lab";
+import {ArrowBack, Send} from "@mui/icons-material";
 import {
-  Button,
-  CircularProgress,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
+    Button,
+    CircularProgress,
+    Container,
+    FormControl,
+    Grid,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
 } from "@mui/material";
-import { width } from "@mui/system";
 import _ from "lodash";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 
 export const NewTopic = () => {
   const [courseData, setCourseData] = useState(undefined);
@@ -61,7 +58,7 @@ export const NewTopic = () => {
 
   const SendToDB = async () => {
     console.log({ title, impliedOrder, course_id, shortDesc, theory });
-    AxiosClient.post("http://127.0.0.1:8000/api/topics", {
+    await AxiosClient.post("http://127.0.0.1:8000/api/topics", {
       title: title,
       short_description: shortDesc,
       theory: theory,

@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
-} from "@mui/material";
-import {
-  ArrowBack,
-  Check,
-  DataObject,
-  EmailTwoTone,
-} from "@mui/icons-material";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
+import {Button, CircularProgress, Container, Grid, LinearProgress, Paper, Typography,} from "@mui/material";
+import {ArrowBack,} from "@mui/icons-material";
 import DownloadIcon from "@mui/icons-material/Download";
 import DataFetchService from "../services/DataFetchService";
 import CheckIcon from "@mui/icons-material/Check";

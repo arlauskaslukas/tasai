@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Cookies from "universal-cookie/es6";
 import {
-  Button,
-  Container,
-  Paper,
-  Typography,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  LinearProgress,
-  CircularProgress,
-  Rating,
-  TextField,
+    Button,
+    CircularProgress,
+    Container,
+    FormControl,
+    Grid,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Paper,
+    Select,
+    Typography,
 } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
+import {ArrowBack} from "@mui/icons-material";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 import _ from "lodash";
 import DataFetchService from "../services/DataFetchService";
-import { DateTimePicker } from "@mui/lab";
 
 export const NewMedia = () => {
   const [topic, setTopic] = useState(0);
@@ -72,7 +69,7 @@ export const NewMedia = () => {
     let formData = new FormData();
     formData.append("topic_id", topic);
     formData.append("file", file);
-    AxiosClient.post("http://127.0.0.1:8000/api/media", formData, {
+    await AxiosClient.post("http://127.0.0.1:8000/api/media", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

@@ -1,19 +1,10 @@
-import { Send } from "@mui/icons-material";
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
+import {Send} from "@mui/icons-material";
+import {Button, CircularProgress, Container, Grid, LinearProgress, Paper, TextField, Typography,} from "@mui/material";
+import {makeStyles} from "@mui/styles";
+import React, {useEffect, useState} from "react";
 import Cookies from "universal-cookie/es6";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 import AxiosClient from "../utils/AxiosClient";
 import _ from "lodash";
 
@@ -64,7 +55,7 @@ export const EditProfile = () => {
   }, []);
 
   const SendToDB = async () => {
-    let res = await AxiosClient.put("http://127.0.0.1:8000/api/users", {
+    await AxiosClient.put("http://127.0.0.1:8000/api/users", {
       id: userData.id,
       email: email,
       name: username,
@@ -73,7 +64,6 @@ export const EditProfile = () => {
 
   const Validate = () => {
     let isDataValid = true;
-    let num_regex = new RegExp("[1-9][0-9]*");
     setErrors([]);
 
     if (!_.isString(username) || _.isEqual(username, "")) {

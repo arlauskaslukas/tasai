@@ -1,19 +1,19 @@
-import { ExpandMore, Send } from "@mui/icons-material";
+import {ExpandMore} from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Paper,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Container,
+    Grid,
+    LinearProgress,
+    Paper,
+    Typography,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import {makeStyles} from "@mui/styles";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
 import Cookies from "universal-cookie/es6";
 import AxiosClient from "../utils/AxiosClient";
 

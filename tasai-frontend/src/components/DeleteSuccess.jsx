@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, AlertTitle } from "@mui/material";
+import {Alert, AlertTitle} from "@mui/material";
 
 export const DeleteSuccess = () => {
   return (

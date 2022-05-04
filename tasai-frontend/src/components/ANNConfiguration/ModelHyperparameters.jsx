@@ -1,17 +1,7 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Checkbox,
-  FormGroup,
-  Typography,
-  Grid,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {Checkbox, FormControl, FormGroup, Grid, InputLabel, MenuItem, Select, Typography,} from "@mui/material";
+import React, {useEffect, useState} from "react";
 import ModelHyperparametersEnums from "../../utils/ANNConfiguration/ModelHyperparametersEnums";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import _ from "lodash";
 
 export const ModelHyperparameters = ({ callback, disabled, initvals = {} }) => {
   const [optimizer, setOptimizer] = useState("Adam");

@@ -1,5 +1,4 @@
 export default class LayersEnums {
-  constructor() {}
   static Layers = [
     {
       layerCatId: 0,

@@ -1,26 +1,23 @@
-import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker } from "@mui/lab";
+import {ArrowBack, Send} from "@mui/icons-material";
 import {
-  Button,
-  CircularProgress,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
+    Button,
+    CircularProgress,
+    Container,
+    FormControl,
+    Grid,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
 } from "@mui/material";
-import { width } from "@mui/system";
 import _ from "lodash";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
-import { useParams } from "react-router";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
+import {useParams} from "react-router";
 
 export const EditTopic = () => {
   let { id } = useParams();
@@ -41,7 +38,7 @@ export const EditTopic = () => {
   const handleButtonClick = async () => {
     setSuccess(false);
     if (Validate()) {
-      let res = await SendToDB();
+      await SendToDB();
       setSuccess(true);
     }
   };
@@ -73,7 +70,7 @@ export const EditTopic = () => {
 
   const SendToDB = async () => {
     console.log({ title, impliedOrder, course_id, shortDesc, theory });
-    AxiosClient.put("http://127.0.0.1:8000/api/topics", {
+    await AxiosClient.put("http://127.0.0.1:8000/api/topics", {
       id: id,
       title: title,
       short_description: shortDesc,
@@ -90,7 +87,6 @@ export const EditTopic = () => {
 
   const Validate = () => {
     let isDataValid = true;
-    let num_regex = new RegExp("[1-9][0-9]*");
     setErrors([]);
 
     if (!_.isString(title) || _.isEqual(title, "")) {

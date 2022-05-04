@@ -1,5 +1,5 @@
-import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker, DateTimePicker } from "@mui/lab";
+import {ArrowBack, Send} from "@mui/icons-material";
+import {DateTimePicker} from "@mui/lab";
 import {
   Button,
   CircularProgress,
@@ -15,10 +15,10 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 import moment from "moment";
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 
 export const CreateAssignment = () => {
   const [topicData, setTopicData] = useState(undefined);
@@ -32,7 +32,7 @@ export const CreateAssignment = () => {
   const handleButtonClick = async () => {
     setSuccess(false);
     if (Validate()) {
-      let res = await SendToDB();
+      await SendToDB();
       setSuccess(true);
     }
   };
@@ -52,7 +52,7 @@ export const CreateAssignment = () => {
   }, []);
 
   const SendToDB = async () => {
-    let res = await AxiosClient.post("http://127.0.0.1:8000/api/assignments", {
+    await AxiosClient.post("http://127.0.0.1:8000/api/assignments", {
       title: title,
       deadline: moment(deadline).format("YYYY-MM-DD HH:mm:ss"),
       topic_id: topic_id,
@@ -62,7 +62,6 @@ export const CreateAssignment = () => {
 
   const Validate = () => {
     let isDataValid = true;
-    let num_regex = new RegExp("[1-9][0-9]*");
     setErrors([]);
 
     if (!_.isString(title) || _.isEqual(title, "")) {

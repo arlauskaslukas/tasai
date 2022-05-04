@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for G:\Git shit\tasai\tasai\app\Http</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">G:\Git shit\tasai\tasai\app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Http</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#10">App\Http\Middleware\RedirectIfAuthenticated</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/TrustHosts.php.html#7">App\Http\Middleware\TrustHosts</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#12">App\Http\Controllers\TimetableEntryController</a></td><td class="text-right">57%</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#7">App\Http\Middleware\Authenticate</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Middleware/IsAdmin.php.html#9">App\Http\Middleware\IsAdmin</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#9">App\Http\Controllers\TopicController</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#11">App\Http\Controllers\ProgressTrackerController</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#12">App\Http\Controllers\ANNModelController</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#11">App\Http\Controllers\CourseController</a></td><td class="text-right">76%</td></tr>
+       <tr><td><a href="Controllers/UserController.php.html#14">App\Http\Controllers\UserController</a></td><td class="text-right">81%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/ANNModelController.php.html#12">App\Http\Controllers\ANNModelController</a></td><td class="text-right">64</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#12">App\Http\Controllers\TimetableEntryController</a></td><td class="text-right">25</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#11">App\Http\Controllers\ProgressTrackerController</a></td><td class="text-right">25</td></tr>
+       <tr><td><a href="Controllers/UserController.php.html#14">App\Http\Controllers\UserController</a></td><td class="text-right">21</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#10">App\Http\Middleware\RedirectIfAuthenticated</a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#9">App\Http\Controllers\TopicController</a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#11">App\Http\Controllers\CourseController</a></td><td class="text-right">18</td></tr>
+       <tr><td><a href="Middleware/IsAdmin.php.html#9">App\Http\Middleware\IsAdmin</a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#7">App\Http\Middleware\Authenticate</a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/ANNModelController.php.html#19"><abbr title="App\Http\Controllers\ANNModelController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#80"><abbr title="App\Http\Controllers\CourseController::course_assignments">course_assignments</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#25"><abbr title="App\Http\Controllers\ProgressTrackerController::recentJoins">recentJoins</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#44"><abbr title="App\Http\Controllers\ProgressTrackerController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#105"><abbr title="App\Http\Controllers\ProgressTrackerController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#30"><abbr title="App\Http\Controllers\TimetableEntryController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#72"><abbr title="App\Http\Controllers\TimetableEntryController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#107"><abbr title="App\Http\Controllers\TimetableEntryController::export_course_event">export_course_event</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#115"><abbr title="App\Http\Controllers\TimetableEntryController::get_course_timetable">get_course_timetable</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#119"><abbr title="App\Http\Controllers\TimetableEntryController::courses_timetables">courses_timetables</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#27"><abbr title="App\Http\Controllers\TopicController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#71"><abbr title="App\Http\Controllers\TopicController::topic_assignments">topic_assignments</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#85"><abbr title="App\Http\Controllers\TopicController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#91"><abbr title="App\Http\Controllers\TopicController::getAvailableTopicOrder">getAvailableTopicOrder</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/UserController.php.html#97"><abbr title="App\Http\Controllers\UserController::getBlockedUsers">getBlockedUsers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/UserController.php.html#103"><abbr title="App\Http\Controllers\UserController::restoreBlocked">restoreBlocked</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/UserController.php.html#112"><abbr title="App\Http\Controllers\UserController::getCurrentUserData">getCurrentUserData</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#20"><abbr title="App\Http\Middleware\RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/TrustHosts.php.html#14"><abbr title="App\Http\Middleware\TrustHosts::hosts">hosts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#193"><abbr title="App\Http\Controllers\ANNModelController::determineType">determineType</abbr></a></td><td class="text-right">37%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#24"><abbr title="App\Http\Controllers\ANNModelController::getModel">getModel</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#15"><abbr title="App\Http\Middleware\Authenticate::redirectTo">redirectTo</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Middleware/IsAdmin.php.html#18"><abbr title="App\Http\Middleware\IsAdmin::handle">handle</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#125"><abbr title="App\Http\Controllers\ANNModelController::insertChainOfLayers">insertChainOfLayers</abbr></a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#117"><abbr title="App\Http\Controllers\ProgressTrackerController::update">update</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#129"><abbr title="App\Http\Controllers\CourseController::destroy">destroy</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#54"><abbr title="App\Http\Controllers\ANNModelController::store">store</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#142"><abbr title="App\Http\Controllers\ProgressTrackerController::destroy">destroy</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#108"><abbr title="App\Http\Controllers\ANNModelController::insertMetrics">insertMetrics</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#41"><abbr title="App\Http\Controllers\TimetableEntryController::store">store</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#54"><abbr title="App\Http\Controllers\ProgressTrackerController::store">store</abbr></a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#68"><abbr title="App\Http\Controllers\ProgressTrackerController::getPersonalTrackers">getPersonalTrackers</abbr></a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#161"><abbr title="App\Http\Controllers\ANNModelController::saveLayerParameters">saveLayerParameters</abbr></a></td><td class="text-right">88%</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#30"><abbr title="App\Http\Controllers\CourseController::store">store</abbr></a></td><td class="text-right">88%</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#99"><abbr title="App\Http\Controllers\CourseController::update">update</abbr></a></td><td class="text-right">88%</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#39"><abbr title="App\Http\Controllers\TopicController::store">store</abbr></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/ANNModelController.php.html#193"><abbr title="App\Http\Controllers\ANNModelController::determineType">determineType</abbr></a></td><td class="text-right">47</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#20"><abbr title="App\Http\Middleware\RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#80"><abbr title="App\Http\Controllers\CourseController::course_assignments">course_assignments</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#25"><abbr title="App\Http\Controllers\ProgressTrackerController::recentJoins">recentJoins</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#119"><abbr title="App\Http\Controllers\TimetableEntryController::courses_timetables">courses_timetables</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#71"><abbr title="App\Http\Controllers\TopicController::topic_assignments">topic_assignments</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#125"><abbr title="App\Http\Controllers\ANNModelController::insertChainOfLayers">insertChainOfLayers</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#24"><abbr title="App\Http\Controllers\ANNModelController::getModel">getModel</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#54"><abbr title="App\Http\Controllers\ANNModelController::store">store</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Middleware/IsAdmin.php.html#18"><abbr title="App\Http\Middleware\IsAdmin::handle">handle</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#117"><abbr title="App\Http\Controllers\ProgressTrackerController::update">update</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#108"><abbr title="App\Http\Controllers\ANNModelController::insertMetrics">insertMetrics</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#68"><abbr title="App\Http\Controllers\ProgressTrackerController::getPersonalTrackers">getPersonalTrackers</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/ANNModelController.php.html#161"><abbr title="App\Http\Controllers\ANNModelController::saveLayerParameters">saveLayerParameters</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#15"><abbr title="App\Http\Middleware\Authenticate::redirectTo">redirectTo</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#129"><abbr title="App\Http\Controllers\CourseController::destroy">destroy</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#142"><abbr title="App\Http\Controllers\ProgressTrackerController::destroy">destroy</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#30"><abbr title="App\Http\Controllers\CourseController::store">store</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/CourseController.php.html#99"><abbr title="App\Http\Controllers\CourseController::update">update</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/ProgressTrackerController.php.html#54"><abbr title="App\Http\Controllers\ProgressTrackerController::store">store</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/TimetableEntryController.php.html#41"><abbr title="App\Http\Controllers\TimetableEntryController::store">store</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/TopicController.php.html#39"><abbr title="App\Http\Controllers\TopicController::store">store</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 9.2.10</a> using <a href="https://secure.php.net/" target="_top">PHP 8.1.2</a> and <a href="https://phpunit.de/">PHPUnit 9.5.10</a> at Tue May 3 18:01:31 UTC 2022.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/jquery.min.js" type="text/javascript"></script>
+  <script src="../_js/d3.min.js" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,1,4,2,1,1,20], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([19,0,0,0,1,0,0,3,2,11,2,39], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[97.36842105263158,11,"<a href=\"Controllers\/ANNController.php.html#7\">App\\Http\\Controllers\\ANNController<\/a>"],[71.27659574468085,35,"<a href=\"Controllers\/ANNModelController.php.html#12\">App\\Http\\Controllers\\ANNModelController<\/a>"],[100,0,"<a href=\"Controllers\/AssignmentEntryController.php.html#11\">App\\Http\\Controllers\\AssignmentEntryController<\/a>"],[100,12,"<a href=\"Controllers\/AttendanceEntryController.php.html#9\">App\\Http\\Controllers\\AttendanceEntryController<\/a>"],[100,6,"<a href=\"Controllers\/AuthController.php.html#10\">App\\Http\\Controllers\\AuthController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/ConfirmPasswordController.php.html#9\">App\\Http\\Controllers\\Auth\\ConfirmPasswordController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/ForgotPasswordController.php.html#8\">App\\Http\\Controllers\\Auth\\ForgotPasswordController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/LoginController.php.html#9\">App\\Http\\Controllers\\Auth\\LoginController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/RegisterController.php.html#12\">App\\Http\\Controllers\\Auth\\RegisterController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/ResetPasswordController.php.html#9\">App\\Http\\Controllers\\Auth\\ResetPasswordController<\/a>"],[100,0,"<a href=\"Controllers\/Auth\/VerificationController.php.html#9\">App\\Http\\Controllers\\Auth\\VerificationController<\/a>"],[100,0,"<a href=\"Controllers\/Controller.php.html#10\">App\\Http\\Controllers\\Controller<\/a>"],[76.19047619047619,15,"<a href=\"Controllers\/CourseController.php.html#11\">App\\Http\\Controllers\\CourseController<\/a>"],[100,0,"<a href=\"Controllers\/MediaController.php.html#9\">App\\Http\\Controllers\\MediaController<\/a>"],[100,0,"<a href=\"Controllers\/PaymentController.php.html#9\">App\\Http\\Controllers\\PaymentController<\/a>"],[68.88888888888889,17,"<a href=\"Controllers\/ProgressTrackerController.php.html#11\">App\\Http\\Controllers\\ProgressTrackerController<\/a>"],[100,3,"<a href=\"Controllers\/TestimonialController.php.html#10\">App\\Http\\Controllers\\TestimonialController<\/a>"],[57.57575757575758,13,"<a href=\"Controllers\/TimetableEntryController.php.html#12\">App\\Http\\Controllers\\TimetableEntryController<\/a>"],[68.42105263157895,13,"<a href=\"Controllers\/TopicController.php.html#9\">App\\Http\\Controllers\\TopicController<\/a>"],[81.81818181818183,19,"<a href=\"Controllers\/UserController.php.html#14\">App\\Http\\Controllers\\UserController<\/a>"],[100,0,"<a href=\"Kernel.php.html#7\">App\\Http\\Kernel<\/a>"],[66.66666666666666,2,"<a href=\"Middleware\/Authenticate.php.html#7\">App\\Http\\Middleware\\Authenticate<\/a>"],[100,1,"<a href=\"Middleware\/Cors.php.html#8\">App\\Http\\Middleware\\Cors<\/a>"],[100,0,"<a href=\"Middleware\/EncryptCookies.php.html#7\">App\\Http\\Middleware\\EncryptCookies<\/a>"],[66.66666666666666,3,"<a href=\"Middleware\/IsAdmin.php.html#9\">App\\Http\\Middleware\\IsAdmin<\/a>"],[100,0,"<a href=\"Middleware\/PreventRequestsDuringMaintenance.php.html#7\">App\\Http\\Middleware\\PreventRequestsDuringMaintenance<\/a>"],[0,4,"<a href=\"Middleware\/RedirectIfAuthenticated.php.html#10\">App\\Http\\Middleware\\RedirectIfAuthenticated<\/a>"],[100,0,"<a href=\"Middleware\/TrimStrings.php.html#7\">App\\Http\\Middleware\\TrimStrings<\/a>"],[0,1,"<a href=\"Middleware\/TrustHosts.php.html#7\">App\\Http\\Middleware\\TrustHosts<\/a>"],[100,0,"<a href=\"Middleware\/TrustProxies.php.html#8\">App\\Http\\Middleware\\TrustProxies<\/a>"],[100,0,"<a href=\"Middleware\/VerifyCsrfToken.php.html#7\">App\\Http\\Middleware\\VerifyCsrfToken<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,2,"<a href=\"Controllers\/ANNController.php.html#10\">App\\Http\\Controllers\\ANNController::parseModelFromJson<\/a>"],[95.45454545454545,6,"<a href=\"Controllers\/ANNController.php.html#37\">App\\Http\\Controllers\\ANNController::parseLayer<\/a>"],[100,2,"<a href=\"Controllers\/ANNController.php.html#70\">App\\Http\\Controllers\\ANNController::addCompile<\/a>"],[100,1,"<a href=\"Controllers\/ANNController.php.html#83\">App\\Http\\Controllers\\ANNController::addDependencies<\/a>"],[0,1,"<a href=\"Controllers\/ANNModelController.php.html#19\">App\\Http\\Controllers\\ANNModelController::index<\/a>"],[66.66666666666666,4,"<a href=\"Controllers\/ANNModelController.php.html#24\">App\\Http\\Controllers\\ANNModelController::getModel<\/a>"],[81.25,4,"<a href=\"Controllers\/ANNModelController.php.html#54\">App\\Http\\Controllers\\ANNModelController::store<\/a>"],[85.71428571428571,3,"<a href=\"Controllers\/ANNModelController.php.html#108\">App\\Http\\Controllers\\ANNModelController::insertMetrics<\/a>"],[73.68421052631578,5,"<a href=\"Controllers\/ANNModelController.php.html#125\">App\\Http\\Controllers\\ANNModelController::insertChainOfLayers<\/a>"],[88.88888888888889,3,"<a href=\"Controllers\/ANNModelController.php.html#161\">App\\Http\\Controllers\\ANNModelController::saveLayerParameters<\/a>"],[100,2,"<a href=\"Controllers\/ANNModelController.php.html#179\">App\\Http\\Controllers\\ANNModelController::transformpPassedParams<\/a>"],[37.5,12,"<a href=\"Controllers\/ANNModelController.php.html#193\">App\\Http\\Controllers\\ANNModelController::determineType<\/a>"],[100,1,"<a href=\"Controllers\/ANNModelController.php.html#216\">App\\Http\\Controllers\\ANNModelController::user_models<\/a>"],[100,2,"<a href=\"Controllers\/AttendanceEntryController.php.html#16\">App\\Http\\Controllers\\AttendanceEntryController::index<\/a>"],[100,1,"<a href=\"Controllers\/AttendanceEntryController.php.html#40\">App\\Http\\Controllers\\AttendanceEntryController::store<\/a>"],[100,2,"<a href=\"Controllers\/AttendanceEntryController.php.html#59\">App\\Http\\Controllers\\AttendanceEntryController::show<\/a>"],[100,2,"<a href=\"Controllers\/AttendanceEntryController.php.html#70\">App\\Http\\Controllers\\AttendanceEntryController::checkIfUserHasParticipated<\/a>"],[100,3,"<a href=\"Controllers\/AttendanceEntryController.php.html#86\">App\\Http\\Controllers\\AttendanceEntryController::saveOrUpdateParticipation<\/a>"],[100,1,"<a href=\"Controllers\/AttendanceEntryController.php.html#122\">App\\Http\\Controllers\\AttendanceEntryController::update<\/a>"],[100,1,"<a href=\"Controllers\/AttendanceEntryController.php.html#140\">App\\Http\\Controllers\\AttendanceEntryController::destroy<\/a>"],[100,1,"<a href=\"Controllers\/AuthController.php.html#12\">App\\Http\\Controllers\\AuthController::register<\/a>"],[100,1,"<a href=\"Controllers\/AuthController.php.html#36\">App\\Http\\Controllers\\AuthController::logout<\/a>"],[100,3,"<a href=\"Controllers\/AuthController.php.html#42\">App\\Http\\Controllers\\AuthController::login<\/a>"],[100,1,"<a href=\"Controllers\/AuthController.php.html#66\">App\\Http\\Controllers\\AuthController::refresh<\/a>"],[100,1,"<a href=\"Controllers\/CourseController.php.html#18\">App\\Http\\Controllers\\CourseController::index<\/a>"],[88.88888888888889,2,"<a href=\"Controllers\/CourseController.php.html#30\">App\\Http\\Controllers\\CourseController::store<\/a>"],[100,2,"<a href=\"Controllers\/CourseController.php.html#58\">App\\Http\\Controllers\\CourseController::show<\/a>"],[100,2,"<a href=\"Controllers\/CourseController.php.html#65\">App\\Http\\Controllers\\CourseController::course_topics<\/a>"],[100,1,"<a href=\"Controllers\/CourseController.php.html#74\">App\\Http\\Controllers\\CourseController::top_courses<\/a>"],[0,3,"<a href=\"Controllers\/CourseController.php.html#80\">App\\Http\\Controllers\\CourseController::course_assignments<\/a>"],[88.88888888888889,2,"<a href=\"Controllers\/CourseController.php.html#99\">App\\Http\\Controllers\\CourseController::update<\/a>"],[80,2,"<a href=\"Controllers\/CourseController.php.html#129\">App\\Http\\Controllers\\CourseController::destroy<\/a>"],[100,1,"<a href=\"Controllers\/ProgressTrackerController.php.html#18\">App\\Http\\Controllers\\ProgressTrackerController::index<\/a>"],[0,2,"<a href=\"Controllers\/ProgressTrackerController.php.html#25\">App\\Http\\Controllers\\ProgressTrackerController::recentJoins<\/a>"],[0,1,"<a href=\"Controllers\/ProgressTrackerController.php.html#44\">App\\Http\\Controllers\\ProgressTrackerController::create<\/a>"],[87.5,2,"<a href=\"Controllers\/ProgressTrackerController.php.html#54\">App\\Http\\Controllers\\ProgressTrackerController::store<\/a>"],[87.5,3,"<a href=\"Controllers\/ProgressTrackerController.php.html#68\">App\\Http\\Controllers\\ProgressTrackerController::getPersonalTrackers<\/a>"],[100,2,"<a href=\"Controllers\/ProgressTrackerController.php.html#90\">App\\Http\\Controllers\\ProgressTrackerController::show<\/a>"],[0,1,"<a href=\"Controllers\/ProgressTrackerController.php.html#105\">App\\Http\\Controllers\\ProgressTrackerController::edit<\/a>"],[75,3,"<a href=\"Controllers\/ProgressTrackerController.php.html#117\">App\\Http\\Controllers\\ProgressTrackerController::update<\/a>"],[83.33333333333334,2,"<a href=\"Controllers\/ProgressTrackerController.php.html#142\">App\\Http\\Controllers\\ProgressTrackerController::destroy<\/a>"],[100,2,"<a href=\"Controllers\/TestimonialController.php.html#12\">App\\Http\\Controllers\\TestimonialController::index<\/a>"],[100,1,"<a href=\"Controllers\/TestimonialController.php.html#23\">App\\Http\\Controllers\\TestimonialController::store<\/a>"],[100,1,"<a href=\"Controllers\/TimetableEntryController.php.html#19\">App\\Http\\Controllers\\TimetableEntryController::index<\/a>"],[0,1,"<a href=\"Controllers\/TimetableEntryController.php.html#30\">App\\Http\\Controllers\\TimetableEntryController::create<\/a>"],[85.71428571428571,2,"<a href=\"Controllers\/TimetableEntryController.php.html#41\">App\\Http\\Controllers\\TimetableEntryController::store<\/a>"],[100,2,"<a href=\"Controllers\/TimetableEntryController.php.html#59\">App\\Http\\Controllers\\TimetableEntryController::show<\/a>"],[0,1,"<a href=\"Controllers\/TimetableEntryController.php.html#72\">App\\Http\\Controllers\\TimetableEntryController::edit<\/a>"],[100,1,"<a href=\"Controllers\/TimetableEntryController.php.html#84\">App\\Http\\Controllers\\TimetableEntryController::update<\/a>"],[100,1,"<a href=\"Controllers\/TimetableEntryController.php.html#102\">App\\Http\\Controllers\\TimetableEntryController::destroy<\/a>"],[0,1,"<a href=\"Controllers\/TimetableEntryController.php.html#107\">App\\Http\\Controllers\\TimetableEntryController::export_course_event<\/a>"],[0,1,"<a href=\"Controllers\/TimetableEntryController.php.html#115\">App\\Http\\Controllers\\TimetableEntryController::get_course_timetable<\/a>"],[0,2,"<a href=\"Controllers\/TimetableEntryController.php.html#119\">App\\Http\\Controllers\\TimetableEntryController::courses_timetables<\/a>"],[100,1,"<a href=\"Controllers\/TopicController.php.html#16\">App\\Http\\Controllers\\TopicController::index<\/a>"],[0,1,"<a href=\"Controllers\/TopicController.php.html#27\">App\\Http\\Controllers\\TopicController::create<\/a>"],[88.88888888888889,2,"<a href=\"Controllers\/TopicController.php.html#39\">App\\Http\\Controllers\\TopicController::store<\/a>"],[100,2,"<a href=\"Controllers\/TopicController.php.html#64\">App\\Http\\Controllers\\TopicController::show<\/a>"],[0,2,"<a href=\"Controllers\/TopicController.php.html#71\">App\\Http\\Controllers\\TopicController::topic_assignments<\/a>"],[0,1,"<a href=\"Controllers\/TopicController.php.html#85\">App\\Http\\Controllers\\TopicController::edit<\/a>"],[0,1,"<a href=\"Controllers\/TopicController.php.html#91\">App\\Http\\Controllers\\TopicController::getAvailableTopicOrder<\/a>"],[90,2,"<a href=\"Controllers\/TopicController.php.html#106\">App\\Http\\Controllers\\TopicController::update<\/a>"],[100,1,"<a href=\"Controllers\/TopicController.php.html#139\">App\\Http\\Controllers\\TopicController::destroy<\/a>"],[100,1,"<a href=\"Controllers\/UserController.php.html#17\">App\\Http\\Controllers\\UserController::index<\/a>"],[100,3,"<a href=\"Controllers\/UserController.php.html#23\">App\\Http\\Controllers\\UserController::progress_trackers<\/a>"],[100,3,"<a href=\"Controllers\/UserController.php.html#35\">App\\Http\\Controllers\\UserController::course_progress<\/a>"],[100,1,"<a href=\"Controllers\/UserController.php.html#56\">App\\Http\\Controllers\\UserController::store<\/a>"],[100,2,"<a href=\"Controllers\/UserController.php.html#72\">App\\Http\\Controllers\\UserController::show<\/a>"],[100,4,"<a href=\"Controllers\/UserController.php.html#79\">App\\Http\\Controllers\\UserController::update<\/a>"],[100,2,"<a href=\"Controllers\/UserController.php.html#89\">App\\Http\\Controllers\\UserController::destroy<\/a>"],[0,1,"<a href=\"Controllers\/UserController.php.html#97\">App\\Http\\Controllers\\UserController::getBlockedUsers<\/a>"],[0,1,"<a href=\"Controllers\/UserController.php.html#103\">App\\Http\\Controllers\\UserController::restoreBlocked<\/a>"],[0,1,"<a href=\"Controllers\/UserController.php.html#112\">App\\Http\\Controllers\\UserController::getCurrentUserData<\/a>"],[66.66666666666666,2,"<a href=\"Middleware\/Authenticate.php.html#15\">App\\Http\\Middleware\\Authenticate::redirectTo<\/a>"],[100,1,"<a href=\"Middleware\/Cors.php.html#17\">App\\Http\\Middleware\\Cors::handle<\/a>"],[66.66666666666666,3,"<a href=\"Middleware\/IsAdmin.php.html#18\">App\\Http\\Middleware\\IsAdmin::handle<\/a>"],[0,4,"<a href=\"Middleware\/RedirectIfAuthenticated.php.html#20\">App\\Http\\Middleware\\RedirectIfAuthenticated::handle<\/a>"],[0,1,"<a href=\"Middleware\/TrustHosts.php.html#14\">App\\Http\\Middleware\\TrustHosts::hosts<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

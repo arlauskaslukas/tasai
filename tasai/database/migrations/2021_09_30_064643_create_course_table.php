@@ -22,6 +22,7 @@ class CreateCourseTable extends Migration
             $table->integer('duration');
             $table->float('cost');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

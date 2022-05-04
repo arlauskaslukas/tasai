@@ -1,48 +1,35 @@
 import {
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  CircularProgress,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  IconButton,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    LinearProgress,
+    MenuItem,
+    Paper,
+    Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import {
-  ArrowBack,
-  ExpandMore,
-  RoomRounded,
-  SaveAlt,
-  StarRate,
-  Visibility,
-} from "@mui/icons-material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Add from "@mui/icons-material/Add";
-import { makeStyles } from "@mui/styles";
+import React, {useEffect, useState} from "react";
+import {ArrowBack, ExpandMore, SaveAlt, StarRate, Visibility,} from "@mui/icons-material";
+import {makeStyles} from "@mui/styles";
 import _ from "lodash";
 import AxiosClient from "../utils/AxiosClient";
-import { DeleteSuccess } from "../components/DeleteSuccess";
 import DataFetchService from "../services/DataFetchService";
-import { Accordion } from "@mui/material";
-import { Select } from "@mui/material";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {SuccessAlert} from "../components/SuccessAlert";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -62,8 +49,7 @@ export const ManageAssignmentEntries = () => {
   let dfs = new DataFetchService();
 
   const axiosCall = async () => {
-    const res = await dfs.getAssignmentEntries();
-    let elements = res;
+    let elements = await dfs.getAssignmentEntries();
     console.log(elements);
     setData(elements);
   };
@@ -90,7 +76,6 @@ export const ManageAssignmentEntries = () => {
   };
 
   const SendToDB = async () => {
-    let identifier = Number(selectedEntry.id);
     const res = await AxiosClient.put(
       `http://127.0.0.1:8000/api/assignmententries`,
       {
@@ -140,7 +125,7 @@ export const ManageAssignmentEntries = () => {
         </div>
       </div>
     );
-  } else if (data !== undefined)
+  } else
     return (
       <div style={{ minHeight: "100vh" }}>
         <Container>

@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import React, {useState} from "react";
 
 export const LayerSelection = ({ children, value, index, selectLayerFunc }) => {
   const [layer, setLayer] = useState(children[0]);

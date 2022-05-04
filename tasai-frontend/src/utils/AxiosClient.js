@@ -23,7 +23,7 @@ AxiosClient.interceptors.response.use(
     console.log(error);
     let res = error.response;
     console.log(res.data);
-    if (res.status == 401) {
+    if (res.status === 401) {
       window.location.href = "http://localhost:3000/login";
     }
     console.log("Unauthorized");

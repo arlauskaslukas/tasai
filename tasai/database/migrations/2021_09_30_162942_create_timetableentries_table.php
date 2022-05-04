@@ -18,8 +18,8 @@ class CreateTimetableentriesTable extends Migration
             $table->dateTime('lesson_time');
             $table->string('entry_title');
             $table->string('link');
-            $table->foreignId('course_id')->constrained('courses');
-            $table->foreignId('topic_id')->constrained('topics');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
+            $table->foreignId('topic_id')->constrained('topics')->onDelete('cascade');
             $table->timestamps();
         });
     }

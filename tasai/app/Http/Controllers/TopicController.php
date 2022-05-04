@@ -141,10 +141,7 @@ class TopicController extends Controller
         $fields = $request->validate([
            'id' => 'required|numeric'
         ]);
-        if(Topic::find($fields['id'])!=null) {
-            Topic::destroy($request->id);
-            return response(array("message" => "ok"), 200);
-        }
-        return response(['message'=>'Topic with such id was not found'], 404);
+        Topic::destroy($request->id);
+        return response(array("message" => "ok"), 200);
     }
 }

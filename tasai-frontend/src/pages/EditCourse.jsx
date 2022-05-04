@@ -1,14 +1,13 @@
-import { ArrowBack, Send } from "@mui/icons-material";
-import { DatePicker } from "@mui/lab";
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { width } from "@mui/system";
+import {ArrowBack, Send} from "@mui/icons-material";
+import {DatePicker} from "@mui/lab";
+import {Button, Container, Grid, TextField, Typography} from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router";
 import axios from "axios";
 import AxiosClient from "../utils/AxiosClient";
-import { Error } from "../components/Error";
-import { SuccessAlert } from "../components/SuccessAlert";
+import {Error} from "../components/Error";
+import {SuccessAlert} from "../components/SuccessAlert";
 import _ from "lodash";
 
 export const EditCourse = () => {
@@ -33,7 +32,7 @@ export const EditCourse = () => {
 
   const SendToDB = async () => {
     console.log({ title, duration, cost, shortDesc, longDesc });
-    AxiosClient.put("http://127.0.0.1:8000/api/courses", {
+    await AxiosClient.put("http://127.0.0.1:8000/api/courses", {
       id: Number(id),
       starts_at: moment(startDate).format("YYYY-MM-DD"),
       title: title,
