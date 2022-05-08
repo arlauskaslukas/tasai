@@ -13,8 +13,8 @@ class AuthController extends Controller
     {
         $fields = $request->validate([
             'name' => "required|string",
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string'
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8'
         ]);
 
         $user = User::create([
@@ -42,7 +42,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $fields = $request->validate([
-            'email' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string|min:8'
         ]);
 

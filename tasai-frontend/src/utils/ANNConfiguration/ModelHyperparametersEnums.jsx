@@ -24,7 +24,7 @@ export default class ModelHyperparametersEnums {
     "Mean Squared Error",
     "Mean Squared Logarithmic Error",
     "Poisson",
-    "Sparse Categorical Crossentropy",
+    "sparse_categorical_crossentropy",
     "Squared Hinge",
   ];
   static Metrics = [

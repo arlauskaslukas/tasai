@@ -163,7 +163,7 @@ export const EditTimetableEntry = () => {
                 href="/admin/timetables"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
             </div>
             {errors.length === 0 ? (

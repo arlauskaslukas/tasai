@@ -127,7 +127,7 @@ export const CreateAssignment = () => {
                 href="/admin/assignments"
                 style={{ backgroundColor: "#B7094C " }}
               >
-                Atgal
+                Back
               </Button>
             </div>
           </div>

@@ -129,7 +129,7 @@ export const ViewEnrolledTopic = () => {
             res === "ok"
               ? setSuccess(true)
               : setErrors([
-                  "Serverside error has occured while processing your request",
+                  "Serverside error has occurred while processing your request",
                 ])
           );
       } else if (uploadType === 2) {
@@ -139,7 +139,7 @@ export const ViewEnrolledTopic = () => {
             res === "ok"
               ? setSuccess(true)
               : setErrors([
-                  "Serverside error has occured while processing your request",
+                  "Serverside error has occurred while processing your request",
                 ])
           );
       }
@@ -291,7 +291,7 @@ export const ViewEnrolledTopic = () => {
               variant="h4"
               textAlign={"left"}
             >
-              Teorija
+              Theory
             </Typography>
             <Typography
               style={{

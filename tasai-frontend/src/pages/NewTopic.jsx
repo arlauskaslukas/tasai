@@ -140,7 +140,7 @@ export const NewTopic = () => {
           {errors.length === 0 ? (
             <></>
           ) : (
-            <Error title={"Klaida įvedant duomenis"} subpoints={errors} />
+            <Error title={"Error while submitting data"} subpoints={errors} />
           )}
           {success ? (
             <>

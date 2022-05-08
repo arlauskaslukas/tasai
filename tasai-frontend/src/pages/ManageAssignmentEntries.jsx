@@ -1,35 +1,41 @@
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    FormControl,
-    InputLabel,
-    LinearProgress,
-    MenuItem,
-    Paper,
-    Select,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  LinearProgress,
+  MenuItem,
+  Paper,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {ArrowBack, ExpandMore, SaveAlt, StarRate, Visibility,} from "@mui/icons-material";
-import {makeStyles} from "@mui/styles";
+import React, { useEffect, useState } from "react";
+import {
+  ArrowBack,
+  ExpandMore,
+  SaveAlt,
+  StarRate,
+  Visibility,
+} from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
 import _ from "lodash";
 import AxiosClient from "../utils/AxiosClient";
 import DataFetchService from "../services/DataFetchService";
-import {SuccessAlert} from "../components/SuccessAlert";
+import { SuccessAlert } from "../components/SuccessAlert";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -92,18 +98,23 @@ export const ManageAssignmentEntries = () => {
     return returnable;
   };
 
-  const handleDownload = async (link, filename) => {
-    console.log(filename);
-    dfs.getFile(filename).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      let substrings = _.split(filename, "/");
-      let downloadfile = _.last(substrings);
-      link.setAttribute("download", downloadfile);
-      document.body.appendChild(link);
-      link.click();
-    });
+  const handleDownload = async (fileURL) => {
+    console.log(fileURL);
+    dfs
+      .getFile(fileURL)
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        let substrings = _.split(fileURL, "/");
+        let downloadfile = _.last(substrings);
+        link.setAttribute("download", downloadfile);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((e) => {
+        console.log(e.response.data);
+      });
   };
 
   if (data === undefined) {
@@ -259,10 +270,7 @@ export const ManageAssignmentEntries = () => {
                                         <Button
                                           variant="contained"
                                           onClick={() =>
-                                            handleDownload(
-                                              entry.asset,
-                                              "test.py"
-                                            )
+                                            handleDownload(entry.asset)
                                           }
                                           startIcon={<SaveAlt />}
                                         >

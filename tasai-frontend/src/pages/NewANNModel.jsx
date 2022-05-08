@@ -1,41 +1,67 @@
-import {AddCircleOutline, ArrowBack, BugReport, ExpandMore, SendAndArchiveOutlined, Upload,} from "@mui/icons-material";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Divider,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Paper,
-    Select,
-    Typography,
+  AddCircleOutline,
+  ArrowBack,
+  BugReport,
+  ExpandMore,
+  SendAndArchiveOutlined,
+  Upload,
+  Visibility,
+} from "@mui/icons-material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Alert,
+  AlertTitle,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  LinearProgress,
+  MenuItem,
+  Paper,
+  Select,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {LayerHyperparameters} from "../components/ANNConfiguration/LayerHyperparameters";
-import {LayerVisualization} from "../components/ANNConfiguration/LayerVisualization";
-import {ModelHyperparameters} from "../components/ANNConfiguration/ModelHyperparameters";
+import { makeStyles } from "@mui/styles";
+import React, { useEffect, useState } from "react";
+import { LayerHyperparameters } from "../components/ANNConfiguration/LayerHyperparameters";
+import { LayerVisualization } from "../components/ANNConfiguration/LayerVisualization";
+import { ModelHyperparameters } from "../components/ANNConfiguration/ModelHyperparameters";
 import LayersEnums from "../utils/ANNConfiguration/LayersEnums";
 import CodeSnippet from "../../node_modules/carbon-components-react/es/components/CodeSnippet/CodeSnippet";
 import DataFetchService from "../services/DataFetchService";
-import {LoadingBackdrop} from "../components/LoadingBackdrop";
-import {SnackbarSuccess} from "../components/SnackbarSuccess";
+import { LoadingBackdrop } from "../components/LoadingBackdrop";
+import { SnackbarSuccess } from "../components/SnackbarSuccess";
 import SaveIcon from "@mui/icons-material/Save";
-import {useParams} from "react-router";
+import { useParams } from "react-router";
+import { Error } from "../components/Error";
+import { TableContainer } from "carbon-components-react";
+import { Table } from "carbon-components-react";
+import { TableHead } from "carbon-components-react";
+import { TableRow } from "carbon-components-react";
+import { TableCell } from "carbon-components-react";
+import { TableBody } from "carbon-components-react";
+
+const useStyles = makeStyles((theme) => ({
+  head: {
+    backgroundColor: "#B8E7F5",
+  },
+}));
 
 export const NewANNModel = ({ reviewing = false }) => {
   const layers = LayersEnums.Layers;
   const [newLayerDialogOpen, setNewLayerDialogOpen] = useState(false);
   const handleNewLayerDialogClose = () => setNewLayerDialogOpen(false);
   const handleNewLayerDialogOpen = () => setNewLayerDialogOpen(true);
-  const [layerCategory, setLayerCategory] = useState(0);
-  const [availableLayers, setAvailableLayers] = useState(layers[0].layers);
+  const [availableLayers, setAvailableLayers] = useState(layers.layers);
   const [addedLayers, setAddedLayers] = useState([]);
   const [selectedLayer, setSelectedLayer] = useState("");
   const [codeSnippetOpen, setCodeSnippetOpen] = useState(false);
@@ -54,6 +80,209 @@ export const NewANNModel = ({ reviewing = false }) => {
   const [layersHyperparams, setLayersHyperparams] = useState([]);
   const [modelText, setModelText] = useState("");
 
+  const [testArchitectureDialogOpen, setTestArchitectureDialogOpen] =
+    useState(false);
+  const [testArchitectureErrors, setTestArchitectureErrors] = useState([]);
+  const [testArchitectureReceivedData, setTestArchitectureReceivedData] =
+    useState(undefined);
+  const [testArchitectureSent, setTestArchitectureSent] = useState(false);
+  const [testArchitectureTableLabels, setTestArchitectureTableLabels] =
+    useState([]);
+  const [testArchitectureSnackbarSuccess, setTestArchitectureSnackbarSuccess] =
+    useState(false);
+  const [dataset, setDataset] = useState("");
+  const [epochs, setEpochs] = useState(10);
+
+  const deleteLayer = (idx) => {
+    let newLayers = addedLayers.filter((layer, id) => id !== idx);
+    let newLayerHyperparameters = layersHyperparams
+      .filter((obj) => obj.id !== idx)
+      .map((filtered, newId) => {
+        return { ...filtered, id: newId };
+      });
+    setAddedLayers(newLayers);
+    setLayersHyperparams(newLayerHyperparameters);
+  };
+
+  const resetTestValues = () => {
+    setTestArchitectureErrors([]);
+    setTestArchitectureReceivedData(undefined);
+    setTestArchitectureSent(false);
+    setTestArchitectureTableLabels([]);
+  };
+  const classes = useStyles();
+
+  const ArchitectureTest = () => {
+    if (testArchitectureReceivedData !== undefined)
+      return <ArchitectureResultsWindow />;
+    else if (testArchitectureSent && testArchitectureReceivedData === undefined)
+      return <ArchitectureLoadWindow />;
+    return <ArchitectureOptionsWindow />;
+  };
+
+  const ArchitectureLoadWindow = () => {
+    return (
+      <div>
+        <LinearProgress />
+        <Alert
+          severity="warning"
+          style={{ textAlign: "left", marginBlock: "50px" }}
+        >
+          <AlertTitle>Heads up!</AlertTitle>
+          The architecture test has been started, you can close this dialog if
+          you want, but do not go outside this page. We will let you know when
+          your results are ready.
+        </Alert>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            overflow: "hidden",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+          }}
+        >
+          <CircularProgress color={"secondary"} />
+        </div>
+      </div>
+    );
+  };
+
+  const ArchitectureResultsWindow = () => {
+    return (
+      <>
+        <TableContainer component={Paper} style={{ padding: "20px" }}>
+          <Table>
+            <TableHead className={classes.head}>
+              <TableRow>
+                <TableCell style={{ fontWeight: "bold" }}>Epoch</TableCell>
+                {testArchitectureTableLabels.map((label) => (
+                  <TableCell style={{ fontWeight: "bold" }}>{label}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {testArchitectureReceivedData.map((row, idx) => (
+                <TableRow key={idx}>
+                  <TableCell component="th" scope="row">
+                    {idx + 1}
+                  </TableCell>
+                  {Object.keys(row).map((key) => (
+                    <TableCell>{row[key]}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  };
+
+  const ArchitectureOptionsWindow = () => {
+    return (
+      <>
+        {testArchitectureErrors.length === 0 ? (
+          <></>
+        ) : (
+          <Error title={"Error!"} subpoints={testArchitectureErrors} />
+        )}
+        <FormControl fullWidth style={{ marginBlock: "20px" }}>
+          <InputLabel id="dataset">Dataset</InputLabel>
+          <Select
+            labelId="dataset"
+            id="dataset"
+            value={dataset}
+            onChange={(event) => setDataset(event.target.value)}
+          >
+            <MenuItem value="MNIST">MNIST</MenuItem>
+            <MenuItem value="FASHION">Fashion MNIST</MenuItem>
+            <MenuItem value="BOSTON">BOSTON</MenuItem>
+            <MenuItem value="CIFAR10">CIFAR10</MenuItem>
+            <MenuItem value="CIFAR100">CIFAR100</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth style={{ marginBlock: "20px" }}>
+          <InputLabel id="epochs">Epochs</InputLabel>
+          <Select
+            labelId="epochs"
+            id="epochs"
+            value={epochs}
+            onChange={(event) => setEpochs(event.target.value)}
+          >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={15}>15</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+          </Select>
+        </FormControl>
+      </>
+    );
+  };
+
+  const sendTestArchitecture = () => {
+    if (validateArchitectureCompilationData()) {
+      setTestArchitectureSent(true);
+      dfs
+        .sendArchitecture(
+          modelHyperparams.optimizer,
+          modelHyperparams.loss,
+          modelHyperparams.metrics,
+          layersHyperparams,
+          dataset,
+          epochs
+        )
+        .then((data) => {
+          if (data.success_status) {
+            setTestArchitectureReceivedData(
+              transformModelHistoryData(data.model)
+            );
+            setTestArchitectureSnackbarSuccess(true);
+          }
+        });
+    }
+  };
+
+  const validateArchitectureCompilationData = () => {
+    setTestArchitectureErrors([]);
+    let isValid = true;
+    if (dataset === "") {
+      isValid = false;
+      setTestArchitectureErrors((oldvals) => [
+        ...oldvals,
+        "The dataset has not been chosen",
+      ]);
+    }
+    return isValid;
+  };
+
+  const transformModelHistoryData = (modelData) => {
+    let i = 0;
+    let returnable = [];
+    for (i = 0; i < epochs; i++) {
+      let row = {};
+      for (var key in modelData) {
+        row[key] = modelData[key][i];
+      }
+      returnable.push(row);
+    }
+    setTestArchitectureTableLabels(Object.keys(modelData));
+    return returnable;
+  };
+
+  const handleTestArchitectureDialogOpen = () => {
+    setTestArchitectureDialogOpen(true);
+  };
+  const handleTestArchitectureDialogClose = () => {
+    setTestArchitectureDialogOpen(false);
+  };
+  const handleTestArchitectureDialogSent = () => {
+    setTestArchitectureSent(true);
+  };
+
   const changeHyperparamsVals = (idx, params) => {
     let mapped = layersHyperparams.map((layer) => {
       return layer.id === idx
@@ -65,6 +294,7 @@ export const NewANNModel = ({ reviewing = false }) => {
   };
 
   const handleModelCodeGeneration = async () => {
+    setToggleLoading(true);
     let res = await dfs.generateANNModel(
       modelHyperparams.optimizer,
       modelHyperparams.loss,
@@ -72,6 +302,7 @@ export const NewANNModel = ({ reviewing = false }) => {
       layersHyperparams
     );
     setModelText(res.model);
+    setToggleLoading(false);
     handleCodeSnippetOpen();
   };
 
@@ -103,10 +334,6 @@ export const NewANNModel = ({ reviewing = false }) => {
     });
   };
 
-  const handleCategoryChange = (event) => {
-    setLayerCategory(event.target.value);
-    changeAvailableLayers(event.target.value);
-  };
   const handleLayerAddition = () => {
     setAddedLayers((layers) => [...layers, selectedLayer]);
     setLayersHyperparams((layers) => [
@@ -114,14 +341,8 @@ export const NewANNModel = ({ reviewing = false }) => {
       { title: selectedLayer, id: addedLayers.length, hyperparameters: {} },
     ]);
   };
-  const changeAvailableLayers = (cat) => {
-    let res = layers.filter((layerType) => layerType.layerCatId === cat)[0];
-    setAvailableLayers(res.layers);
-    setSelectedLayer(res.layers[0]);
-  };
 
   useEffect(() => {
-    changeAvailableLayers(layerCategory);
     if (reviewing) {
       dfs.getModel(id).then((result) => {
         setHyperparams(
@@ -166,7 +387,59 @@ export const NewANNModel = ({ reviewing = false }) => {
         handleToggle={() => setSaveModelSuccess(!saveModelSuccess)}
         text={"A model has been saved successfully"}
       />
-      <Dialog open={codeSnippetOpen}>
+      <SnackbarSuccess
+        open={testArchitectureSnackbarSuccess}
+        onClick={handleTestArchitectureDialogOpen}
+        handleToggle={() =>
+          setTestArchitectureSnackbarSuccess(!testArchitectureSnackbarSuccess)
+        }
+        text={"Your model results are ready! ♥"}
+      />
+      <Dialog
+        open={testArchitectureDialogOpen}
+        fullWidth={testArchitectureReceivedData === undefined}
+        fullScreen={testArchitectureReceivedData !== undefined}
+      >
+        <DialogTitle>Test your architecture</DialogTitle>
+        <DialogContent>
+          <div style={{ overflow: "hidden", height: "100%" }}>
+            <div
+              style={{
+                paddingRight: 17,
+                height: "100%",
+                width: "100%",
+                overflowY: "scroll",
+              }}
+            >
+              <ArchitectureTest />
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="outlined"
+            onClick={handleTestArchitectureDialogClose}
+          >
+            Close
+          </Button>
+          {testArchitectureReceivedData === undefined ? (
+            <>
+              <Button
+                variant="contained"
+                autoFocus
+                onClick={sendTestArchitecture}
+              >
+                Send
+              </Button>
+            </>
+          ) : (
+            <Button variant="contained" autoFocus onClick={resetTestValues}>
+              New test
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
+      <Dialog open={codeSnippetOpen} fullScreen>
         <DialogTitle>{"Your generated code"}</DialogTitle>
         <DialogContent>
           <div style={{ overflow: "hidden", height: "100%", width: "100%" }}>
@@ -201,22 +474,7 @@ export const NewANNModel = ({ reviewing = false }) => {
         <DialogTitle>{"New layer"}</DialogTitle>
         <DialogContent>
           <FormControl fullWidth style={{ marginBlock: "20px" }}>
-            <InputLabel id="layer-type">Layer type</InputLabel>
-            <Select
-              labelId="layer-type"
-              id="layer-type-select"
-              value={layerCategory}
-              onChange={handleCategoryChange}
-            >
-              {layers.map((layerType) => (
-                <MenuItem value={layerType.layerCatId}>
-                  {layerType.layerCat}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth style={{ marginBlock: "20px" }}>
-            <InputLabel id="layer">Sluoksnis</InputLabel>
+            <InputLabel id="layer">Layer</InputLabel>
             <Select
               labelId="layer"
               id="layer-select"
@@ -320,6 +578,7 @@ export const NewANNModel = ({ reviewing = false }) => {
                     <></>
                   ) : (
                     <LayerHyperparameters
+                      onDelete={() => deleteLayer(idx)}
                       title={layer}
                       idx={idx}
                       disabled={reviewing}
@@ -341,7 +600,7 @@ export const NewANNModel = ({ reviewing = false }) => {
               }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                   <Button
                     style={{ width: "100%", height: "100%" }}
                     onClick={handleNewLayerDialogOpen}
@@ -353,7 +612,7 @@ export const NewANNModel = ({ reviewing = false }) => {
                     New layer
                   </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                   <Button
                     style={{ width: "100%", height: "100%" }}
                     color="success"
@@ -365,29 +624,26 @@ export const NewANNModel = ({ reviewing = false }) => {
                     Generate code
                   </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                   <Button
                     style={{ width: "100%", height: "100%" }}
                     color="secondary"
                     variant="contained"
-                    disabled
-                    startIcon={<BugReport />}
+                    onClick={handleTestArchitectureDialogOpen}
+                    startIcon={
+                      testArchitectureReceivedData === undefined ? (
+                        <BugReport />
+                      ) : (
+                        <Visibility />
+                      )
+                    }
                   >
-                    Test the architecture
+                    {testArchitectureReceivedData === undefined
+                      ? "Test the architecture"
+                      : "View test results"}
                   </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
-                  <Button
-                    style={{ width: "100%", height: "100%" }}
-                    color="warning"
-                    variant="contained"
-                    disabled={reviewing}
-                    startIcon={<Upload />}
-                  >
-                    Load ANN architecture
-                  </Button>
-                </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                   <Button
                     style={{ width: "100%", height: "100%" }}
                     color="success"

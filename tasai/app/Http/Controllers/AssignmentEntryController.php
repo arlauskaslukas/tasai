@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AssignmentEntry;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -53,7 +54,14 @@ class AssignmentEntryController extends Controller
             "filename"=>"required"
         ]);
         $file = $request['filename'];
-        return Storage::download("public/$file");
+        $storagePath = Storage::disk("public")->path($file);
+        $fileContent = file_get_contents($storagePath);
+
+        return \response($fileContent)->withHeaders(
+            [
+                "Content-Type"=>mime_content_type($storagePath)
+            ]
+        );
     }
 
     public function create()

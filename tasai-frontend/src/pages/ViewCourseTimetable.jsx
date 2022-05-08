@@ -115,7 +115,7 @@ export const ViewCourseTimetable = () => {
                   href={`/mycourses/${id}`}
                   style={{ backgroundColor: "#B7094C " }}
                 >
-                  Atgal
+                  Back
                 </Button>
                 <Button variant="contained" startIcon={<DownloadIcon />}>
                   Download iCal file

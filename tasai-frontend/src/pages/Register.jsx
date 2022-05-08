@@ -1,31 +1,44 @@
-import {Button, Grid, TextField, Typography} from "@mui/material";
-import React, {useState} from "react";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import background from "../assets/background.svg";
 import AxiosClient from "../utils/AxiosClient";
 import Cookies from "universal-cookie/es6";
 import Logo from "../assets/logo.svg";
+import { Error } from "../components/Error";
 
 export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
+  const [errors, setErrors] = useState([]);
+
   const cookies = new Cookies();
   const handleRegistration = () => {
+    setErrors([]);
     AxiosClient.post("http://127.0.0.1:8000/api/register", {
       name: name,
       email: email,
       password: pwd,
-    }).then((results) => {
-      console.log(results);
-      cookies.set("Authorization", results.data.token, { path: "/" });
-      cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
-      if (cookies.get("AdminStatus") === "1") {
-        window.location.href = "http://localhost:3000/admin";
-      } else {
-        window.location.href = "http://localhost:3000/";
-      }
-    });
+    })
+      .then((results) => {
+        console.log(results);
+        cookies.set("Authorization", results.data.token, { path: "/" });
+        cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
+      })
+      .then((res) => {
+        if (cookies.get("AdminStatus") === "1") {
+          window.location.href = "http://localhost:3000/admin";
+        } else {
+          window.location.href = "http://localhost:3000/";
+        }
+      })
+      .catch((e) => {
+        let errs = e.response.data.errors;
+        for (var err in errs) {
+          setErrors((old) => [...old, ...errs[err]]);
+        }
+      });
   };
 
   return (
@@ -70,11 +83,16 @@ export const Register = () => {
               alignItems: "center",
             }}
           >
+            {errors.length === 0 ? (
+              <></>
+            ) : (
+              <Error title={"Auth error!"} subpoints={errors} />
+            )}
             <Typography
               variant={"h4"}
               fontWeight={"bold"}
               color="#F41D6F"
-              marginTop={"20%"}
+              marginTop={"10%"}
             >
               REGISTER
             </Typography>
