@@ -1,29 +1,44 @@
-import {Button, Grid, TextField, Typography} from "@mui/material";
-import React, {useState} from "react";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import Cookies from "universal-cookie/es6";
 import background from "../assets/background.svg";
 import AxiosClient from "../utils/AxiosClient";
 import Logo from "../assets/logo.svg";
+import { Error } from "../components/Error";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const cookies = new Cookies();
+  const [errors, setErrors] = useState([]);
 
   const handleLogin = () => {
     AxiosClient.post("http://127.0.0.1:8000/api/login", {
       email: email,
       password: pwd,
-    }).then((results) => {
-      console.log(results);
-      cookies.set("Authorization", results.data.token, { path: "/" });
-      cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
-      if (cookies.get("AdminStatus") === "1") {
-        window.location.href = "http://localhost:3000/admin";
-      } else {
-        window.location.href = "http://localhost:3000/";
-      }
-    });
+    })
+      .then((results) => {
+        console.log(results);
+        cookies.set("Authorization", results.data.token, { path: "/" });
+        cookies.set("AdminStatus", results.data.user.is_admin, { path: "/" });
+      })
+      .then((res) => {
+        if (cookies.get("AdminStatus") === "1") {
+          window.location.href = "http://localhost:3000/admin";
+        } else {
+          window.location.href = "http://localhost:3000/";
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 401) {
+          setErrors((old) => [...old, e.response.data.message]);
+        } else {
+          let errs = e.response.data.errors;
+          for (var err in errs) {
+            setErrors((old) => [...old, ...errs[err]]);
+          }
+        }
+      });
   };
 
   if (cookies.get("Authorization") !== undefined) {
@@ -82,6 +97,11 @@ export const Login = () => {
                 alignItems: "center",
               }}
             >
+              {errors.length === 0 ? (
+                <></>
+              ) : (
+                <Error title={"Auth error!"} subpoints={errors} />
+              )}
               <Typography
                 variant={"h4"}
                 fontWeight={"bold"}

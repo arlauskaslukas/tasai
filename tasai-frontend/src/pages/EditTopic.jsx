@@ -149,7 +149,7 @@ export const EditTopic = () => {
                 href="/admin/topics"
                 style={{ backgroundColor: "#B7094C" }}
               >
-                Atgal
+                Back
               </Button>
             </div>
           </div>

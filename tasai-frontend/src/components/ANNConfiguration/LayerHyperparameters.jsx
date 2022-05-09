@@ -1,34 +1,59 @@
-import {Delete, ExpandMore} from "@mui/icons-material";
+import { Delete, ExpandMore } from "@mui/icons-material";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
-    Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import LayersEnums from "../../utils/ANNConfiguration/LayersEnums";
 
-function LayerHyperparametersDistributor(title, updateFunction) {
+function LayerHyperparametersDistributor(title, updateFunction, onDelete) {
   if (title === "Input") {
-    return <InputLayerHyperparameters updateFunction={updateFunction} />;
+    return (
+      <InputLayerHyperparameters
+        updateFunction={updateFunction}
+        onDelete={onDelete}
+      />
+    );
   } else if (title === "Dense") {
-    return <DenseLayerHyperparameters updateFunction={updateFunction} />;
+    return (
+      <DenseLayerHyperparameters
+        updateFunction={updateFunction}
+        onDelete={onDelete}
+      />
+    );
   } else if (title === "Flatten") {
-    return <FlattenLayerHyperparameters updateFunction={updateFunction} />;
+    return (
+      <FlattenLayerHyperparameters
+        updateFunction={updateFunction}
+        onDelete={onDelete}
+      />
+    );
   } else if (title === "Dropout") {
-    return <DropoutLayerHyperparameters updateFunction={updateFunction} />;
+    return (
+      <DropoutLayerHyperparameters
+        updateFunction={updateFunction}
+        onDelete={onDelete}
+      />
+    );
   } else if (title === "Conv2D") {
-    return <Conv2DLayerHyperparameters updateFunction={updateFunction} />;
+    return (
+      <Conv2DLayerHyperparameters
+        updateFunction={updateFunction}
+        onDelete={onDelete}
+      />
+    );
   }
 }
 
-const InputLayerHyperparameters = ({ updateFunction }) => {
+const InputLayerHyperparameters = ({ updateFunction, onDelete }) => {
   const [inputShape, setInputShape] = useState("");
   const [batchSize, setBatchSize] = useState(0);
   const handleInputShapeChange = (event) => {
@@ -48,7 +73,12 @@ const InputLayerHyperparameters = ({ updateFunction }) => {
           justifyContent: "right",
         }}
       >
-        <Button color="warning" variant="contained" startIcon={<Delete />}>
+        <Button
+          color="warning"
+          onClick={() => onDelete()}
+          variant="contained"
+          startIcon={<Delete />}
+        >
           Delete Layer
         </Button>
       </div>
@@ -72,7 +102,7 @@ const InputLayerHyperparameters = ({ updateFunction }) => {
   );
 };
 
-const DenseLayerHyperparameters = ({ updateFunction }) => {
+const DenseLayerHyperparameters = ({ updateFunction, onDelete }) => {
   const activations = LayersEnums.Activations;
   const [activation, setActivation] = useState("");
   const [units, setUnits] = useState(2);
@@ -93,7 +123,12 @@ const DenseLayerHyperparameters = ({ updateFunction }) => {
           justifyContent: "right",
         }}
       >
-        <Button color="warning" variant="contained" startIcon={<Delete />}>
+        <Button
+          color="warning"
+          onClick={() => onDelete()}
+          variant="contained"
+          startIcon={<Delete />}
+        >
           Delete Layer
         </Button>
       </div>
@@ -124,12 +159,11 @@ const DenseLayerHyperparameters = ({ updateFunction }) => {
   );
 };
 
-const FlattenLayerHyperparameters = ({ updateFunction }) => {
-  const DataFormats = ["channels_first", "channels_last"];
-  const [dataFormat, setDataFormat] = useState("channels_last");
-  const handleDataFormatChange = (event) => {
-    setDataFormat(event.target.value);
-    updateFunction({ data_format: event.target.value });
+const FlattenLayerHyperparameters = ({ updateFunction, onDelete }) => {
+  const [inputShape, setInputShape] = useState("(28,28)");
+  const handleInputShapeChange = (event) => {
+    setInputShape(event.target.value);
+    updateFunction({ input_shape: event.target.value });
   };
   return (
     <>
@@ -140,29 +174,29 @@ const FlattenLayerHyperparameters = ({ updateFunction }) => {
           justifyContent: "right",
         }}
       >
-        <Button color="warning" variant="contained" startIcon={<Delete />}>
+        <Button
+          color="warning"
+          onClick={() => onDelete()}
+          variant="contained"
+          startIcon={<Delete />}
+        >
           Delete Layer
         </Button>
       </div>
-      <FormControl fullWidth style={{ marginBlock: "20px" }}>
-        <InputLabel id="data_format">Data format</InputLabel>
-        <Select
-          labelId="data_format"
-          id="data_format"
-          value={dataFormat}
-          label="data_format"
-          onChange={handleDataFormatChange}
-        >
-          {DataFormats.map((val) => (
-            <MenuItem value={val}>{val}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <TextField
+        required
+        fullWidth
+        style={{ marginBlock: "20px" }}
+        label={"Input shape"}
+        value={inputShape}
+        onChange={handleInputShapeChange}
+        variant="outlined"
+      />
     </>
   );
 };
 
-const DropoutLayerHyperparameters = ({ updateFunction }) => {
+const DropoutLayerHyperparameters = ({ updateFunction, onDelete }) => {
   const [rate, setRate] = useState(0.1);
   const num_regex = new RegExp("([0](\\.[1-9]*){0,1})|(1)");
   const handleRateChange = (event) => {
@@ -192,7 +226,12 @@ const DropoutLayerHyperparameters = ({ updateFunction }) => {
           justifyContent: "right",
         }}
       >
-        <Button color="warning" variant="contained" startIcon={<Delete />}>
+        <Button
+          color="warning"
+          onClick={() => onDelete()}
+          variant="contained"
+          startIcon={<Delete />}
+        >
           Delete Layer
         </Button>
       </div>
@@ -210,9 +249,17 @@ const DropoutLayerHyperparameters = ({ updateFunction }) => {
   );
 };
 
-export const LayerHyperparameters = ({ title, idx, parentUpdateFunc }) => {
+export const LayerHyperparameters = ({
+  title,
+  idx,
+  parentUpdateFunc,
+  onDelete,
+}) => {
   const updateFunction = (params) => {
     parentUpdateFunc(idx, params);
+  };
+  const deleteLayer = () => {
+    onDelete(idx);
   };
   return (
     <div>
@@ -223,14 +270,14 @@ export const LayerHyperparameters = ({ title, idx, parentUpdateFunc }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          {LayerHyperparametersDistributor(title, updateFunction)}
+          {LayerHyperparametersDistributor(title, updateFunction, deleteLayer)}
         </AccordionDetails>
       </Accordion>
     </div>
   );
 };
 
-const Conv2DLayerHyperparameters = ({ updateFunction }) => {
+const Conv2DLayerHyperparameters = ({ updateFunction, onDelete }) => {
   const Paddings = ["same", "valid"];
   const [filters, setFilters] = useState(2);
   const [kernelSize, setKernelSize] = useState("(2,2)");
@@ -303,7 +350,12 @@ const Conv2DLayerHyperparameters = ({ updateFunction }) => {
           justifyContent: "right",
         }}
       >
-        <Button color="warning" variant="contained" startIcon={<Delete />}>
+        <Button
+          color="warning"
+          onClick={() => onDelete()}
+          variant="contained"
+          startIcon={<Delete />}
+        >
           Delete Layer
         </Button>
       </div>

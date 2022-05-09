@@ -3,6 +3,7 @@ import AxiosClient from "../utils/AxiosClient";
 export default class DataFetchService {
   constructor() {
     this.apiBaseUrl = "http://127.0.0.1:8000/api";
+    this.flaskUrl = "http://127.0.0.1:5000";
   }
   async getTimetables() {
     const res = await AxiosClient.get(this.apiBaseUrl + "/course_timetables");
@@ -104,6 +105,20 @@ export default class DataFetchService {
         returnable = "error";
       });
     return returnable;
+  }
+  async sendArchitecture(optimizer, loss, metrics, layers, dataset, epochs) {
+    let dataObject = {
+      optimizer: optimizer,
+      loss: loss,
+      metrics: metrics,
+      layers: layers,
+      dataset: dataset,
+      epochs: epochs,
+    };
+    console.log(dataObject);
+    let res = await AxiosClient.post(this.flaskUrl + "/test_model", dataObject);
+    console.log(res);
+    return res.data;
   }
   async getAssignmentEntries() {
     let res = await AxiosClient.get(this.apiBaseUrl + "/assignmententries");

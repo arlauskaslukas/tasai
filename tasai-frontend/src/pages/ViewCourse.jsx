@@ -1,23 +1,23 @@
-import {ExpandMore} from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Grid,
-    LinearProgress,
-    Paper,
-    Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  LinearProgress,
+  Paper,
+  Typography,
 } from "@mui/material";
-import {makeStyles} from "@mui/styles";
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import { makeStyles } from "@mui/styles";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import Cookies from "universal-cookie/es6";
 import StripeContainer from "../components/stripe/StripeContainer";
 import AxiosClient from "../utils/AxiosClient";
@@ -127,14 +127,13 @@ export const ViewCourse = () => {
     return (
       <div style={{ minHeight: "100vh" }}>
         <Dialog
+          fullWidth
           open={isDialogOpen}
           onClose={() => handleCloseDialog()}
           aria-labelLedby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            {"Rate assignment entry"}
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Buy course"}</DialogTitle>
           <DialogContent id="alert-dialog-description">
             <StripeContainer
               course_id={id}

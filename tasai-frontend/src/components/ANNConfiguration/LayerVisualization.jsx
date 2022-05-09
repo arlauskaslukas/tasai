@@ -1,4 +1,4 @@
-import {Chip, Paper, Typography} from "@mui/material";
+import { Chip, Paper, Typography } from "@mui/material";
 import React from "react";
 
 const InputLayerVisualization = ({ title, id, layerData }) => {
@@ -96,7 +96,7 @@ const FlattenLayerVisualization = ({ title, id, layerData }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>Data format: {layerData.data_format}</Typography>
+        <Typography>Input shape: {layerData.input_shape}</Typography>
       </div>
     </Paper>
   );
@@ -179,19 +179,15 @@ export const LayerVisualization = ({ title, id, layerData }) => {
     return (
       <DenseLayerVisualization title={title} id={id} layerData={layerData} />
     );
-  }
-  else if (title === "Flatten") {
+  } else if (title === "Flatten") {
     return (
-      <FlattenLayerVisualization title={title} id={id} layerData={layerData}/>
+      <FlattenLayerVisualization title={title} id={id} layerData={layerData} />
     );
-  }
-  else if (title === "Dropout") {
+  } else if (title === "Dropout") {
     return (
-      <DropoutLayerVisualization title={title} id={id} layerData={layerData}/>
+      <DropoutLayerVisualization title={title} id={id} layerData={layerData} />
     );
-  }
-  else if (title === "Conv2D")
-  {
+  } else if (title === "Conv2D") {
     return (
       <Conv2DLayerVisualization title={title} id={id} layerData={layerData} />
     );
