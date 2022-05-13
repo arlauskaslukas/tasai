@@ -1,22 +1,22 @@
-import {ArrowBack, Send} from "@mui/icons-material";
+import { ArrowBack, Send } from "@mui/icons-material";
 import {
-    Button,
-    CircularProgress,
-    Container,
-    FormControl,
-    Grid,
-    InputLabel,
-    LinearProgress,
-    MenuItem,
-    Select,
-    TextField,
-    Typography,
+  Button,
+  CircularProgress,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  LinearProgress,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
 import _ from "lodash";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AxiosClient from "../utils/AxiosClient";
-import {Error} from "../components/Error";
-import {SuccessAlert} from "../components/SuccessAlert";
+import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
 
 export const NewTopic = () => {
   const [courseData, setCourseData] = useState(undefined);
@@ -115,10 +115,17 @@ export const NewTopic = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               NEW TOPIC
             </Typography>
             <div

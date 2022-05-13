@@ -49,7 +49,6 @@ export default class DataFetchService {
       metrics: metrics,
       layers: layers,
       title: title,
-      user_id: 1,
     });
     console.log(res);
     return res.data;

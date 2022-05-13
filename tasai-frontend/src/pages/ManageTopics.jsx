@@ -1,29 +1,30 @@
 import {
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {ArrowBack} from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { ArrowBack } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -61,6 +62,7 @@ export const ManageTopics = () => {
       },
     });
     setSuccess(res.data.message === "ok");
+    axiosCall();
   };
 
   const axiosCall = async () => {
@@ -94,10 +96,17 @@ export const ManageTopics = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               TOPICS MANAGEMENT
             </Typography>
             <div
@@ -152,6 +161,8 @@ export const ManageTopics = () => {
               </Button>
             </DialogActions>
           </Dialog>
+
+          {success ? <DeleteSuccess /> : <></>}
 
           <div>
             <TableContainer component={Paper} style={{ padding: "20px" }}>

@@ -40,7 +40,7 @@ class ANNController extends Controller
         {
             $shape = $layer["hyperparameters"]["input_shape"];
             $batch_size = $layer["hyperparameters"]["batch_size"];
-            return "\tlayers.Input(shape=($shape), batch_size=$batch_size),\n";
+            return "\tlayers.Input(shape=$shape, batch_size=$batch_size),\n";
         }
         elseif($layer['title'] == "Dense")
         {
@@ -50,8 +50,8 @@ class ANNController extends Controller
         }
         elseif($layer['title']=="Flatten")
         {
-            $data_format = $layer["hyperparameters"]["data_format"];
-            return "\tlayers.Flatten(data_format='$data_format'), \n";
+            $shape = $layer["hyperparameters"]["input_shape"];
+            return "\tlayers.Flatten(shape=$shape), \n";
         }
         elseif($layer['title'] == "Dropout")
         {

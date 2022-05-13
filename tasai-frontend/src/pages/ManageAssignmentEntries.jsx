@@ -140,8 +140,15 @@ export const ManageAssignmentEntries = () => {
     return (
       <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               ASSIGNMENTS MANAGEMENT
             </Typography>
             <div
@@ -215,10 +222,7 @@ export const ManageAssignmentEntries = () => {
                           <Typography>No entries found yet.</Typography>
                         </>
                       ) : (
-                        <TableContainer
-                          component={Paper}
-                          style={{ padding: "20px" }}
-                        >
+                        <TableContainer component={Paper}>
                           <Table>
                             <TableHead className={classes.head}>
                               <TableRow key="0">
@@ -256,7 +260,9 @@ export const ManageAssignmentEntries = () => {
                                     {formatDate(entry.submitted)}
                                   </TableCell>
                                   <TableCell style={{ fontWeight: "bold" }}>
-                                    {entry.rating === 0 ? "No" : "Yes"}
+                                    {entry.rating === 0
+                                      ? "No"
+                                      : `Yes, ${entry.rating}/10`}
                                   </TableCell>
                                   <TableCell style={{ fontWeight: "bold" }}>
                                     <div

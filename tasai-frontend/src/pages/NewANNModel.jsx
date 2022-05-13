@@ -28,6 +28,7 @@ import {
   MenuItem,
   Paper,
   Select,
+  TextField,
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -58,6 +59,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const NewANNModel = ({ reviewing = false }) => {
   const layers = LayersEnums.Layers;
+  const [modelSaveDialogOpen, setModelSaveDialogOpen] = useState(false);
+  const [modelName, setModelName] = useState("");
   const [newLayerDialogOpen, setNewLayerDialogOpen] = useState(false);
   const handleNewLayerDialogClose = () => setNewLayerDialogOpen(false);
   const handleNewLayerDialogOpen = () => setNewLayerDialogOpen(true);
@@ -241,6 +244,9 @@ export const NewANNModel = ({ reviewing = false }) => {
               transformModelHistoryData(data.model)
             );
             setTestArchitectureSnackbarSuccess(true);
+          } else {
+            setTestArchitectureErrors((vals) => [...vals, data.error]);
+            setTestArchitectureSent(false);
           }
         });
     }
@@ -306,10 +312,25 @@ export const NewANNModel = ({ reviewing = false }) => {
     handleCodeSnippetOpen();
   };
 
+  const handleSaveDialogOpen = () => setModelSaveDialogOpen(true);
+  const handleSaveDialogClose = () => setModelSaveDialogOpen(false);
+
+  const [missingNameError, setMissingNameError] = useState(false);
+
+  const handleSaveModel = () => {
+    if (!modelName) {
+      setMissingNameError(true);
+      return;
+    }
+    setMissingNameError(false);
+    handleSave();
+  };
+
   const handleSave = async () => {
+    handleSaveDialogClose();
     setToggleLoading(true);
     let response = await dfs.saveANNModel(
-      "Luko test modelis",
+      modelName,
       modelHyperparams.optimizer,
       modelHyperparams.loss,
       modelHyperparams.metrics,
@@ -467,6 +488,7 @@ export const NewANNModel = ({ reviewing = false }) => {
         </DialogActions>
       </Dialog>
       <Dialog
+        fullWidth
         open={newLayerDialogOpen}
         onClose={handleNewLayerDialogClose}
         style={{ minWidth: "50vw" }}
@@ -496,6 +518,36 @@ export const NewANNModel = ({ reviewing = false }) => {
             onClick={handleLayerAddition}
           >
             Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        fullWidth
+        open={modelSaveDialogOpen}
+        onClose={handleSaveDialogClose}
+      >
+        <DialogTitle>{"Save your model"}</DialogTitle>
+        <DialogContent>
+          {missingNameError ? (
+            <Error title={"Error"} subpoints={["Missing model name"]} />
+          ) : (
+            <></>
+          )}
+          <TextField
+            value={modelName}
+            required
+            fullWidth
+            style={{ marginBlock: "20px" }}
+            label={"Name your model"}
+            inputMode={"numeric"}
+            onChange={(e) => setModelName(e.target.value)}
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSaveDialogClose}>Cancel</Button>
+          <Button variant="contained" autoFocus onClick={handleSaveModel}>
+            Save model
           </Button>
         </DialogActions>
       </Dialog>
@@ -649,7 +701,7 @@ export const NewANNModel = ({ reviewing = false }) => {
                     color="success"
                     variant="contained"
                     disabled={reviewing}
-                    onClick={handleSave}
+                    onClick={handleSaveDialogOpen}
                     startIcon={<SaveIcon />}
                   >
                     Save ANN architecture

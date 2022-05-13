@@ -1,24 +1,24 @@
 import {
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    LinearProgress,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {ArrowBack, Close, Person} from "@mui/icons-material";
-import {makeStyles} from "@mui/styles";
+import React, { useEffect, useState } from "react";
+import { ArrowBack, Close, Person } from "@mui/icons-material";
+import { makeStyles } from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
 
 const useStyles = makeStyles((theme) => ({
@@ -127,10 +127,17 @@ export const ManageUsers = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               USER MANAGEMENT
             </Typography>
             <div
