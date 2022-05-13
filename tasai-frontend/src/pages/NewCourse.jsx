@@ -1,12 +1,12 @@
-import {ArrowBack, Send} from "@mui/icons-material";
-import {DatePicker} from "@mui/lab";
-import {Button, Container, Grid, TextField, Typography} from "@mui/material";
+import { ArrowBack, Send } from "@mui/icons-material";
+import { DatePicker } from "@mui/lab";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import _ from "lodash";
 import moment from "moment";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import AxiosClient from "../utils/AxiosClient";
-import {Error} from "../components/Error";
-import {SuccessAlert} from "../components/SuccessAlert";
+import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
 
 export const NewCourse = () => {
   const [title, setTitle] = useState("");
@@ -77,10 +77,21 @@ export const NewCourse = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Container>
-        <div>
-          <Typography textAlign={"start"} variant="h4">
+        <div style={{ paddingTop: "20px" }}>
+          <Typography
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: "bold",
+            }}
+            textAlign={"start"}
+            variant="h4"
+          >
             NEW COURSE
           </Typography>
           <div

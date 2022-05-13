@@ -181,7 +181,7 @@ export const ViewCourse = () => {
                     You have to log in to start learning
                   </Typography>
                 ) : isEnrolled ? (
-                  <Button disabled variant="contained">
+                  <Button href="/mycourses" variant="contained">
                     Start learning
                   </Button>
                 ) : (

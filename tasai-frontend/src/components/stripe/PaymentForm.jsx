@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
+import React, { useState } from "react";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import DataFetchService from "../../services/DataFetchService";
-import {Button, FormGroup, Typography} from "@mui/material";
-import {CreditCard} from "@mui/icons-material";
+import { Button, FormGroup, Typography } from "@mui/material";
+import { CreditCard } from "@mui/icons-material";
 
 export default function PaymentForm({ course_id, onCompletePurchase }) {
   const dfs = new DataFetchService();
@@ -67,14 +67,23 @@ export default function PaymentForm({ course_id, onCompletePurchase }) {
           <FormGroup>
             <CardElement options={CARD_OPTIONS} />
           </FormGroup>
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<CreditCard />}
-            onClick={handleSubmit}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              paddingTop: "20px",
+            }}
           >
-            PAY SECURELY WITH STRIPE
-          </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CreditCard />}
+              onClick={handleSubmit}
+            >
+              PAY SECURELY WITH STRIPE
+            </Button>
+          </div>
         </div>
       ) : (
         <div>

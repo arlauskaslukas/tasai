@@ -1,21 +1,29 @@
-import {Book, Home, Logout, Menu, Person, PersonAdd, Settings,} from "@mui/icons-material";
 import {
-    AppBar,
-    Button,
-    Divider,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    Typography,
+  Book,
+  Home,
+  Logout,
+  Menu,
+  Person,
+  PersonAdd,
+  Settings,
+} from "@mui/icons-material";
+import {
+  AppBar,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
 } from "@mui/material";
-import React, {useLayoutEffect, useState} from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Cookies from "universal-cookie/es6";
 import AxiosClient from "../utils/AxiosClient";
-import {styled, useTheme} from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
@@ -114,9 +122,6 @@ export const NavBar = () => {
               <Button href={"/testimonials"} color={"inherit"}>
                 Testimonials
               </Button>
-              <Button href={"/newmodel"} color={"inherit"}>
-                New ANN model
-              </Button>
               {cookies.get("AdminStatus") === "1" ? (
                 <>
                   <Button color="inherit" href="/admin">
@@ -137,6 +142,9 @@ export const NavBar = () => {
                 </>
               ) : (
                 <>
+                  <Button href={"/newmodel"} color={"inherit"}>
+                    New ANN model
+                  </Button>
                   <Button href={"/mycourses"} color="inherit">
                     My courses
                   </Button>

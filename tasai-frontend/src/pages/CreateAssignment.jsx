@@ -1,5 +1,5 @@
-import {ArrowBack, Send} from "@mui/icons-material";
-import {DateTimePicker} from "@mui/lab";
+import { ArrowBack, Send } from "@mui/icons-material";
+import { DateTimePicker } from "@mui/lab";
 import {
   Button,
   CircularProgress,
@@ -15,10 +15,10 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 import moment from "moment";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import AxiosClient from "../utils/AxiosClient";
-import {Error} from "../components/Error";
-import {SuccessAlert} from "../components/SuccessAlert";
+import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
 
 export const CreateAssignment = () => {
   const [topicData, setTopicData] = useState(undefined);
@@ -109,10 +109,17 @@ export const CreateAssignment = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               CREATE NEW ASSIGNMENT
             </Typography>
             <div

@@ -1,13 +1,13 @@
-import {ArrowBack, Send} from "@mui/icons-material";
-import {DatePicker} from "@mui/lab";
-import {Button, Container, Grid, TextField, Typography} from "@mui/material";
+import { ArrowBack, Send } from "@mui/icons-material";
+import { DatePicker } from "@mui/lab";
+import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import moment from "moment";
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import axios from "axios";
 import AxiosClient from "../utils/AxiosClient";
-import {Error} from "../components/Error";
-import {SuccessAlert} from "../components/SuccessAlert";
+import { Error } from "../components/Error";
+import { SuccessAlert } from "../components/SuccessAlert";
 import _ from "lodash";
 
 export const EditCourse = () => {
@@ -95,10 +95,21 @@ export const EditCourse = () => {
     axiosCall();
   }, []);
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Container>
-        <div>
-          <Typography textAlign={"start"} variant="h4">
+        <div style={{ paddingTop: "20px" }}>
+          <Typography
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: "bold",
+            }}
+            textAlign={"start"}
+            variant="h4"
+          >
             UPDATE COURSE INFORMATION
           </Typography>
           <div

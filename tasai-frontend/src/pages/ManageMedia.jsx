@@ -1,34 +1,34 @@
 import {
-    Alert,
-    AlertTitle,
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Alert,
+  AlertTitle,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {ArrowBack} from "@mui/icons-material";
+import { ArrowBack } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import _ from "lodash";
 import AxiosClient from "../utils/AxiosClient";
-import {DeleteSuccess} from "../components/DeleteSuccess";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -64,10 +64,10 @@ export const ManageMedia = () => {
     setDialogOpen(false);
   };
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     SendToDB();
+    await axiosCall();
     setDialogOpen(false);
-    axiosCall();
   };
 
   const SendToDB = async () => {
@@ -77,7 +77,8 @@ export const ManageMedia = () => {
         id: identifier,
       },
     });
-    setSuccess(res.data.message === "ok");
+    console.log(res);
+    setSuccess(res.data.response === "ok");
   };
 
   if (data === undefined) {
@@ -201,13 +202,6 @@ export const ManageMedia = () => {
                             justifyContent: "end",
                           }}
                         >
-                          <IconButton
-                            href={`/admin/media/edit/${row.id}`}
-                            aria-label="edit"
-                            style={{ color: "#0091AD" }}
-                          >
-                            <EditIcon />
-                          </IconButton>
                           <IconButton
                             onClick={() => {
                               setSelectedEntry(row);

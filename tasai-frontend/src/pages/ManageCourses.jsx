@@ -1,31 +1,31 @@
 import {
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {ArrowBack} from "@mui/icons-material";
+import { ArrowBack } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
-import {DeleteSuccess} from "../components/DeleteSuccess";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -60,16 +60,18 @@ export const ManageCourses = () => {
     const res = await AxiosClient.delete(
       `http://127.0.0.1:8000/api/courses/${identifier}`
     );
+    await axiosCall();
     setSuccess(res.data.message === "ok");
   };
 
+  const axiosCall = async () => {
+    const res = await axios.get("http://127.0.0.1:8000/api/courses");
+    let elements = res.data;
+    console.log(elements);
+    setData(elements);
+  };
+
   useEffect(() => {
-    const axiosCall = async () => {
-      const res = await axios.get("http://127.0.0.1:8000/api/courses");
-      let elements = res.data;
-      console.log(elements);
-      setData(elements);
-    };
     axiosCall();
     setLoadingStatus(false);
   }, []);
@@ -94,10 +96,17 @@ export const ManageCourses = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               COURSES MANAGEMENT
             </Typography>
             <div

@@ -1,33 +1,33 @@
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    CircularProgress,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {ArrowBack, ExpandMore} from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { ArrowBack, ExpandMore } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Add from "@mui/icons-material/Add";
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import AxiosClient from "../utils/AxiosClient";
-import {DeleteSuccess} from "../components/DeleteSuccess";
+import { DeleteSuccess } from "../components/DeleteSuccess";
 import DataFetchService from "../services/DataFetchService";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,14 +65,16 @@ export const ManageTimetables = () => {
       `http://127.0.0.1:8000/api/timetables/${identifier}`
     );
     setSuccess(res.data.response === "ok");
+    axiosCall();
+  };
+
+  const axiosCall = async () => {
+    const res = await datafetchservice.getTimetables();
+    console.log(res);
+    setData(res);
   };
 
   useEffect(() => {
-    const axiosCall = async () => {
-      const res = await datafetchservice.getTimetables();
-      console.log(res);
-      setData(res);
-    };
     axiosCall();
     setLoadingStatus(false);
   }, []);
@@ -97,10 +99,17 @@ export const ManageTimetables = () => {
     );
   } else
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <div>
-            <Typography textAlign={"start"} variant="h4">
+          <div style={{ paddingTop: "20px" }}>
+            <Typography
+              textAlign={"start"}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+              }}
+              variant="h4"
+            >
               TIMETABLES MANAGEMENT
             </Typography>
             <div
@@ -180,10 +189,7 @@ export const ManageTimetables = () => {
                   </>
                 ) : (
                   <>
-                    <TableContainer
-                      component={Paper}
-                      style={{ padding: "20px" }}
-                    >
+                    <TableContainer component={Paper}>
                       <Table>
                         <TableHead className={classes.head}>
                           <TableRow>
